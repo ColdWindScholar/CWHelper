@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/at.css" />
+    <title>随身WIFI控制台</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="tab-container">
+            <div class="tab active" onclick="switchTab('at-tab')">AT命令</div>
+            <!--div class="tab" onclick="switchTab('band-tab'); getBandInfo();">锁频段</div-->
+            <div class="tab" onclick="switchTab('cell-tab'); getCellLockInfo();">锁小区</div>
+            <!--div class="tab" onclick="switchTab('imei-tab')">修改IMEI</div-->
+            <!--div class="tab" onclick="switchTab('debug-tab'); getDebugStatus();">调试模式</div-->
+            <div class="tab" onclick="switchTab('help-tab')">关于</div>
+        </div>
+		<!--at调试-->
+        <div id="at-tab" class="tab-content active"><form id="frmCgi" action="/goform/goform_set_cmd_process" method="GET"><div class="form-body"><div class="form-title">AT命令测试工具</div><div class="content"><div class="at-command-container"><div class="row-fluid"><div class="span8"><input id="goformId" name="goformId" type="hidden" value="EXECUTE_AT_COMMAND" /><div class="at-input-group"><input id="at_cmd" name="at_cmd" type="text" placeholder="请输入AT命令，例如: AT+CSQ  (不支持发送'AT'询问状态)" autofocus onkeydown="if(event.keyCode==13){at_cmd_ex();return false;}" /><input type="button" class="btn-1" value="执行" onclick="at_cmd_ex();" /></div></div></div><div class="row-fluid"><div class="span8" style="position: relative;"><textarea id="at_result" name="at_result" rows="10" cols="50" readonly placeholder="命令执行结果将显示在这里..."></textarea><button type="button" id="clear-result" class="clear-btn" title="清空结果">清空</button></div></div><div class="row-fluid"><div class="span8"><div class="command-examples"><h3>常用AT命令示例</h3><ul class="example-list"><li>AT+CSQ 查询设备信号质量</li><li>AT+CGEQOSRDP= 查询SIM卡签约速率</li><li>AT+ZMODE? 调试模式状态</li><li>AT+ZCARDSWITCH= 切换卡槽</li><li>AT+CFUN=1,1 重启设备</li></ul></div></div></div></div></div></div></form></div>
+        <!--频段锁定-->
+		<!--div id="band-tab" class="tab-content"><form id="frmBand"><div class="form-body"><div class="form-title">锁频段设置</div><div class="content"><div class="row-fluid"><label class="span4">当前使用频段</label><label class="span8" id="current_reside_band">加载中...</label></div><div class="row-fluid"><label class="span4">已锁定频段</label><label class="span8" id="current_lock_band">加载中...</label></div><div class="row-fluid"><label class="span4">选择频段(勾选)</label><div class="span8" id="band_selection"><div class="loading">加载频段信息...</div></div></div><div class="form-buttons"><input type="button" class="btn-1" value="锁定选择" onclick="lockSelectedBands();" /></div><div><label class="colorHint">锁定后稍等即可生效。</label></div></div></div></form></div>
+        <!--小区锁定-->
+		<div id="cell-tab" class="tab-content"><form id="frmCellLock"><div class="form-body"><div class="form-title">锁小区设置</div><div class="content"><div class="row-fluid" style="display: flex; flex-wrap: wrap;"><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">当前驻留频点:</label><label class="span8" id="current_arfcn">加载中...</label></div><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">当前驻留小区:</label><label class="span8" id="current_pci">加载中...</label></div><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">当前驻留频段:</label><label class="span8" id="current_band">加载中...</label></div></div><div class="row-fluid" style="display: flex; flex-wrap: wrap;"><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">已锁定频点:</label><label class="span8" id="locked_arfcn">加载中...</label></div><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">已锁定小区:</label><label class="span8" id="locked_pci">加载中...</label></div><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">小区锁定状态:</label><label class="span8" id="cell_lock_state">加载中...</label></div></div><div class="row-fluid" style="display: flex; flex-wrap: wrap;"><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">锁定频点:</label><div class="span8"><input id="lock_arfcn" name="lock_arfcn" type="text" placeholder="输入要锁定的频点" style="width: 80%;" /></div></div><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">锁定小区:</label><div class="span8"><input id="lock_pci" name="lock_pci" type="text" placeholder="输入要锁定的小区ID" style="width: 80%;" /></div></div><div style="flex: 1; min-width: 200px; margin-bottom: 10px;"><label class="span4">是否锁定小区:</label><div class="span8"><select id="lock_enable" style="width: 80%;"><option value="1">锁定</option><option value="0">解锁</option></select></div></div></div><div class="form-buttons"><input type="button" class="btn-1" value="提交" onclick="setCellLock();" /></div><div><label class="colorHint">锁定后稍等即可生效。</label></div></div></div></form></div>
+        <!--修改imei-->
+		<!--div id="imei-tab" class="tab-content"><form id="frmImei"><div class="form-body"><div class="form-title">修改IMEI</div><div class="content"><div class="row-fluid"><label class="span4">当前IMEI</label><label class="span8" id="current_imei">加载中...</label></div><div class="row-fluid"><label class="span4">新IMEI</label><div class="span8"><div class="imei-input-group"><input id="imei" name="imei" type="text" class="required" minlength="15" maxlength="15" placeholder="请输入15位IMEI号码" pattern="[0-9]{15}" title="请输入15位IMEI号码" /><input type="button" class="btn-1" value="修改" onclick="changeImei(imei.value);" /><a class="btn-1" onclick="rebootDevice()">重启</a ></div></div></div><div><label class="colorHint">修改IMEI后需重启设备才能生效。</label></div></div></div></form></div>
+		<!--调试模式(默认禁用)-->
+        <!--div id="debug-tab" class="tab-content"><form id="frmDebug"><div class="form-body"><div class="form-title">调试模式设置</div><div class="content"><div class="row-fluid"><div class="span4">当前状态</div><div class="span8 debug-status" id="debug_status">加载中...</div></div><div class="row-fluid"><div class="span8 btn-group"><button type="button" class="btn-1 btn-success" onclick="setDebugMode(1)">开启调试模式</button><button type="button" class="btn-1 btn-danger" onclick="setDebugMode(0)">关闭调试模式</button></div></div><div><label class="colorHint">调试模式可用于高级诊断和故障排除。</label></div></div></div></form></div>
+		<!--工具说明-->
+        <div id="help-tab" class="tab-content"><div class="form-body"><div class="content"><div class="help-section"><ol><li>部分参数修改后需重启设备才能生效</li><li>本工具直接访问地址 http://<span id="current-ip">IP地址</span>:9090/at.html 或者在sim卡切换下方点击"更多调试"即可。</li><li>此版本由 <a href="https://punguin.cn">企鹅君Punguin</a> 修改，原作者是 <a href="https://mwifi.icu">mWIFI ICU</a> 。</li></ol></div></div></div></div>
+    </div>
+    <div style="text-align: center; margin-top: 30px; padding: 15px 0; color: #666; font-size: 14px;">随身WIFI控制台 © 企鹅君Punguin</div>
+</body>
+<script src="js/at.js"></script>
+</html>
