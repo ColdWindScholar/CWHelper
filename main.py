@@ -929,7 +929,7 @@ class Main:
             if choice == "A":
                 self.zmtd_extract()
             elif choice == "B":
-                input("start conhost.exe file\\dongle_fun\\dongle_fun.bat")
+                call(["file\\dongle_fun\\dongle_fun.bat"], extra_path=False)
             elif choice == "C":
                 self.zmtd_brusquel()
             elif choice == "D":
@@ -940,7 +940,7 @@ class Main:
             elif choice == "F":
                 self.ufi_nv_set()
             elif choice == "G":
-                input("explorer file\\OpenZxicEditor-For-Windows")
+                call(['explorer', "file\\OpenZxicEditor-For-Windows"], extra_path=False)
             elif choice == "H":
                 self.mifi_Studio()
             elif choice == "01":
