@@ -950,7 +950,7 @@ class Main:
             elif choice == "03":
                 self.install_drive()
             elif choice == "04":
-                input("start bin\\openadb.bat")
+                call(["openadb.bat"])
             elif choice == "05":
                 if os.name == "nt":
                     call(['devmgmt.msc'], extra_path=False)
