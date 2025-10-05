@@ -924,7 +924,7 @@ class Main:
             print("\033[36m     工具与导航栏:\033[0m")
             print(
                 "\033[33m         1.串口工具         2.云小帆助手      3.1869工具      4.西瓜味asr工具(最终)   5.Orz0000工具(鸡蛋姐)\033[0m")
-            print("\033[33m         6.zxic设置WIFI     7.流量失踪器      \033[4;35m8.紫光专区入口\033[0m  ")
+            print("\033[33m         6.zxic设置WIFI     7.流量失踪器      \033[4;35m8.紫光专区入口    \033[31m9.退出工具\033[0m\033[0m")
             choice = input("\033[32m请输入并按Enter键: \033[0m")
             if choice == "A":
                 self.zmtd_extract()
@@ -972,7 +972,7 @@ class Main:
                 call(["explorer", "https://net.arsn.cn/"], extra_path=False)
             elif choice == "8":
                 self.uisoc()
-            elif choice == "EXIT":
+            elif choice == "EXIT" or choice == '9':
                 print("\033[31m退出工具箱\033[0m")
                 break
             else:
