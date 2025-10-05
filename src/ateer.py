@@ -1,4 +1,3 @@
-import sys
 import serial
 import serial.tools.list_ports
 
@@ -12,10 +11,6 @@ def find_at_port():
 
 
 def ateer(at_command, show_send: bool = False, show_response: bool = False, timeout: int = 2):
-    BAUDRATE = 9600
-    BYTESIZE = serial.EIGHTBITS
-    STOPBITS = serial.STOPBITS_ONE
-    PARITY = serial.PARITY_NONE
     port_name = find_at_port()
     if not port_name:
         print()
@@ -23,7 +18,7 @@ def ateer(at_command, show_send: bool = False, show_response: bool = False, time
         print('未找到包含 \'AT\' 的串口设备')
         return 2
     try:
-        with serial.Serial(port=port_name, baudrate=BAUDRATE, bytesize=BYTESIZE, stopbits=STOPBITS, parity=PARITY,
+        with serial.Serial(port=port_name, baudrate=9600, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE,
                            timeout=timeout) as ser:
             ser.write((at_command + '\r\n').encode())
             response = ser.read(1024).decode(errors='ignore')
