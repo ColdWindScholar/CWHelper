@@ -39,7 +39,7 @@ def call(exe, extra_path=True, out=0, return_output=False):
             if out == 0:
                 print(out_put)
         return 2
-    except FileNotFoundError:
-        return 2
+    except (FileNotFoundError, OSError) as e:
+        return 2 if not return_output else (2, e)
     ret.wait()
     return ret.returncode if not return_output else (ret.returncode, out_put_)
