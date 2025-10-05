@@ -958,7 +958,7 @@ class Main:
                     cmd = input("adb>")
                     if cmd == 'E':
                         break
-                    call(cmd)
+                    call(cmd) if "adb shell" != cmd else print("Not supported.")
             elif choice == "05":
                 if os.name == "nt":
                     call(['devmgmt.msc'], extra_path=False)
