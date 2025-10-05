@@ -957,21 +957,24 @@ class Main:
             elif choice == "04":
                 input("start bin\\openadb.bat")
             elif choice == "05":
-                input("start devmgmt.msc")
+                if os.name == "nt":
+                    call(['devmgmt.msc'], extra_path=False)
+                else:
+                    input("This operation only able on Windows.")
             elif choice == "1":
-                input('start "" "https://atmaster.netlify.app/#/"')
+                call(["explorer.exe", "https://atmaster.netlify.app/#/"], extra_path=False)
             elif choice == "2":
-                input("start file\\tool\\YXF_TOOL.exe")
+                call(["file\\tool\\YXF_TOOL.exe"], extra_path=False)
             elif choice == "3":
-                input("start file\\tool\\ZTE_PATCH_1.1.exe")
+                call(["file\\tool\\ZTE_PATCH_1.1.exe"], extra_path=False)
             elif choice == "4":
-                input("start file\\tool\\Watermelon-ASR_Tools.exe")
+                call(["file\\tool\\Watermelon-ASR_Tools.exe"], extra_path=False)
             elif choice == "5":
                 call(["file\\tool\\UFITOOL_MTD4.exe"], extra_path=False)
             elif choice == "6":
                 self.set_wifi()
             elif choice == "7":
-                input('start "" "https://net.arsn.cn/"')
+                call(["explorer", "https://net.arsn.cn/"], extra_path=False)
             elif choice == "8":
                 self.uisoc()
             elif choice == "EXIT":
