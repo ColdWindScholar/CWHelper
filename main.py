@@ -951,7 +951,7 @@ class Main:
             elif choice == "03":
                 self.install_drive()
             elif choice == "04":
-                print("            \033[33m输入\033[31mE\033[0m即可退出\033[0m")
+                print("            \033[33m输入\033[31mE\033[0m\033[33m即可退出\033[0m")
                 print("          检测连接的设备――adb devices                 设备终端――adb shell")
                 print("     设备重启――adb reboot   拉取文件――adb pull 设备路径 电脑路径   上传文件――adb push 电脑路径 设备路径")
                 while True:
