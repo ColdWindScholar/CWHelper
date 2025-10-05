@@ -6,7 +6,7 @@ import shutil
 import sys
 import time
 from src.sn_search import main as sn_search
-from src.utils import call
+from src.utils import call, ebinner
 from src.ateer import ateer
 import re
 import io
@@ -954,11 +954,7 @@ class Main:
                 print("            \033[33m输入\033[31mE\033[0m\033[33m即可退出\033[0m")
                 print("          检测连接的设备――adb devices                 设备终端――adb shell")
                 print("     设备重启――adb reboot   拉取文件――adb pull 设备路径 电脑路径   上传文件――adb push 电脑路径 设备路径")
-                while True:
-                    cmd = input("adb>")
-                    if cmd == 'E':
-                        break
-                    call(cmd) if "adb shell" != cmd else print("Not supported.")
+                call(["cmd","/c", "start", "cmd", "/k", f"cd {ebinner}"],extra_path=False)
             elif choice == "05":
                 if os.name == "nt":
                     call(['devmgmt.msc'], extra_path=False)
