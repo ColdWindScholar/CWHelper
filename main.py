@@ -20,7 +20,8 @@ else:
     sys.stdout.write("\x1b]2;CWHelper\x07")
     sys.stdout.flush()
 
-def md5_for_large_file(file_path, chunk_size=1024*1024):
+
+def md5_for_large_file(file_path, chunk_size=1024 * 1024):
     md5 = hashlib.md5()
     with open(file_path, 'rb') as f:
         while True:
@@ -30,6 +31,7 @@ def md5_for_large_file(file_path, chunk_size=1024*1024):
                 break
             md5.update(data)
     return md5.hexdigest()
+
 
 class Main:
     def __init__(self):
@@ -678,19 +680,24 @@ class Main:
                     choice = input("\033[36m是否要在浏览器中打开 ATweb? (y/n):")
                     if choice in ["Y", 'y']:
                         input(f"http://{ip[0]}:9090/at_info.html")
+
     def zmtd_brusquel(self):
         def copy_to_workdir(src_path):
             shutil.copyfile(src_path, "mtd.bin")
             return "mtd.bin"
+
         def get_local_md5(file):
             return md5_for_large_file(file)
+
         def adb_push(local_file, device_file):
             return call(["adb", "push", local_file, device_file])
+
         def get_device_md5(device_file):
             _, output = call(["adb", "shell", "md5sum", device_file])
             for i in output:
                 if i:
                     return i
+
         def compare_md5(local_md5, device_md5):
             if local_md5.lower() != device_md5.lower():
                 print("\033[31mmd5校验失败，文件可能损坏，已中止刷写，请重启设备后重新开始\033[0m")
@@ -704,23 +711,27 @@ class Main:
             call(["adb", "shell", "ln", "-s", "/tmp/busybox", "/tmp/sh"])
             call(["adb", "shell", "ln", "-s", "/tmp/busybox", "/tmp/reboot"])
             call(["adb", "shell", "chmod", "+x", "/tmp/busybox", "/tmp/reboot", "/tmp/sh", "/tmp/dd"])
+
         def optional_backup():
-            choice = input("\033[34m是否进行备份当前分区\033[36m\033[1m(\033[31m备份将耗费较长时间\033[36m\033[1m)\033[33m[需要输yes，回车跳过]\033[0m")
+            choice = input(
+                "\033[34m是否进行备份当前分区\033[36m\033[1m(\033[31m备份将耗费较长时间\033[36m\033[1m)\033[33m[需要输yes，回车跳过]\033[0m")
             if choice == 'yes':
                 timestamp = time.strftime("%Y%m%d%H%M", time.localtime())
-                userprofile:str = os.getenv("USERPROFILE") if os.name == 'nt' else os.getenv("HOME")
+                userprofile: str = os.getenv("USERPROFILE") if os.name == 'nt' else os.getenv("HOME")
                 backup_folder = os.path.join(userprofile, "Desktop\\MTD分区备份")
                 filename = f"MTD4备份{timestamp}.bin"
                 desktop_path = os.path.join(backup_folder, filename)
                 os.makedirs(backup_folder, exist_ok=True)
                 with open(f"{backup_folder}/readme.txt", "w", encoding='utf-8', newline='\n') as f:
-                    f.write("此文件夹由CWHelper MTD刷写器生成，您已选择将MTD文件备份。\n本工具支持多次备份并不覆盖原文件，您无需删除原文件。\n\n您可以将备份的MTD文件重新写入设备。")
+                    f.write(
+                        "此文件夹由CWHelper MTD刷写器生成，您已选择将MTD文件备份。\n本工具支持多次备份并不覆盖原文件，您无需删除原文件。\n\n您可以将备份的MTD文件重新写入设备。")
                 if not call(["adb", "pull", "/dev/mtd4", desktop_path]):
                     print(f"\033[32m备份完成，已保存至桌面:{desktop_path}\033[0m")
                 else:
                     print("\033[31m失败！:\033[0m")
             else:
                 print("\033[33m 已选择无需备份，跳过备份步骤\033[0m")
+
         def upload_flash_files():
             call(["adb", "shell", "killall", "-9", "zte_ufi"])
             call(["adb", "shell", "killall", "-9", "zte_mifi"])
@@ -728,21 +739,25 @@ class Main:
             call(["adb", "shell", "killall", "-9", "goahead"])
             adb_push('mtd.bin', '/tmp/mtd4.bin')
             call(["adb", "shell", "mkdir", "-p", "/mnt/userdata/temp/"])
+
         def write_flash_script():
             adb_push("file/flash.sh", "/mnt/userdata/temp/flash.sh")
-            call(["adb","shell", "chmod", "+x", "/mnt/userdata/temp/flash.sh"])
+            call(["adb", "shell", "chmod", "+x", "/mnt/userdata/temp/flash.sh"])
+
         def final_confirmation():
             print("\033[32m全部文件已经推送成功！\033[0m")
             print("\033[31m请确认提供的文件全部正确！这是您最后的机会！\033[0m")
             print("\033[31m输入'IAMSURE'进行下一操作\033[0m")
             while input("输入:") != "IAMSURE":
                 continue
+
         def execute_flash():
             input("回车以开始刷机！")
             print("\033[33m正在刷机！请勿关闭设备和本工具！\033[0m")
             call(["adb", "shell", "/mnt/userdata/temp/flash.sh"])
             print("\033[32m设备刷写完成，请等待设备开机，感谢使用。\033[0m")
             print("\033[33m机器插上闪一下灯关机就是砖了，请用编程器救回！\033[0m")
+
         if not self.is_adb_device_connected():
             input("回车继续")
             return 1
@@ -760,17 +775,6 @@ class Main:
         write_flash_script()
         final_confirmation()
         execute_flash()
-
-
-
-
-
-
-
-
-
-
-
 
     def zmtd_extract(self):
         script_dir = self.local_dir
