@@ -16,6 +16,7 @@ from src.mtdcut import main as mtdcut
 from src.mtdrepk import main as mtdrepk
 from src.mtdjoin import main as mtdjoin
 from src.mtdunpk import main as mtdunpk
+
 if os.name == 'nt':
     import ctypes
 
@@ -134,13 +135,20 @@ class Main:
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print(
             f"\033[36m\033[1m使用小贴士:\033[0m\033[32m部分设备厂家删除adbd后端,导致开完adb后依然是无法使用状态(离线模式),详情请看助手主页设备状态")
-        print("\033[36m\033[1m =------\033[0m\033[35m\033[1m选择模式\033[36m\033[1m------------------------------------------------------------------------------------------------=")
-        print("\033[36m\033[1m =                                                                                                              =")
-        print("\033[36m\033[1m =    \033[0m\033[33m1. 调试模式(ADB+AT+网络)     2. 工厂端口模式(仅AT)       3. 仅系统模式(慎用)        4. 关闭所有模式      \033[36m\033[1m =")
-        print("\033[36m\033[1m =                                                                                                              =")
-        print("\033[36m\033[1m =    \033[0m\033[33m5. Remo专用调试模式(ADB+AT+网络)                                                                         \033[36m\033[1m =")
-        print("\033[36m\033[1m =                                                                                                              =")
-        print("\033[36m\033[1m =--------------------------------------------------------------------------------------------------------------=")
+        print(
+            "\033[36m\033[1m =------\033[0m\033[35m\033[1m选择模式\033[36m\033[1m------------------------------------------------------------------------------------------------=")
+        print(
+            "\033[36m\033[1m =                                                                                                              =")
+        print(
+            "\033[36m\033[1m =    \033[0m\033[33m1. 调试模式(ADB+AT+网络)     2. 工厂端口模式(仅AT)       3. 仅系统模式(慎用)        4. 关闭所有模式      \033[36m\033[1m =")
+        print(
+            "\033[36m\033[1m =                                                                                                              =")
+        print(
+            "\033[36m\033[1m =    \033[0m\033[33m5. Remo专用调试模式(ADB+AT+网络)                                                                         \033[36m\033[1m =")
+        print(
+            "\033[36m\033[1m =                                                                                                              =")
+        print(
+            "\033[36m\033[1m =--------------------------------------------------------------------------------------------------------------=")
         print()
         adb_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m\033[31m\033[1m")
         if adb_selection == "1":
@@ -193,13 +201,15 @@ class Main:
             print()
             print("\033[32m\033[1m\n正在向系统发送请求.....\033[0m\033[34m\033[1m")
             print("\033[34m\033[1m")
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx"])
+            call(
+                ['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx"])
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=YWRtaW4%3D"])
             print("\033[32m\033[1m\n检测到阻止,正在绕过.....\033[0m\033[34m\033[1m")
             call(['curl',
                   f"http://{ip_address}/reqproc/proc_post?goformId=REMO_SIM_SELECT_R1865&isTest=false&sim_option_id=3&select_sim_mode=1"])
             call(
-                ['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SysCtlUtal&action=System_MODE&debug_enable=1"])
+                ['curl',
+                 f"http://{ip_address}/reqproc/proc_post?goformId=SysCtlUtal&action=System_MODE&debug_enable=1"])
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D1"])
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1"])
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
@@ -426,6 +436,7 @@ class Main:
                     return
                 print(f"\033[33m未知设备状态:{state}\033[0m")
                 input("回车以继续。")
+
             main()
         elif selection == '4':
             self.is_adb_device_connected()
@@ -899,7 +910,8 @@ class Main:
     def mtd_tools(self):
         os.system("cls") if os.name == "nt" else os.system("clear")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
-        print(f"\033[33m            1.编程器固件一键解包           2.一键重新打包固件       3.合并所有MTD分区       4.返回\033[0m")
+        print(
+            f"\033[33m            1.编程器固件一键解包           2.一键重新打包固件       3.合并所有MTD分区       4.返回\033[0m")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         choice = input("\033[32m请输入并按Enter键: \033[0m")
         if choice == "1":
@@ -952,21 +964,22 @@ class Main:
             print("\033[36m     工具与导航栏:\033[0m")
             print(
                 "\033[33m         1.串口工具         2.云小帆助手      3.1869工具      4.西瓜味asr工具(最终)   5.Orz0000工具(鸡蛋姐)\033[0m")
-            print("\033[33m         6.zxic设置WIFI     7.流量失踪器      \033[4;35m8.紫光专区入口\033[0m  \033[31m9.退出工具\033[0m")
+            print(
+                "\033[33m         6.zxic设置WIFI     7.流量失踪器      \033[4;35m8.紫光专区入口\033[0m  \033[31m9.退出工具\033[0m")
             choice = input("\033[32m请输入并按Enter键: \033[0m")
             choices = {
-                "A":self.zmtd_extract,
-                "B":lambda : call(["file/dongle_fun/dongle_fun.bat"], extra_path=False),
-                "C":self.zmtd_brusquel,
-                "D":self.mtd_check,
-                "E":self.xr_web,
-                "F":self.ufi_nv_set,
+                "A": self.zmtd_extract,
+                "B": lambda: call(["file/dongle_fun/dongle_fun.bat"], extra_path=False),
+                "C": self.zmtd_brusquel,
+                "D": self.mtd_check,
+                "E": self.xr_web,
+                "F": self.ufi_nv_set,
                 "H": self.mifi_studio,
-                "01":self.machine_material,
-                "02":self.set_adb,
-                "03":self.install_drive,
-                "8":self.uisoc,
-                "6":self.set_wifi
+                "01": self.machine_material,
+                "02": self.set_adb,
+                "03": self.install_drive,
+                "8": self.uisoc,
+                "6": self.set_wifi
             }
             if choice in choices:
                 choices[choice]()
@@ -977,8 +990,9 @@ class Main:
             elif choice == "04":
                 print("            \033[33m输入\033[31mE\033[0m\033[33m即可退出\033[0m")
                 print("          检测连接的设备――adb devices                 设备终端――adb shell")
-                print("     设备重启――adb reboot   拉取文件――adb pull 设备路径 电脑路径   上传文件――adb push 电脑路径 设备路径")
-                call(["cmd","/c", "start", "cmd", "/k", f"cd {ebinner}"],extra_path=False)
+                print(
+                    "     设备重启――adb reboot   拉取文件――adb pull 设备路径 电脑路径   上传文件――adb push 电脑路径 设备路径")
+                call(["cmd", "/c", "start", "cmd", "/k", f"cd {ebinner}"], extra_path=False)
             elif choice == "05":
                 if os.name == "nt":
                     call(['devmgmt.msc'], extra_path=False)
