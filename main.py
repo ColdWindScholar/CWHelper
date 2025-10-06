@@ -12,7 +12,10 @@ import re
 import io
 from time import sleep
 from shutil import move
-
+from src.mtdcut import main as mtdcut
+from src.mtdrepk import main as mtdrepk
+from src.mtdjoin import main as mtdjoin
+from src.mtdunpk import main as mtdunpk
 if os.name == 'nt':
     import ctypes
 
@@ -86,7 +89,6 @@ class Main:
         return True
 
     def mtd_check(self):
-
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print("以下为您的设备MTD挂载状态")
         print()
@@ -901,6 +903,31 @@ class Main:
         print("\033[36m-------------------------------------------------------------------------------------\033[0m")
         input("回车继续")
 
+    def mtd_tools(self):
+        os.system("cls") if os.name == "nt" else os.system("clear")
+        print(f"\033[36m\033[1m{self.split_mark}\033[0m")
+        print(f"\033[33m            1.编程器固件一键解包           2.一键重新打包固件       3.合并所有MTD分区       4.返回\033[0m")
+        print(f"\033[36m\033[1m{self.split_mark}\033[0m")
+        choice = input("\033[32m请输入并按Enter键: \033[0m")
+        if choice == "1":
+            file_path = input("\033[33m请输入文件地址并按Enter键: \033[0m")
+            if not os.path.exists(file_path):
+                input("\033[33m文件不存在！\033[0m")
+                return 0
+            mtdcut(file_path)
+            mtdunpk()
+            with open("MTDs/name.txt", 'r', encoding='utf-8') as f:
+                name = f.read()
+            move("MTDs", "z." + name.replace(" ", "."))
+        elif choice == "2":
+            mtdrepk()
+            mtdjoin()
+        elif choice == "3":
+            mtdjoin()
+        elif choice == "4":
+            return 1
+        input("回车继续")
+
     def print_menu(self):
         while True:
             os.system("cls") if os.name == "nt" else os.system("clear")
@@ -941,7 +968,9 @@ class Main:
             elif choice == "F":
                 self.ufi_nv_set()
             elif choice == "G":
-                call(['explorer', "file\\OpenZxicEditor-For-Windows"], extra_path=False)
+                while True:
+                    if self.mtd_tools() == 1:
+                        break
             elif choice == "H":
                 self.mifi_Studio()
             elif choice == "01":
