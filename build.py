@@ -65,14 +65,14 @@ class Builder:
         dndplat = self.dndplat
         if self.ostype == 'Darwin':
             PyInstaller.__main__.run([
-                'tool.py',
+                'main.py',
                 '-F',
                 '-i',
                 'icon.ico',
             ])
         elif os.name == 'posix':
             PyInstaller.__main__.run([
-                'tool.py',
+                'main.py',
                 '-F',
                 '-i',
                 'icon.ico',
@@ -82,7 +82,7 @@ class Builder:
             platform.machine = lambda: 'x86' if platform.architecture()[0] == '32bit' and mach_ == 'AMD64' else mach_
 
             PyInstaller.__main__.run([
-                'tool.py',
+                'main.py',
                 '-F',
                 '-i',
                 'icon.ico',
