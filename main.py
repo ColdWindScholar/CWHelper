@@ -504,11 +504,11 @@ class Main:
     def uisoc(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print("\n")
-        print("\033[33m       1.查询聚火SN\033[0m")
-        print("\033[34m       2.修改设备参数\033[0m")
-        print("\033[36m       3.ResearchDownload\033[0m")
-        print("\033[32m       4.spd_dump\033[0m")
-        print("\033[37m       5.切卡\033[0m")
+        print("\033[33m      1.查询聚火SN\033[0m")
+        print("\033[34m      2.修改设备参数\033[0m")
+        print("\033[36m      3.ResearchDownload\033[0m")
+        print("\033[32m      4.spd_dump\033[0m")
+        print("\033[37m      5.切卡\033[0m")
         print("按下回车返回")
         choice111 = input("\033[32m请输入并按Enter键: \033[0m")
         if choice111 == "1":
