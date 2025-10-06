@@ -100,7 +100,8 @@ class Builder:
         if not os.path.exists('dist/LICENSE'):
             shutil.copy(f'{self.local}/LICENSE', f"{self.local}/dist/LICENSE")
         for i in ['file', 'LICENSES', 'TQ']:
-            shutil.copytree(f"{self.local}/{i}", f"{self.local}/dist/{i}")
+            if not os.path.isfile(f'dist/{i}'):
+                shutil.copytree(f"{self.local}/{i}", f"{self.local}/dist/{i}")
 
         if os.name == 'posix':
             if platform.machine() == 'x86_64' and os.path.exists(f'{self.local}/dist/bin/Linux/aarch64'):
