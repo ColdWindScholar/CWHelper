@@ -42,6 +42,8 @@ def get_flow(sn):
     else:
         print(f"SN号: {sn} 没有已用流量")
     print("----------------------------------")
+    return None
+
 
 def get_vendor(sn):
     response = requests.get(f"{url_3}?sn={sn}")
@@ -54,6 +56,8 @@ def get_vendor(sn):
     print("办卡时间:", json_data['data']['createDate'])
     print("更新时间:", json_data['data']['updateDate'])
     print("----------------------------------")
+    return None
+
 
 def get_wifi_info(sn):
     response = requests.get(f"{url_4}?sn={sn}")
@@ -63,6 +67,8 @@ def get_wifi_info(sn):
         return 1
     print(f"WiFi 名称: {json_data['data']['wifiName']}\nWiFi 密码: {json_data['data']['wifiPwd']}")
     print("----------------------------------")
+    return None
+
 
 def get_all(sn):
     if get_status(sn):
@@ -75,6 +81,8 @@ def get_all(sn):
         return 1
     if get_wifi_info(sn):
         return 1
+    return None
+
 
 def main():
     print("\033[32m本软件可通过API进行查询聚火公司产品SN,但API是具有时效性的,若被修复则该工具无法正常使用。\033[0m")

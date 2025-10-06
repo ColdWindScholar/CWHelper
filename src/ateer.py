@@ -7,7 +7,8 @@ def find_at_port():
         desc = f'{port.device} {port.description}'.lower()
         if 'at' in desc:
             return port.device
-        return
+        return None
+    return None
 
 
 def ateer(at_command, show_send: bool = False, show_response: bool = False, timeout: int = 2):
