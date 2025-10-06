@@ -210,6 +210,14 @@ class Main:
             call(['curl', f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS"])
             input("\033[32m\033[1m\n操作已完成，回车返回\033[0m")
 
+    def is_readonly_to_flash(self) -> bool:
+        ret, adb_output = call(["adb", "shell", "touch", "/sbin/test"], out=1, return_output=True)
+        for i in adb_output:
+            if "Read" in i:
+                input("\033[31m\033[1m您的设备系统只读,请尝试编程器\033[0m\n回车继续")
+                return False
+        return True
+
     def ufi_nv_set(self):
         intype = self.get_nv_value("zcgmi")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
@@ -274,11 +282,8 @@ class Main:
             print("\033[34m\033[1m挂载读写...\033[0m")
             call(["adb", "shell", "mount", "-o", "remount,rw", "/"])
             print("\033[34m\033[1m检查文件系统...\033[0m")
-            ret, adb_output = call(["adb", "shell", "touch", "/sbin/test"], out=1, return_output=True)
-            for i in adb_output:
-                if "Read" in i:
-                    input("\033[31m\033[1m您的设备系统只读,请尝试编程器\033[0m\n回车继续")
-                    return 1
+            if not self.is_readonly_to_flash():
+                return 1
             print("\033[32m\033[1m已挂载根目录为可读写，正在停止厂家服务...\033[0m")
             call(['adb', 'shell', 'killall', 'fota_Update'])
             call(['adb', 'shell', 'killall', 'fota_upi'])
@@ -432,11 +437,8 @@ class Main:
             print("\033[34m\033[1m挂载读写...\033[0m")
             call(["adb', 'shell", "mount", "-o", "remount,rw", "/"])
             print("\033[34m\033[1m检查文件系统...\033[0m")
-            ret, adb_output = call(["adb", "shell", "touch", "/sbin/test"], out=1, return_output=True)
-            for i in adb_output:
-                if "Read" in i:
-                    input("\033[31m\033[1m您的设备系统只读,请尝试编程器\033[0m\n回车继续")
-                    return 1
+            if self.is_readonly_to_flash():
+                return 1
             print("\n\n")
             print("\033[31m\033[1m使用须知:")
             print("目前该版本软件仅适用于格行GX009自带线快充充电宝\033[0mSN为XFWP25开头的设备")
