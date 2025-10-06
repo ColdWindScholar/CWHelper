@@ -3,8 +3,9 @@ from .fillend import fill
 from .utils import call
 import json
 
-def main():
-    file_path = "MTDs/"
+def main(file_path = None):
+    if file_path is None:
+        file_path = "MTDs/"
     if not os.path.exists(file_path + "/partitions.json") and not os.path.exists(file_path + "/mtd0"):
         print("无法识别工程文件夹，请检查：", file_path)
         return 1

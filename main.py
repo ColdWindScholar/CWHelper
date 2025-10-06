@@ -920,10 +920,16 @@ class Main:
                 name = f.read()
             move("MTDs", "z." + name.replace(" ", "."))
         elif choice == "2":
-            mtdrepk()
-            mtdjoin()
+            project_name = input("输入项目名称:")
+            if not project_name:
+                return 1
+            mtdrepk(project_name)
+            mtdjoin(project_name)
         elif choice == "3":
-            mtdjoin()
+            project_name = input("输入项目名称:")
+            if not project_name:
+                return 1
+            mtdjoin(project_name)
         elif choice == "4":
             return 1
         input("回车继续")
