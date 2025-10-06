@@ -1,5 +1,5 @@
 file_path = "MTDs/"
-from utils import call
+from .utils import call
 import json
 from jefferson.jffs2 import extract_jffs2
 from pathlib import Path
