@@ -1,6 +1,0 @@
-OpenZxicEditor（原名 ZXIC-RomKit）
-项目地址(Project address)：https://github.com/exp-3/OpenZxicEditor
-使用协议(protocol)：GNU AGPLv3
-
-本工具箱中使用的是一个已做细微修改的旧版本（删除了 curl.exe 以避免上传用户数据）
-根据 AGPLv3 协议，相关源代码可通过官方仓库获取
