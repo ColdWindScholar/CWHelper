@@ -36,10 +36,10 @@ def repack(mtd, type, erase, size):
               filter_, '-Xdict-size', dict_size])
         print("已打包squashfs分区：", mtd)
     elif type == "jffs2":
-        _, output = call(['mkfs.jffs2', '-d', mtd + "_unpacked", '-o', mtd + "_new", '-X', 'lzo', '--pagesize=0x1000',
+        ret, output = call(['mkfs.jffs2', '-d', mtd + "_unpacked", '-o', mtd + "_new", '-X', 'lzo', '--pagesize=0x1000',
                           f'--eraseblock={erase}', '-l', '-n', '-q', '-v'], out=1, return_output=True)
-        if error_data := [i for i in output if "error" in i]:
-            print("错误：打包jffs2分区", mtd, "时似乎出现了一些问题\n", "\n".join(error_data))
+        if ret:
+            print("错误：打包jffs2分区", mtd, "时似乎出现了一些问题\n", "\n".join(output))
         print("已打包jffs2分区：", mtd)
     else:
         print("已跳过", type, "分区：", mtd)
