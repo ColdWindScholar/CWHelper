@@ -209,13 +209,6 @@ class Main:
             sleep(5)
             call(['curl', f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS"])
             input("\033[32m\033[1m\n操作已完成，回车返回\033[0m")
-        elif "About_stealing" == "stealing":
-            A = "俺承认Remo这段代码偷窃自Ufitool"
-            B = "我忍受不了每月那几次的使用机会了"
-            C = "希望苏哥能原谅我吧,望谅解"
-            D = "偷窃行为确实不文明,这样子做我心里也很不安"
-            E = "总之希望苏哥能原谅我,看到这段代码就联系我吧"
-            print("Test,remo adbd By ufitool")
 
     def ufi_nv_set(self):
         intype = self.get_nv_value("zcgmi")
