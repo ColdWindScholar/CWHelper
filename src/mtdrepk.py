@@ -65,8 +65,8 @@ def main():
     with open(file_path + "/partitions.json", 'r', encoding='utf-8') as f:
         partitions = json.load(f)
     for partition in partitions:
-        target_file = file_path + partition["file"]+"_unpacked"
-        if os.path.isdir(target_file):
+        target_file = file_path + partition["file"]
+        if os.path.isdir(target_file+"_unpacked"):
             repack(target_file, partition['fst'], partition["ebs"], partition['size'])
         else:
             print("已跳过分区：", target_file, "，未找到解包文件夹")
