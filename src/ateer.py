@@ -25,7 +25,7 @@ def ateer(at_command, show_send: bool = False, show_response: bool = False, time
             response = ser.read(1024).decode(errors='ignore')
             if show_response:
                 if show_send:
-                    print(f'➡️ 发送指令：{at_command}')
+                    print(f'发送指令：{at_command}')
                 print('返回：', response.strip())
     except Exception as e:
         print(f'串口通信失败：{e}')

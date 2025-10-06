@@ -13,6 +13,7 @@ def main(input_file):
         f.seek(partition_table_offset)
         if f.read(len(partition_table_magic)) != partition_table_magic:
             print("Partition table magic mismatch")
+            return 1
         f.seek(partition_table_offset)
         f.read(24 + 8)
         i = 0
@@ -61,6 +62,8 @@ def main(input_file):
         if "." in name:
             name = os.path.splitext(name)[0]
         f.write(name)
+        return None
+
 
 if __name__ == "__main__":
     main(input("File path:"))

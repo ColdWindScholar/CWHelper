@@ -1,11 +1,14 @@
 import os
 import subprocess
 import platform as plat
+
 elocal = os.getcwd()
 platform = plat.machine()
 ostype = plat.system()
 binner = elocal + "/bin"
 ebinner = binner + "/" + ostype + "/" + platform + "/"
+
+
 def call(exe, extra_path=True, out=0, return_output=False):
     out_put_ = []
     if isinstance(exe, list):

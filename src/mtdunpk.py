@@ -3,6 +3,8 @@ from .utils import call
 import json
 from jefferson.jffs2 import extract_jffs2
 from pathlib import Path
+
+
 def unpack(mtd, type_, image_name):
     print("=====================================")
     if type_ == "squashfs":
@@ -24,4 +26,3 @@ def main():
     for part in partitions:
         target_file = f"{file_path}/{part['file']}"
         unpack(target_file, part['fst'], part['file'])
-
