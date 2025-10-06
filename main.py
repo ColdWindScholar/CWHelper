@@ -29,7 +29,6 @@ def md5_for_large_file(file_path, chunk_size=1024 * 1024):
     md5 = hashlib.md5()
     with open(file_path, 'rb') as f:
         while True:
-            # 读取下一个块
             data = f.read(chunk_size)
             if not data:
                 break
@@ -103,7 +102,6 @@ class Main:
         print(" 小部分机器是mtd4:'imagefs'")
         print("  本工具箱目前仅支持mtd4:'rootfs'的机器")
         print("   后期可能考虑添加mtd5机器支持")
-        print()
         return input("回车以继续")
 
     def install_drive(self):
@@ -150,7 +148,6 @@ class Main:
             call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2"])
             call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1"])
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1"])
-            print()
             call(['curl',
                   f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password=coolfish666@Qiruizhilian20241202"])
             call(['curl',
@@ -416,10 +413,9 @@ class Main:
                 if state == "offline":
                     print("\033[33m检测到设备状态为 offline。\033[0m")
                     choice = input('\033[36m\033[1m是否唤醒设备的 ADB？(y/n):\033[0m')
-                    if choice == 'y':
+                    if choice in ['y', "Y"]:
                         wake_adb()
-                        new_state = get_adb_state()
-                        if new_state == 'device':
+                        if get_adb_state() == 'device':
                             print("\033[32m\033[1m设备已成功上线，ADB 正常。\033[0m")
                             check_system_rw()
                         else:
@@ -430,7 +426,6 @@ class Main:
                     return
                 print(f"\033[33m未知设备状态:{state}\033[0m")
                 input("回车以继续。")
-
             main()
         elif selection == '4':
             self.is_adb_device_connected()
