@@ -60,7 +60,7 @@ def main():
     file_path = "MTDs/"
     if not os.path.exists(file_path + "/partitions.json"):
         print("无法识别工程文件夹，请检查：", file_path)
-        exit()
+        return 1
     print("开始打包...")
     with open(file_path + "/partitions.json", 'r', encoding='utf-8') as f:
         partitions = json.load(f)
