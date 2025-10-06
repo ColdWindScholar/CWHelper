@@ -5,8 +5,6 @@ from .utils import call
 import json
 
 
-
-
 def repack(mtd, type, erase, size):
     if os.path.exists(mtd + "_new"):
         os.remove(mtd + "_new")
@@ -37,7 +35,7 @@ def repack(mtd, type, erase, size):
         print("已打包squashfs分区：", mtd)
     elif type == "jffs2":
         ret, output = call(['mkfs.jffs2', '-d', mtd + "_unpacked", '-o', mtd + "_new", '-X', 'lzo', '--pagesize=0x1000',
-                          f'--eraseblock={erase}', '-l', '-n', '-q', '-v'], out=1, return_output=True)
+                            f'--eraseblock={erase}', '-l', '-n', '-q', '-v'], out=1, return_output=True)
         if ret:
             print("错误：打包jffs2分区", mtd, "时似乎出现了一些问题\n", "\n".join(output))
         print("已打包jffs2分区：", mtd)
@@ -57,7 +55,7 @@ def repack(mtd, type, erase, size):
             fill(mtd + "_new", size)
 
 
-def main(file_path = None):
+def main(file_path=None):
     if file_path is None:
         file_path = "MTDs/"
     if not os.path.exists(file_path + "/partitions.json"):
@@ -67,8 +65,8 @@ def main(file_path = None):
     with open(file_path + "/partitions.json", 'r', encoding='utf-8') as f:
         partitions = json.load(f)
     for partition in partitions:
-        target_file = file_path + "/" +partition["file"]
-        if os.path.isdir(target_file+"_unpacked"):
+        target_file = file_path + "/" + partition["file"]
+        if os.path.isdir(target_file + "_unpacked"):
             repack(target_file, partition['fst'], partition["ebs"], partition['size'])
         else:
             print("已跳过分区：", target_file, "，未找到解包文件夹")
