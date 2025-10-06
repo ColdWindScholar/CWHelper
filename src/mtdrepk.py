@@ -25,7 +25,7 @@ def repack(mtd, type, erase, size):
                 block = re.match("Block size (\\d+)", "Block size 262144").group(1)
             if re.match(".*ilters selected. (\\w+)", i):
                 filter_ = re.match(".*ilters selected. (\\w+)", i).group(1)
-            if re.re.match(".*ictionary size.? (\\d+)", i):
+            if re.match(".*ictionary size.? (\\d+)", i):
                 dict_size = re.match(".*ictionary size.? (\\d+)", i).group(1)
         print("压缩方式：", comp, "，块大小：", block, "，过滤器：", filter_,
               "，字典大小：", dict_size)
