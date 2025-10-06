@@ -156,14 +156,9 @@ class Main:
             call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2"])
             call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1"])
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1"])
-            call(['curl',
-                  f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password=coolfish666@Qiruizhilian20241202"])
-            call(['curl',
-                  f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password=xscmadmin888@Qiruizhilian20241202"])
-            call(['curl',
-                  f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password=MM888@Qiruizhilian20241202"])
-            call(['curl',
-                  f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password=159258@Qiruizhilian20241202"])
+            for user in ["coolfish666", "xscmadmin888", "MM888", "159258"]:
+                call(['curl',
+                  f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202"])
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE"])
