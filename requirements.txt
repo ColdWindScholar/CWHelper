@@ -2,3 +2,4 @@ pyserial
 jefferson
 requests
 pillow
+pyinstaller
