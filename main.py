@@ -954,31 +954,26 @@ class Main:
                 "\033[33m         1.串口工具         2.云小帆助手      3.1869工具      4.西瓜味asr工具(最终)   5.Orz0000工具(鸡蛋姐)\033[0m")
             print("\033[33m         6.zxic设置WIFI     7.流量失踪器      \033[4;35m8.紫光专区入口\033[0m  \033[31m9.退出工具\033[0m")
             choice = input("\033[32m请输入并按Enter键: \033[0m")
-            if choice == "A":
-                self.zmtd_extract()
-            elif choice == "B":
-                call(["file/dongle_fun/dongle_fun.bat"], extra_path=False)
-            elif choice == "C":
-                self.zmtd_brusquel()
-            elif choice == "D":
-                self.mtd_check()
-                input("回车继续")
-            elif choice == "E":
-                self.xr_web()
-            elif choice == "F":
-                self.ufi_nv_set()
+            choices = {
+                "A":self.zmtd_extract,
+                "B":lambda : call(["file/dongle_fun/dongle_fun.bat"], extra_path=False),
+                "C":self.zmtd_brusquel,
+                "D":self.mtd_check,
+                "E":self.xr_web,
+                "F":self.ufi_nv_set,
+                "H": self.mifi_studio,
+                "01":self.machine_material,
+                "02":self.set_adb,
+                "03":self.install_drive,
+                "8":self.uisoc,
+                "6":self.set_wifi
+            }
+            if choice in choices:
+                choices[choice]()
             elif choice == "G":
                 while True:
                     if self.mtd_tools() == 1:
                         break
-            elif choice == "H":
-                self.mifi_studio()
-            elif choice == "01":
-                self.machine_material()
-            elif choice == "02":
-                self.set_adb()
-            elif choice == "03":
-                self.install_drive()
             elif choice == "04":
                 print("            \033[33m输入\033[31mE\033[0m\033[33m即可退出\033[0m")
                 print("          检测连接的设备――adb devices                 设备终端――adb shell")
@@ -999,17 +994,14 @@ class Main:
                 call(["file/tool/Watermelon-ASR_Tools.exe"], extra_path=False)
             elif choice == "5":
                 call(["file/tool/UFITOOL_MTD4.exe"], extra_path=False)
-            elif choice == "6":
-                self.set_wifi()
             elif choice == "7":
                 call(["explorer", "https://net.arsn.cn/"], extra_path=False)
-            elif choice == "8":
-                self.uisoc()
             elif choice == "EXIT" or choice == '9':
                 print("\033[31m退出工具箱\033[0m")
                 break
             else:
-                input("\033[31m无效的选项，请重试。\033[0m\n回车以继续")
+                print("\033[31m无效的选项，请重试。\033[0m")
+            input("回车以继续")
 
 
 if __name__ == '__main__':
