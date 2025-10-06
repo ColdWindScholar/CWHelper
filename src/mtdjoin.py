@@ -7,6 +7,7 @@ def main():
     file_path = "MTDs/"
     if not os.path.exists(file_path + "/partitions.json") and not os.path.exists(file_path + "/mtd0"):
         print("无法识别工程文件夹，请检查：", file_path)
+        return
     file_out = file_path + "/full_new.bin"
     if os.path.exists(file_path + "/partitions.json"):
         print("检测到新版mtd集合格式")
