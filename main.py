@@ -1,21 +1,22 @@
-#hello
-#!/bin/env python3
+# hello
+# !/bin/env python3
 import hashlib
+import io
 import os
+import re
 import shutil
 import sys
 import time
+from shutil import move
+from time import sleep
+
+from src.ateer import ateer
+from src.mtdcut import main as mtdcut
+from src.mtdjoin import main as mtdjoin
+from src.mtdrepk import main as mtdrepk
+from src.mtdunpk import main as mtdunpk
 from src.sn_search import main as sn_search
 from src.utils import call, ebinner
-from src.ateer import ateer
-import re
-import io
-from time import sleep
-from shutil import move
-from src.mtdcut import main as mtdcut
-from src.mtdrepk import main as mtdrepk
-from src.mtdjoin import main as mtdjoin
-from src.mtdunpk import main as mtdunpk
 
 if os.name == 'nt':
     import ctypes
@@ -155,7 +156,7 @@ class Main:
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1"])
             for user in ["coolfish666", "xscmadmin888", "MM888", "159258"]:
                 call(['curl',
-                  f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202"])
+                      f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202"])
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE"])
@@ -339,8 +340,10 @@ class Main:
             def handle_readonly():
                 print("\033[32m\033[1m系统为只读，正在执行只读系统的专属代码...\033[0m")
                 print("\033[33m\033[1m正在优化设备nv配置...\033[0m")
-                for nv_set in ["dm_enable=0", "mqtt_enable=0", "tc_enable=0", "tc_downlink=", "tc_uplink=", "fota_updateMode=0", "fota_version_delta_id=",
-                               "fota_version_delta_url=","fota_version_name=","fota_upgrade_result_internal=","fl_autoswitchsim=0","alk_sim_select=0","path_sh=/etc_rw/sbin"]:
+                for nv_set in ["dm_enable=0", "mqtt_enable=0", "tc_enable=0", "tc_downlink=", "tc_uplink=",
+                               "fota_updateMode=0", "fota_version_delta_id=",
+                               "fota_version_delta_url=", "fota_version_name=", "fota_upgrade_result_internal=",
+                               "fl_autoswitchsim=0", "alk_sim_select=0", "path_sh=/etc_rw/sbin"]:
                     call(['adb', 'shell', 'nv', 'set', nv_set])
                 call(['adb', 'shell', 'nv', 'save'])
                 print("\033[32m\033[1mnv编辑器：参数已保存\033[0m")
@@ -439,7 +442,7 @@ class Main:
             call(["adb", "shell", "rm", "-rf", "-r", "/etc_ro/mmi"])
             call(["adb", "shell", "rm", "-r", "-rf", "/sbin/tc_tbf.sh"])
             call(["adb", "shell", "rm", "-rf", "/sbin/start_update_app.sh"])
-            print("\033[31m设备内核已被删除，请不要关机设备\033[0m\n"*3)
+            print("\033[31m设备内核已被删除，请不要关机设备\033[0m\n" * 3)
             print("\033[32m正在安装新内核文件与补丁...\033[0m")
             call(["adb", "push", "file/gx009/zte_mifi", "/sbin/zte_mifi"])
             call(["adb", "push", "file/gx009/goahead", "/bin/goahead"])
@@ -955,7 +958,7 @@ class Main:
                 call(["cmd", "/c", "start", "cmd", "/k", f"cd {ebinner}"], extra_path=False)
             elif choice == "05":
                 if os.name == "nt":
-                    call(["cmd","/c",'devmgmt.msc'], extra_path=False)
+                    call(["cmd", "/c", 'devmgmt.msc'], extra_path=False)
                 else:
                     input("This operation only able on Windows.")
             elif choice == "1":
