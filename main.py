@@ -401,10 +401,8 @@ class Main:
                 print("\033[33m正在检测设备系统是否为只读...\033[0m")
                 is_readonly = is_system_readonly()
                 print("\033[32m\033[1m检测结果：系统为", "只读" if is_readonly else "可读写", "。\033[0m")
-                if is_readonly:
-                    handle_readonly()
-                else:
-                    handle_rw()
+                handle_readonly() if is_readonly else handle_rw()
+
 
             def main():
                 state = get_adb_state()
