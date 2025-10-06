@@ -190,13 +190,11 @@ class Main:
             print("\033[31m\033[1m\n\n警告:该方式来源于Remo内部人员\033[34m\033[1m")
             print(
                 "\033[31m\033[1m\n\n仅适用于第四代机型以前的版本(即24年6月之前),其他版本估计会遇到错误\033[34m\033[1m")
-            print()
             print("\033[32m\033[1m\n正在向系统发送请求.....\033[0m\033[34m\033[1m")
             print("\033[34m\033[1m")
             call(
                 ['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx"])
             call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=YWRtaW4%3D"])
-            print("\033[32m\033[1m\n检测到阻止,正在绕过.....\033[0m\033[34m\033[1m")
             call(['curl',
                   f"http://{ip_address}/reqproc/proc_post?goformId=REMO_SIM_SELECT_R1865&isTest=false&sim_option_id=3&select_sim_mode=1"])
             call(
