@@ -387,7 +387,6 @@ class Main:
                     input("\033[31m未检测到任何设备，请先开启 ADB 或连接设备。\033[0m\n回车以继续。")
                 if state == "device":
                     print("\033[32m\033[1m设备已连接。\033[0m")
-                    print()
                     check_system_rw()
                     input("回车以继续。")
                 if state == "offline":
