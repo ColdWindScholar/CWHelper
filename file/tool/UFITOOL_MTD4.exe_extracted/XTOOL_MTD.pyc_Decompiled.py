@@ -1,20 +1,17 @@
-# Decompiled with PyLingual (https://pylingual.io)
-# Internal filename: XTOOL_MTD.py
-# Bytecode version: 3.11a7e (3495)
-# Source timestamp: 1970-01-01 00:00:00 UTC (0)
 
-import os
 import base64
+import os
 import subprocess
-import time
 import sys
+
 import requests
 import serial
-import threading
-from serial.tools import list_ports
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton, QTextEdit, QMessageBox, QInputDialog, QComboBox, QSizePolicy, QLabel, QLineEdit, QDialog, QFileDialog, QDialogButtonBox
-from PyQt5.QtGui import QIcon, QFont, QTextCursor, QTextBlockFormat
 from PyQt5.QtCore import Qt, QProcess, QThread, pyqtSignal, QTimer
+from PyQt5.QtGui import QIcon, QFont, QTextCursor, QTextBlockFormat
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton, \
+    QTextEdit, QMessageBox, QInputDialog, QComboBox, QSizePolicy, QLabel, QLineEdit, QDialog, QFileDialog
+from serial.tools import list_ports
+
 
 class AdbCommandThread(QThread):
     output_signal = pyqtSignal(str)
@@ -511,7 +508,6 @@ class ADToolWindow(QWidget):
                 self.adb_process.waitForBytesWritten()
                 self.entry.clear()
                 self.output_text.ensureCursorVisible()
-                print("oooo")
 
     def remount_rw(self):
         self.execute_adb_command('adb shell mount -o remount,rw /')
