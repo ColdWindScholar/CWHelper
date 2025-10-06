@@ -14,6 +14,7 @@ def main(input_file):
         if f.read(len(partition_table_magic)) != partition_table_magic:
             print("Partition table magic mismatch")
         f.seek(partition_table_offset)
+        f.read(24 + 8)
         i = 0
         while True:
             part_data = f.read(40)
