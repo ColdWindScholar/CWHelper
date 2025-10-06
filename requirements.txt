@@ -3,3 +3,4 @@ jefferson
 requests
 pillow
 pyinstaller
+sv_ttk

@@ -55,6 +55,7 @@ class Main:
         print("\033[33m\033[1m设备状态：\033[0m",
               "\033[32m\033[1m已连接\033[0m" if has_device else "\033[31m\033[1m无设备\033[0m",
               "\033[32m(\033[0m\033[31m\033[1m离线\033[0m\033[32m)\033[0m" if is_offline else "")
+        return has_device, is_offline
 
     def get_nv_value(self, param) -> str:
         ret, adb_output = call(["adb", "shell", "nv", "get", param], return_output=True, out=1)
