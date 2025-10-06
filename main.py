@@ -212,7 +212,6 @@ class Main:
 
     def ufi_nv_set(self):
         intype = self.get_nv_value("zcgmi")
-        fota_platform = self.get_nv_value("fota_platform")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         if intype.strip():
             print(f"\033[33m\033[1m设备类型: \033[34m{intype}]\033[0m")
@@ -515,20 +514,20 @@ class Main:
             call(["explorer", "file\\tool\\spd_dump"], extra_path=False)
         elif choice111 == "5":
             print("\033[31m\033[1m警告!请先连接设备WIFI或网络,否则程序卡死[滑稽笑]\033[0m")
-            ipAddress = input("\033[32m设备WEB地址(例如 192.168.100.1):\033[31m\033[1m")
-            call(['explorer', f"http://{ipAddress}//postesim?postesim=%7B%22esim%22:0%7D"], extra_path=False)
+            ip_address = input("\033[32m设备WEB地址(例如 192.168.100.1):\033[31m\033[1m")
+            call(['explorer', f"http://{ip_address}//postesim?postesim=%7B%22esim%22:0%7D"], extra_path=False)
 
-    def mifi_Studio(self):
+    def mifi_studio(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print(
             "\033[32m\033[1m使用小贴士:\033[0m\033[32m 1.本工具是直接运行MIFI之家的ZXIC-RomKit进行提取,该工具在助手3.0时就已经有了")
         print("\033[31m提取完成后,您提取的内容会在ZXIC-RomKit根目录以'Z.'开头的文件夹内\033[0m")
         print("\033[1m请选择要进行的操作：")
         print("\033[36m\033[1m                      1.打开工具           2.打开提取目录          3.返回\033[0m")
-        user_Studio_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m")
-        if user_Studio_selection == "1":
+        user_studio_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m")
+        if user_studio_selection == "1":
             call(['explorer', "file\\ZXIC-RomKit\\_ADB一键提取固件.bat"], extra_path=False)
-        elif user_Studio_selection == "2":
+        elif user_studio_selection == "2":
             call(['explorer', "file\\ZXIC-RomKit"], extra_path=False)
 
     def set_wifi(self):
@@ -574,7 +573,6 @@ class Main:
                 print('\033[32m\033[1m该机器为可写文件系统,支持文件上传(可能是jffs2)\033[0m')
                 print(f"\033[36m\033[1m{self.split_mark}\033[0m")
                 return 0
-            return 0
 
         def file():
             file_path = input("\033[33m请将文件夹拖入此窗口，然后按回车键:\033[0m")
@@ -585,11 +583,11 @@ class Main:
                 return None
             return file_path
 
-        def backupWebFolder(temp_backup_path):
+        def backup_web_folder(temp_backup_path):
             print("\033[32m正在备份设备后台WEB文件夹...\033[0m")
             return call(["adb", "pull", "/etc_ro/web", temp_backup_path])
 
-        def moveBackupFolder(temp_backup_path, backup_dir):
+        def move_backup_folder(temp_backup_path, backup_dir):
             folder_name = input("\033[33m请输入备份文件夹的名称:\033[31m")
             print("\033[34m")
             try:
@@ -600,17 +598,17 @@ class Main:
                 print(f"\033[32m备份完成，文件已保存到:{backup_dir + "/" + folder_name}\033[0m")
             print("\033[0m")
 
-        def Backup_web():
+        def backup_web():
             script_dir = self.local_dir
             temp_backup_path = script_dir + "/web_backup"
             backup_dir = script_dir + "/TQ"
             user_input = input("\033[33m\033[1m是否备份设备原后台? (y/n)\033[0m")
             if user_input in ["y", "Y"]:
-                backup_result = backupWebFolder(temp_backup_path)
+                backup_result = backup_web_folder(temp_backup_path)
                 if backup_result:
                     print("\033[31m备份失败，请检查设备连接及权限。\033[0m")
                 else:
-                    moveBackupFolder(temp_backup_path, backup_dir)
+                    move_backup_folder(temp_backup_path, backup_dir)
             else:
                 print("\033[34m已跳过备份操作\033[0m")
             print(f"\033[36m\033[1m{self.split_mark}\033[0m")
@@ -628,7 +626,7 @@ class Main:
         call(["adb", "shell", "mount", "-o", "remount,rw", "/"])
         if check_file():
             return
-        Backup_web()
+        backup_web()
         up_web()
         input("回车继续")
 
@@ -690,6 +688,7 @@ class Main:
             for i in output:
                 if i:
                     return i
+            return None
 
         def compare_md5(local_md5, device_md5):
             if local_md5.lower() != device_md5.lower():
@@ -768,6 +767,7 @@ class Main:
         write_flash_script()
         final_confirmation()
         execute_flash()
+        return None
 
     def zmtd_extract(self):
         script_dir = self.local_dir
@@ -979,7 +979,7 @@ class Main:
                     if self.mtd_tools() == 1:
                         break
             elif choice == "H":
-                self.mifi_Studio()
+                self.mifi_studio()
             elif choice == "01":
                 self.machine_material()
             elif choice == "02":
