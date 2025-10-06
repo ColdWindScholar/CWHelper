@@ -25,4 +25,3 @@ def main():
         target_file = f"{file_path}/{part['file']}"
         unpack(target_file, part['fst'], part['file'])
 
-main()
