@@ -91,7 +91,6 @@ class Main:
     def mtd_check(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print("以下为您的设备MTD挂载状态")
-        print()
         ret, adb_output = call(["adb", "shell", "cat", "/proc/mtd"], return_output=True, out=1)
         if ret:
             input("查询失败，回车继续")
