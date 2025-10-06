@@ -503,7 +503,6 @@ class Main:
 
     def uisoc(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
-        print("\n")
         print("\033[33m      1.查询聚火SN\033[0m")
         print("\033[34m      2.修改设备参数\033[0m")
         print("\033[36m      3.ResearchDownload\033[0m")
