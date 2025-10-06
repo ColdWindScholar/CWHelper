@@ -1,3 +1,4 @@
 pyserial
 jefferson
 requests
+pillow
