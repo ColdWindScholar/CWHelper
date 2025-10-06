@@ -7,7 +7,6 @@ def find_at_port():
         desc = f'{port.device} {port.description}'.lower()
         if 'at' in desc:
             return port.device
-        return None
     return None
 
 
