@@ -8,7 +8,8 @@ import json
 
 
 def repack(mtd, type, erase, size):
-    os.remove(mtd + "_new")
+    if os.path.exists(mtd + "_new"):
+        os.remove(mtd + "_new")
     print("=====================================")
     if type == "squashfs":
         print("获取原文件参数信息：")
