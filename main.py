@@ -682,9 +682,6 @@ class Main:
             shutil.copyfile(src_path, "mtd.bin")
             return "mtd.bin"
 
-        def get_local_md5(file):
-            return md5_for_large_file(file)
-
         def adb_push(local_file, device_file):
             return call(["adb", "push", local_file, device_file])
 
@@ -760,7 +757,7 @@ class Main:
             return 1
         user_path = input("\033[33m请将要写入的文件拖入此窗口后按回车：\033[0m")
         copy_to_workdir(user_path)
-        local_md5 = get_local_md5("mtd.bin")
+        local_md5 = md5_for_large_file("mtd.bin")
         adb_push("mtd.bin", "/tmp/mtd4.bin")
         device_md5 = get_device_md5("/tmp/mtd4.bin")
         if compare_md5(local_md5, device_md5):
