@@ -537,16 +537,16 @@ class Main:
             "\033[31m使用须知:\033[34m\033[1m目前版本暂不支持给您的路由器设置WiFi密码,只支持修改您的WiFi名称,支持中文")
         print("         支持小部分表情符号与大部分中文字符。如果遇到WiFi消失、WiFi无法连接等问题,请长按恢复出厂按钮。")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
-        YOUR_IP = input("\033[32m设备WEB地址(例如 192.168.100.1):\033[31m\033[1m")
-        print(f"\033[34m\033[1m请先在电脑上登录设备后台: http://{YOUR_IP}/\033[0m")
-        YOUR_SSID = input("\033[32m请输入你的 SSID:\033[31m\033[1m")
+        your_ip = input("\033[32m设备WEB地址(例如 192.168.100.1):\033[31m\033[1m")
+        print(f"\033[34m\033[1m请先在电脑上登录设备后台: http://{your_ip}/\033[0m")
+        your_ssid = input("\033[32m请输入你的 SSID:\033[31m\033[1m")
         print("\033[0m")
-        MAX_Access = input("\033[32m最大接入设备数:\033[31m\033[1m")
+        max_access = input("\033[32m最大接入设备数:\033[31m\033[1m")
         print("\033[0m")
-        DATA = f"goformId=SET_WIFI_SSID1_SETTINGS&ssid={YOUR_SSID}&broadcastSsidEnabled=0&MAX_Access_num={MAX_Access}&security_mode=OPEN&cipher=2&NoForwarding=0&show_qrcode_flag=0&security_shared_mode=NONE"
+        data = f"goformId=SET_WIFI_SSID1_SETTINGS&ssid={your_ssid}&broadcastSsidEnabled=0&MAX_Access_num={max_access}&security_mode=OPEN&cipher=2&NoForwarding=0&show_qrcode_flag=0&security_shared_mode=NONE"
 
         def requ(type_):
-            call(["curl", "-s", "-X", "POST", "-d", DATA, f"http://{YOUR_IP}/{type_}"])
+            call(["curl", "-s", "-X", "POST", "-d", data, f"http://{your_ip}/{type_}"])
 
         types = ['goform/goform_set_cmd_process', 'reqproc/proc_post']
         for t in types:
@@ -590,14 +590,14 @@ class Main:
             return call(["adb", "pull", "/etc_ro/web", temp_backup_path])
 
         def moveBackupFolder(temp_backup_path, backup_dir):
-            folderName = input("\033[33m请输入备份文件夹的名称:\033[31m")
+            folder_name = input("\033[33m请输入备份文件夹的名称:\033[31m")
             print("\033[34m")
             try:
-                move(temp_backup_path, backup_dir + "/" + folderName)
+                move(temp_backup_path, backup_dir + "/" + folder_name)
             except Exception as e:
                 print(f"\033[31m移动文件失败，请检查权限。{e}\033[0m")
             else:
-                print(f"\033[32m备份完成，文件已保存到:{backup_dir + "/" + folderName}\033[0m")
+                print(f"\033[32m备份完成，文件已保存到:{backup_dir + "/" + folder_name}\033[0m")
             print("\033[0m")
 
         def Backup_web():
