@@ -92,7 +92,10 @@ class Main:
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print("以下为您的设备MTD挂载状态")
         print()
-        _, adb_output = call(["adb", "shell", "cat", "/proc/mtd"], return_output=True, out=1)
+        ret, adb_output = call(["adb", "shell", "cat", "/proc/mtd"], return_output=True, out=1)
+        if ret:
+            input("查询失败，回车继续")
+            return 2
         for i in adb_output:
             print(i)
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
