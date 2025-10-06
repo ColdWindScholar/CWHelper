@@ -1,0 +1,73 @@
+name: "Build Tool"
+permissions:
+  contents: write
+  discussions: write
+on:
+  push:
+    paths:
+      - "bin/version.ini"
+  workflow_dispatch:
+jobs:
+  build:
+    needs: [build-win]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ["3.12.6"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+      - name: Generate Release Body
+        run: |
+            set ver $(cat bin\version.ini | findstr version).Split()[2]
+            echo "Build times: ${{ github.run_number }}" >> body.md
+            echo "Version: $ver" >> body.md && echo Ok
+            echo "Changelog:"  >> body.md
+            echo '```' >> body.md
+            git log -1 --pretty=%B $(git rev-parse HEAD) >> body.md
+            echo '```' >> body.md
+            echo $ver > version.txt && echo Ok
+      - name: Read version.txt
+        id: version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./version.txt
+          trim: true
+      - name: Rename Tool
+        run: |
+          cd CWHelper-win
+          move ./CWHelper-win.zip ../CWHelper-${{ steps.version.outputs.content }}-win.zip
+          cd ..
+      - name: Upload release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          removeArtifacts: true
+          name: "CWHelper-${{ steps.version.outputs.content }}"
+          tag: "CI_BUILD_${{ github.run_number }}"
+          bodyFile: "body.md"
+          artifacts: "*.zip"
+
+  build-win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12.6
+        uses: actions/setup-python@v5
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.12.6'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x86'
+      # You can test your matrix by printing the current Python version
+      - name: Update pip
+        run:  python -m pip install -U --force-reinstall pip
+      - name: Pack tool
+        run: python build.py
+      - name: Upload Win Build
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CWHelper-win
+          path: './CWHelper-win.zip'
