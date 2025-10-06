@@ -911,7 +911,7 @@ class Main:
         choice = input("\033[32m请输入并按Enter键: \033[0m")
         if choice == "1":
             file_path = input("\033[33m请输入文件地址并按Enter键: \033[0m")
-            if not os.path.exists(file_path):
+            if not os.path.exists(file_path) or not os.path.isfile(file_path):
                 input("\033[33m文件不存在！\033[0m")
                 return 0
             mtdcut(file_path)
