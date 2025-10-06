@@ -62,7 +62,6 @@ class Builder:
 
     def pyinstaller_build(self):
         import PyInstaller.__main__
-        dndplat = self.dndplat
         if self.ostype == 'Darwin':
             PyInstaller.__main__.run([
                 'main.py',
