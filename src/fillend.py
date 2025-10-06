@@ -5,8 +5,7 @@ def fill(file_path, desired_size, fill_char = None):
         fill_char = b'\xff'
     if not os.path.exists(file_path):
         open(file_path, 'w').close()
-    current_size = os.path.getsize(file_path)
-    bytes_to_fill = desired_size - current_size
+    bytes_to_fill = desired_size - os.path.getsize(file_path)
     if bytes_to_fill > 0:
         with open(file_path, 'a+b') as file:
             file.seek(0, 2)
