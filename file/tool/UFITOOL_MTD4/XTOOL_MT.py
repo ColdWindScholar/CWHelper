@@ -1,4 +1,3 @@
-
 import base64
 import os
 import subprocess
@@ -25,23 +24,25 @@ class AdbCommandThread(QThread):
         for command in self.commands:
             command_with_adb = f'\"{self.adb_path}\" {command}'
             try:
-                process = subprocess.Popen(command_with_adb, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                process = subprocess.Popen(command_with_adb, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                           creationflags=subprocess.CREATE_NO_WINDOW)
                 stdout, stderr = process.communicate()
                 result = f'Executed adb command: {command}\n'
                 if stdout:
-                    result +=  f'Output:\n{stdout.strip()}\n'
+                    result += f'Output:\n{stdout.strip()}\n'
                 if stderr:
                     result += f'Error:\n{stderr.strip()}\n'
-                result +=  f'Return code: {process.returncode}\n'
+                result += f'Return code: {process.returncode}\n'
             except Exception as e:
                 result = f'Exception occurred while executing command: {command}\nException: {str(e)}'
             self.output_signal.emit(result)
+
 
 class ADBTool(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('UFI_TOOL by Orz0000')
-        self.script_directory:str = str(getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__))))
+        self.script_directory: str = str(getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__))))
         self.set_window_icon()
         self.init_ui()
 
@@ -64,8 +65,11 @@ class ADBTool(QMainWindow):
         self.device_status_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         device_layout.addWidget(self.device_status_label)
         layout.addLayout(device_layout)
-        button_names = ['开启ADB', '检测ADB', '通用优化', '18优化', '18改川', 'web后台', '备份mtd分区', '备份系统文件', '重启设备', 'AT工具', 'ADB shell']
-        button_commands = [self.show_input_dialog, self.refresh_device_status, self.execute_stop_commands, self.execute_tasks, self.send_imei, self.execute_web_command, self.execute_mtd_commands, self.pull_directories, self.execute_reboot_operations, self.open_at_tool, self.open_ad_tool]
+        button_names = ['开启ADB', '检测ADB', '通用优化', '18优化', '18改川', 'web后台', '备份mtd分区', '备份系统文件',
+                        '重启设备', 'AT工具', 'ADB shell']
+        button_commands = [self.show_input_dialog, self.refresh_device_status, self.execute_stop_commands,
+                           self.execute_tasks, self.send_imei, self.execute_web_command, self.execute_mtd_commands,
+                           self.pull_directories, self.execute_reboot_operations, self.open_at_tool, self.open_ad_tool]
         for button_text, command_func in zip(button_names, button_commands):
             button = QPushButton(button_text)
             button.clicked.connect(command_func)
@@ -84,7 +88,8 @@ class ADBTool(QMainWindow):
         self.feedback_text.append(output)
 
     def execute_weby_command(self):
-        commands = ['shell mount -o remount,rw /', f"push \"{os.path.join(self.script_directory, 'a.js')}\" /etc_ro/web/js/"]
+        commands = ['shell mount -o remount,rw /',
+                    f"push \"{os.path.join(self.script_directory, 'a.js')}\" /etc_ro/web/js/"]
         self.execute_adb_commands(commands)
         self.thread.output_signal.connect(self.verify_js_push)
 
@@ -99,7 +104,8 @@ class ADBTool(QMainWindow):
         remote_index_path = '/etc_ro/web/index.html'
         pull_command = f'pull {remote_index_path} \"{local_index_path}\"'
         self.execute_adb_commands([pull_command])
-        self.thread.output_signal.connect(lambda output: self.modify_and_push_index_html(output, local_index_path, remote_index_path))
+        self.thread.output_signal.connect(
+            lambda output: self.modify_and_push_index_html(output, local_index_path, remote_index_path))
 
     def modify_and_push_index_html(self, output, local_index_path, remote_index_path):
         if 'Return code: 0' in output:
@@ -107,7 +113,7 @@ class ADBTool(QMainWindow):
             with open(local_index_path, 'r', encoding='utf-8') as file:
                 content = file.read()
             index = content.rfind('</body>')
-            if index!= (-1):
+            if index != (-1):
                 modified_content = content[:index] + '<script src=\"js/a.js\"></script>' + content[index:]
                 with open(local_index_path, 'w', encoding='utf-8') as file:
                     file.write(modified_content)
@@ -160,7 +166,8 @@ class ADBTool(QMainWindow):
         adb_path = os.path.join(self.script_directory, 'adb.exe')
         command_with_adb = f"\"{adb_path}\" {' '.join(commands)}"
         try:
-            process = subprocess.Popen(command_with_adb, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
+            process = subprocess.Popen(command_with_adb, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                       creationflags=subprocess.CREATE_NO_WINDOW)
             stdout, stderr = process.communicate()
             result = {'stdout': stdout.strip(), 'stderr': stderr.strip(), 'returncode': process.returncode}
         except Exception as e:
@@ -176,7 +183,9 @@ class ADBTool(QMainWindow):
                 QMessageBox.warning(self, '警告', '请输入有效的后台地址！')
 
     def start_crawler(self, address):
-        urls = [f'http://{address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2/', f'http://{address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1/', f'http://{address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1']
+        urls = [f'http://{address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2/',
+                f'http://{address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1/',
+                f'http://{address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1']
         timeout_seconds = 1
         for url in urls:
             try:
@@ -191,7 +200,16 @@ class ADBTool(QMainWindow):
                 self.feedback_text.append(f'请求过程中出现错误：\n{e}\n使用地址：\n{url}\n')
 
     def execute_stop_commands(self):
-        commands = ['shell mount -o remount,rw /', 'shell nv set mqtt_host=127.0.0.1', 'shell nv set fota_updateMode=0', 'shell nv set os_url=http://127.0.0.1', 'shell nv set lpa_trigger_host=127.0.0.1', 'shell nv set safecare_hostname=http://127.0.0.1', 'shell nv set safecare_mobsite=http://127.0.0.1', 'shell nv set band_select_enable=1', 'shell nv set dns_manual_func_enable=1', 'shell nv set tr069_func_enable=1', 'shell nv set ussd_enable=1', 'shell nv set terminal_mgmt_enable=0', 'shell nv set nofast_port=', 'shell nv set HOST_FIELD=\'Host: 127.0.0.1\'', 'shell nv set TM_SERVER_NAME=127.0.0.1', 'shell nv set remo_switch_mode=0', 'shell rm /bin/terminal_mgmt', 'shell rm /bin/iccid_check', 'shell rm /sbin/ip_ratelimit.sh', 'shell rm /sbin/tc_tbf.sh', 'shell rm /mnt/userdata/etc_rw/nv/main/ro', 'shell rm /mnt/userdata/etc_rw/nv/backup/ro']
+        commands = ['shell mount -o remount,rw /', 'shell nv set mqtt_host=127.0.0.1', 'shell nv set fota_updateMode=0',
+                    'shell nv set os_url=http://127.0.0.1', 'shell nv set lpa_trigger_host=127.0.0.1',
+                    'shell nv set safecare_hostname=http://127.0.0.1', 'shell nv set safecare_mobsite=http://127.0.0.1',
+                    'shell nv set band_select_enable=1', 'shell nv set dns_manual_func_enable=1',
+                    'shell nv set tr069_func_enable=1', 'shell nv set ussd_enable=1',
+                    'shell nv set terminal_mgmt_enable=0', 'shell nv set nofast_port=',
+                    'shell nv set HOST_FIELD=\'Host: 127.0.0.1\'', 'shell nv set TM_SERVER_NAME=127.0.0.1',
+                    'shell nv set remo_switch_mode=0', 'shell rm /bin/terminal_mgmt', 'shell rm /bin/iccid_check',
+                    'shell rm /sbin/ip_ratelimit.sh', 'shell rm /sbin/tc_tbf.sh',
+                    'shell rm /mnt/userdata/etc_rw/nv/main/ro', 'shell rm /mnt/userdata/etc_rw/nv/backup/ro']
         self.execute_adb_commands(commands)
 
     def send_requests(self, url_base, password):
@@ -250,10 +268,12 @@ class ADBTool(QMainWindow):
                 if imei_response.status_code == 200:
                     self.feedback_text.append(f'发送IMEI成功: {send_imei_url}\n响应: {imei_response.text}\n')
                 else:  # inserted
-                    self.feedback_text.append(f'发送IMEI失败, 状态码: {imei_response.status_code}\n响应: {imei_response.text}\n')
+                    self.feedback_text.append(
+                        f'发送IMEI失败, 状态码: {imei_response.status_code}\n响应: {imei_response.text}\n')
                 reboot_response = requests.get(reboot_url, timeout=1)
             else:  # inserted
-                self.feedback_text.append(f'登录失败, 状态码: {login_response.status_code}\n响应: {login_response.text}\n')
+                self.feedback_text.append(
+                    f'登录失败, 状态码: {login_response.status_code}\n响应: {login_response.text}\n')
         except requests.RequestException as e:
             pass
         QMessageBox.information(self, '完成', '执行完毕，重启后请在后台查看。')
@@ -282,11 +302,13 @@ class ADBTool(QMainWindow):
                 sourcefolder = '/etc_ro/web.zip'
                 source_folder_ = '/etc_ro/'
                 if operation == 'Backup':
-                    commands = ['shell mount -o remount,rw /', f'pull {source_folder} {directory_path}', f'pull {sourcefolder} {directory_path}']
+                    commands = ['shell mount -o remount,rw /', f'pull {source_folder} {directory_path}',
+                                f'pull {sourcefolder} {directory_path}']
                     self.execute_adb_commands(commands)
                 else:  # inserted
                     if operation == 'Loading':
-                        commands = ['shell mount -o remount,rw /', f'shell rm -rf {source_folder}', f'push {directory_path} {source_folder_}']
+                        commands = ['shell mount -o remount,rw /', f'shell rm -rf {source_folder}',
+                                    f'push {directory_path} {source_folder_}']
                         self.execute_adb_commands(commands)
             else:  # inserted
                 self.feedback_text.append('用户取消了操作\n')
@@ -337,9 +359,11 @@ class ADBTool(QMainWindow):
         self.at_tool_window.show()
 
     def open_ad_tool(self):
-        QMessageBox.information(self, '注意事项', '刷分区请自备编程器。\n\n每次进入shell执行器只可执行一次刷写。\n第二次刷写不生效甚至死机。\n\n每次开机建议刷写一次，重刷建议重启后再去操作。')
+        QMessageBox.information(self, '注意事项',
+                                '刷分区请自备编程器。\n\n每次进入shell执行器只可执行一次刷写。\n第二次刷写不生效甚至死机。\n\n每次开机建议刷写一次，重刷建议重启后再去操作。')
         self.ad_tool_window = ADToolWindow(self.script_directory)
         self.ad_tool_window.show()
+
 
 class ADToolWindow(QWidget):
     append_text_signal = pyqtSignal(str)
@@ -400,7 +424,8 @@ class ADToolWindow(QWidget):
 
     def scan_adb_devices(self):
         try:
-            result = subprocess.run(['adb', 'devices'], capture_output=True, text=True, check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+            result = subprocess.run(['adb', 'devices'], capture_output=True, text=True, check=True,
+                                    creationflags=subprocess.CREATE_NO_WINDOW)
             devices = []
             for line in result.stdout.splitlines():
                 if '\tdevice' in line:
@@ -430,7 +455,8 @@ class ADToolWindow(QWidget):
 
     def execute_adb_command(self, command):
         try:
-            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True,
+                                       creationflags=subprocess.CREATE_NO_WINDOW)
             stdout, stderr = process.communicate()
             self.append_text_signal.emit(f'Executed adb command: {command}\n')
         except Exception as e:
@@ -479,7 +505,8 @@ class ADToolWindow(QWidget):
 
     def check_flash_process(self):
         try:
-            process = subprocess.Popen(['adb', 'shell', 'cd /tmp && ./screen -ls'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
+            process = subprocess.Popen(['adb', 'shell', 'cd /tmp && ./screen -ls'], stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
             stdout, stderr = process.communicate()
             if 'No Sockets found' in stdout:
                 self.execute_shell_command('reboot')
@@ -518,6 +545,7 @@ class ADToolWindow(QWidget):
         if self.adb_process:
             self.adb_process.terminate()
         event.accept()
+
 
 class ATToolWindow(QWidget):
     def __init__(self, script_directory):
@@ -625,7 +653,7 @@ class ATToolWindow(QWidget):
                 else:  # inserted
                     self.output_text.append(f'无法打开串口 {selected_port}\n')
         except serial.SerialException as e:
-                self.output_text.append(f'串口 {selected_port} 打开失败: {e}\n')
+            self.output_text.append(f'串口 {selected_port} 打开失败: {e}\n')
         self.output_text.setReadOnly(True)
 
     def set_factory_mode(self, mode):
@@ -658,6 +686,7 @@ class ATToolWindow(QWidget):
             self.send_at_command(f'AT*MRD_SN=,{imei}')
             self.output_text.append(f'已发送命令: {imei}\n')
 
+
 class CommandDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -687,10 +716,14 @@ class CommandDialog(QDialog):
                 self.directory_path = QFileDialog.getExistingDirectory(self, '选择web地址')
             else:  # inserted
                 options = QFileDialog.Options()
-                self.directory_path, _ = QFileDialog.getOpenFileName(self, '选择web地址', '', '压缩文件 (*.zip *.tar *.gz *.tgz);;所有文件 (*)', options=options)
+                self.directory_path, _ = QFileDialog.getOpenFileName(self, '选择web地址', '',
+                                                                     '压缩文件 (*.zip *.tar *.gz *.tgz);;所有文件 (*)',
+                                                                     options=options)
             if self.directory_path:
                 self.operation = 'Loading'
                 self.accept()
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_window = ADBTool()
