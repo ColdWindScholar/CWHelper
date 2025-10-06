@@ -955,7 +955,7 @@ class Main:
                 call(["cmd", "/c", "start", "cmd", "/k", f"cd {ebinner}"], extra_path=False)
             elif choice == "05":
                 if os.name == "nt":
-                    call(['devmgmt.msc'], extra_path=False)
+                    call(["cmd","/c",'devmgmt.msc'], extra_path=False)
                 else:
                     input("This operation only able on Windows.")
             elif choice == "1":
