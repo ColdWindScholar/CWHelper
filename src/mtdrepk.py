@@ -53,6 +53,7 @@ def repack(mtd, type_, erase, size):
         if new_size < size:
             print("填充空字节：", size - new_size)
             fill(mtd + "_new", size)
+    return None
 
 
 def main(file_path=None):
@@ -72,3 +73,4 @@ def main(file_path=None):
             print("已跳过分区：", target_file, "，未找到解包文件夹")
     print("=====================================")
     print("打包完成")
+    return None
