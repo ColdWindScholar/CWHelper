@@ -558,8 +558,8 @@ class Main:
 
         def check_file():
             print("\033[34m]\033[1m搜寻设备...\033[0m")
-            _, devices_output = call(["adb", "devices"], out=1, return_output=True)
-            if not [i for i in devices_output if i.find("\tdevice") != -1]:
+
+            if not self.check_adb_status() == (True, False):
                 input("\033[31m当前无设备连接\033[0m\n回车继续")
                 return 1
             _, output = call(["adb", "shell", "touch", "/etc_ro/web/test_file"], out=1, return_output=True)
