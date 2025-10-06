@@ -328,10 +328,6 @@ class Main:
                         return i.strip()
                 return None
 
-            def wake_adb():
-                print("尝试唤醒设备 ADB...")
-                ateer("at+shell=adbd")
-
             def is_system_readonly():
                 call(['adb', "shell", "mount", "-o", "remount,rw", "/"])
                 ret_code, output = call(['adb', "shell", "touch /sbin/test"], out=1, return_output=True)
@@ -375,11 +371,8 @@ class Main:
                       "echo 'copyright = Software by: &copy; ColdWindScholar Revise' >> /etc_ro/web/i18n/Messages_en.properties"])
                 call(['adb', 'shell', "echo 'nv set cr_version=ALK-Punguin_P049U-20250813 &' >> /etc/rc"])
                 print("\033[33m正在修改设备文件\033[0m")
-                call(['adb', 'shell', 'rm', '-rf', 'bin/iccid_check'])
-                call(['adb', 'shell', 'rm', '-rf', 'bin/mqtt_client'])
-                call(['adb', 'shell', 'rm', '-rf', 'bin/vsim'])
-                call(['adb', 'shell', 'rm', '-rf', 'bin/rmc'])
-                call(['adb', 'shell', 'rm', '-rf', '/sbin/fl_set_iptables.sh'])
+                for file in ['bin/iccid_check', 'bin/mqtt_client', 'bin/vsim', 'bin/rmc', '/sbin/fl_set_iptables.sh']:
+                    call(['adb', 'shell', 'rm', '-rf', file])
                 input("\033[31m修改完成，操作已固化，设备可以恢复出厂\033[0m\n回车以继续")
 
             def check_system_rw():
@@ -402,7 +395,8 @@ class Main:
                     print("\033[33m检测到设备状态为 offline。\033[0m")
                     choice = input('\033[36m\033[1m是否唤醒设备的 ADB？(y/n):\033[0m')
                     if choice in ['y', "Y"]:
-                        wake_adb()
+                        print("尝试唤醒设备 ADB...")
+                        ateer("at+shell=adbd")
                         if get_adb_state() == 'device':
                             print("\033[32m\033[1m设备已成功上线，ADB 正常。\033[0m")
                             check_system_rw()
