@@ -14,7 +14,8 @@ def main():
         print("=====================================")
         with open(file_path + "/partitions.json", "r", encoding="utf-8") as f:
             partition_data = json.load(f)
-        os.remove(file_out)
+        if os.path.exists(file_out):
+            os.remove(file_out)
         file_out_io = open(file_out, "wb")
         for part in partition_data:
             src = file_path + "/" + part['file'] + "_new"
