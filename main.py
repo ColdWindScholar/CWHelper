@@ -623,6 +623,7 @@ class Main:
                 return 1
             call(["adb", "push", folder_path, "/etc_ro/web"])
             print("\033[32m上传完成,设备web已替换!\033[0m")
+            return None
 
         call(["adb", "shell", "mount", "-o", "remount,rw", "/"])
         if check_file():
