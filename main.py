@@ -325,6 +325,7 @@ class Main:
                 for i in out:
                     if i.strip():
                         return i.strip()
+                return None
 
             def wake_adb():
                 print("尝试唤醒设备 ADB...")
@@ -491,6 +492,7 @@ class Main:
             call(["adb", "shell", "reboot"])
             print("\033[32m\033[1m完成,请等待设备开机\033[0m")
             input("回车以继续")
+        return None
 
     def uisoc(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
@@ -546,8 +548,8 @@ class Main:
         def requ(type_):
             call(["curl", "-s", "-X", "POST", "-d", DATA, f"http://{YOUR_IP}/{type_}"])
 
-        TYPES = ['goform/goform_set_cmd_process', 'reqproc/proc_post']
-        for t in TYPES:
+        types = ['goform/goform_set_cmd_process', 'reqproc/proc_post']
+        for t in types:
             requ(t)
         print("\033[32m如果此时WiFi断开代表设置成功")
         print("否则失败")
@@ -557,8 +559,8 @@ class Main:
 
         def check_file():
             print("\033[34m]\033[1m搜寻设备...\033[0m")
-            _, devicesOutput = call(["adb", "devices"], out=1, return_output=True)
-            if not [i for i in devicesOutput if i.find("\tdevice") != -1]:
+            _, devices_output = call(["adb", "devices"], out=1, return_output=True)
+            if not [i for i in devices_output if i.find("\tdevice") != -1]:
                 input("\033[31m当前无设备连接\033[0m\n回车继续")
                 return 1
             _, output = call(["adb", "shell", "touch", "/etc_ro/web/test_file"], out=1, return_output=True)
@@ -583,43 +585,43 @@ class Main:
                 return None
             return file_path
 
-        def backupWebFolder(tempBackupPath):
+        def backupWebFolder(temp_backup_path):
             print("\033[32m正在备份设备后台WEB文件夹...\033[0m")
-            return call(["adb", "pull", "/etc_ro/web", tempBackupPath])
+            return call(["adb", "pull", "/etc_ro/web", temp_backup_path])
 
-        def moveBackupFolder(tempBackupPath, backupDir):
+        def moveBackupFolder(temp_backup_path, backup_dir):
             folderName = input("\033[33m请输入备份文件夹的名称:\033[31m")
             print("\033[34m")
             try:
-                move(tempBackupPath, backupDir + "/" + folderName)
+                move(temp_backup_path, backup_dir + "/" + folderName)
             except Exception as e:
                 print(f"\033[31m移动文件失败，请检查权限。{e}\033[0m")
             else:
-                print(f"\033[32m备份完成，文件已保存到:{backupDir + "/" + folderName}\033[0m")
+                print(f"\033[32m备份完成，文件已保存到:{backup_dir + "/" + folderName}\033[0m")
             print("\033[0m")
 
         def Backup_web():
-            scriptDir = self.local_dir
-            tempBackupPath = scriptDir + "/web_backup"
-            backupDir = scriptDir + "/TQ"
-            userInput = input("\033[33m\033[1m是否备份设备原后台? (y/n)\033[0m")
-            if userInput in ["y", "Y"]:
-                backupResult = backupWebFolder(tempBackupPath)
-                if backupResult:
+            script_dir = self.local_dir
+            temp_backup_path = script_dir + "/web_backup"
+            backup_dir = script_dir + "/TQ"
+            user_input = input("\033[33m\033[1m是否备份设备原后台? (y/n)\033[0m")
+            if user_input in ["y", "Y"]:
+                backup_result = backupWebFolder(temp_backup_path)
+                if backup_result:
                     print("\033[31m备份失败，请检查设备连接及权限。\033[0m")
                 else:
-                    moveBackupFolder(tempBackupPath, backupDir)
+                    moveBackupFolder(temp_backup_path, backup_dir)
             else:
                 print("\033[34m已跳过备份操作\033[0m")
             print(f"\033[36m\033[1m{self.split_mark}\033[0m")
 
         def up_web():
             call(['adb', "shell", "rm", "-rf", "/etc_ro/web"])
-            folderPath = file()
-            if not folderPath:
+            folder_path = file()
+            if not folder_path:
                 print("\033[31m路径不合规\033[0m")
                 return 1
-            call(["adb", "push", folderPath, "/etc_ro/web"])
+            call(["adb", "push", folder_path, "/etc_ro/web"])
             print("\033[32m上传完成,设备web已替换!\033[0m")
 
         call(["adb", "shell", "mount", "-o", "remount,rw", "/"])
@@ -898,6 +900,7 @@ class Main:
                 f"\033[33m\033[1m信息上报服务器: {remo_info_server_url + "/" + remo_info_server_path or 'Unknown'}\033[0m")
         print("\033[36m-------------------------------------------------------------------------------------\033[0m")
         input("回车继续")
+        return None
 
     def mtd_tools(self):
         os.system("cls") if os.name == "nt" else os.system("clear")
@@ -929,6 +932,7 @@ class Main:
         elif choice == "4":
             return 1
         input("回车继续")
+        return None
 
     def print_menu(self):
         while True:
