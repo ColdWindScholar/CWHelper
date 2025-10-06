@@ -345,19 +345,9 @@ class Main:
             def handle_readonly():
                 print("\033[32m\033[1m系统为只读，正在执行只读系统的专属代码...\033[0m")
                 print("\033[33m\033[1m正在优化设备nv配置...\033[0m")
-                call(['adb', 'shell', 'nv', 'set', "dm_enable=0"])
-                call(['adb', 'shell', 'nv', 'set', "mqtt_enable=0"])
-                call(['adb', 'shell', 'nv', 'set', "tc_enable=0"])
-                call(['adb', 'shell', 'nv', 'set', "tc_downlink="])
-                call(['adb', 'shell', 'nv', 'set', "tc_uplink="])
-                call(['adb', 'shell', 'nv', 'set', "fota_updateMode=0"])
-                call(['adb', 'shell', 'nv', 'set', "fota_version_delta_id="])
-                call(['adb', 'shell', 'nv', 'set', "fota_version_delta_url="])
-                call(['adb', 'shell', 'nv', 'set', "fota_version_name="])
-                call(['adb', 'shell', 'nv', 'set', "fota_upgrade_result_internal="])
-                call(['adb', 'shell', 'nv', 'set', "fl_autoswitchsim=0"])
-                call(['adb', 'shell', 'nv', 'set', "alk_sim_select=0"])
-                call(['adb', 'shell', 'nv', 'set', "path_sh=/etc_rw/sbin"])
+                for nv_set in ["dm_enable=0", "mqtt_enable=0", "tc_enable=0", "tc_downlink=", "tc_uplink=", "fota_updateMode=0", "fota_version_delta_id=",
+                               "fota_version_delta_url=","fota_version_name=","fota_upgrade_result_internal=","fl_autoswitchsim=0","alk_sim_select=0","path_sh=/etc_rw/sbin"]:
+                    call(['adb', 'shell', 'nv', 'set', nv_set])
                 call(['adb', 'shell', 'nv', 'save'])
                 print("\033[32m\033[1mnv编辑器：参数已保存\033[0m")
                 call(['adb', 'shell', 'mkdir', '-p', "/etc_rw/sbin"])
