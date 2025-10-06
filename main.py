@@ -506,11 +506,11 @@ class Main:
             sn_search()
             input("回车继续")
         elif choice111 == "2":
-            call(["explorer", "file\\tool\\Pandora_R22.20.1701"], extra_path=False)
+            call(["explorer", "file/tool/Pandora_R22.20.1701"], extra_path=False)
         elif choice111 == "3":
-            call(["explorer", "file\\tool\\ResearchDownload"], extra_path=False)
+            call(["explorer", "file/tool/ResearchDownload"], extra_path=False)
         elif choice111 == "4":
-            call(["explorer", "file\\tool\\spd_dump"], extra_path=False)
+            call(["explorer", "file/tool/spd_dump"], extra_path=False)
         elif choice111 == "5":
             print("\033[31m\033[1m警告!请先连接设备WIFI或网络,否则程序卡死[滑稽笑]\033[0m")
             ip_address = input("\033[32m设备WEB地址(例如 192.168.100.1):\033[31m\033[1m")
@@ -525,9 +525,9 @@ class Main:
         print("\033[36m\033[1m                      1.打开工具           2.打开提取目录          3.返回\033[0m")
         user_studio_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m")
         if user_studio_selection == "1":
-            call(['explorer', "file\\ZXIC-RomKit\\_ADB一键提取固件.bat"], extra_path=False)
+            call(['explorer', "file/ZXIC-RomKit/_ADB一键提取固件.bat"], extra_path=False)
         elif user_studio_selection == "2":
-            call(['explorer', "file\\ZXIC-RomKit"], extra_path=False)
+            call(['explorer', "file/ZXIC-RomKit"], extra_path=False)
 
     def set_wifi(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
@@ -652,15 +652,15 @@ class Main:
             call(["adb", "shell", "mount", "-o", "remount,rw", "/"])
             print("\033[33m\033[1m传输文件(卡住就是不支持)...\033[0m")
             '''
-            --os.execute("bin\\adb push file\\at_web\\at_server /bin/at_server")
-		--os.execute("bin\\adb shell chmod +x ./bin/at_server")
-		--os.execute("bin\\adb push file\\at_web\\at_info.html /etc_ro/web/at_info.html")
-		--os.execute("bin\\adb push file\\at_web\\css\\at.css /etc_ro/web/css/at.css")
-		--os.execute("bin\\adb push file\\at_web\\js\\at.js /etc_ro/web/js/at.js")
+            --os.execute("bin/adb push file/at_web/at_server /bin/at_server")
+		--os.execute("bin/adb shell chmod +x ./bin/at_server")
+		--os.execute("bin/adb push file/at_web/at_info.html /etc_ro/web/at_info.html")
+		--os.execute("bin/adb push file/at_web/css/at.css /etc_ro/web/css/at.css")
+		--os.execute("bin/adb push file/at_web/js/at.js /etc_ro/web/js/at.js")
             '''
             print("\033[35m\033[1m设置自启动...\033[0m")
-            """--os.execute([[bin\\adb shell "echo 'at_server &' >> /sbin/rm_dev.sh"]])
-		--os.execute("start /min bin\\adb shell at_server &")"""
+            """--os.execute([[bin/adb shell "echo 'at_server &' >> /sbin/rm_dev.sh"]])
+		--os.execute("start /min bin/adb shell at_server &")"""
             print("\033[32m设置成功啦！！")
             ret, adb_output = call(['adb', "shell", "nv", "get", "lan_ipaddr"], out=1, return_output=True)
             for i in adb_output:
@@ -709,7 +709,7 @@ class Main:
             if choice == 'yes':
                 timestamp = time.strftime("%Y%m%d%H%M", time.localtime())
                 userprofile: str = os.getenv("USERPROFILE") if os.name == 'nt' else os.getenv("HOME")
-                backup_folder = os.path.join(userprofile, "Desktop\\MTD分区备份")
+                backup_folder = os.path.join(userprofile, "Desktop/MTD分区备份")
                 filename = f"MTD4备份{timestamp}.bin"
                 desktop_path = os.path.join(backup_folder, filename)
                 os.makedirs(backup_folder, exist_ok=True)
@@ -963,7 +963,7 @@ class Main:
             if choice == "A":
                 self.zmtd_extract()
             elif choice == "B":
-                call(["file\\dongle_fun\\dongle_fun.bat"], extra_path=False)
+                call(["file/dongle_fun/dongle_fun.bat"], extra_path=False)
             elif choice == "C":
                 self.zmtd_brusquel()
             elif choice == "D":
@@ -998,13 +998,13 @@ class Main:
             elif choice == "1":
                 call(["explorer.exe", "https://atmaster.netlify.app/#/"], extra_path=False)
             elif choice == "2":
-                call(["file\\tool\\YXF_TOOL.exe"], extra_path=False)
+                call(["file/tool/YXF_TOOL.exe"], extra_path=False)
             elif choice == "3":
-                call(["file\\tool\\ZTE_PATCH_1.1.exe"], extra_path=False)
+                call(["file/tool/ZTE_PATCH_1.1.exe"], extra_path=False)
             elif choice == "4":
-                call(["file\\tool\\Watermelon-ASR_Tools.exe"], extra_path=False)
+                call(["file/tool/Watermelon-ASR_Tools.exe"], extra_path=False)
             elif choice == "5":
-                call(["file\\tool\\UFITOOL_MTD4.exe"], extra_path=False)
+                call(["file/tool/UFITOOL_MTD4.exe"], extra_path=False)
             elif choice == "6":
                 self.set_wifi()
             elif choice == "7":
