@@ -552,7 +552,6 @@ class Main:
 
         def check_file():
             print("\033[34m]\033[1m搜寻设备...\033[0m")
-
             if not self.check_adb_status() == (True, False):
                 input("\033[31m当前无设备连接\033[0m\n回车继续")
                 return 1
@@ -716,10 +715,8 @@ class Main:
                 print("\033[33m 已选择无需备份，跳过备份步骤\033[0m")
 
         def upload_flash_files():
-            call(["adb", "shell", "killall", "-9", "zte_ufi"])
-            call(["adb", "shell", "killall", "-9", "zte_mifi"])
-            call(["adb", "shell", "killall", "-9", "zte_cpe"])
-            call(["adb", "shell", "killall", "-9", "goahead"])
+            for prog in ["zte_ufi", "zte_mifi", "zte_cpe", "goahead"]:
+                call(["adb", "shell", "killall", "-9", prog])
             adb_push('mtd.bin', '/tmp/mtd4.bin')
             call(["adb", "shell", "mkdir", "-p", "/mnt/userdata/temp/"])
 
