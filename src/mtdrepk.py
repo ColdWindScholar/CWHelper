@@ -5,11 +5,11 @@ from .utils import call
 import json
 
 
-def repack(mtd, type, erase, size):
+def repack(mtd, type_, erase, size):
     if os.path.exists(mtd + "_new"):
         os.remove(mtd + "_new")
     print("=====================================")
-    if type == "squashfs":
+    if type_ == "squashfs":
         print("获取原文件参数信息：")
         _, info = call(["unsquashfs", "-s", mtd], out=1, return_output=True)
         comp = 'xz'
@@ -33,14 +33,14 @@ def repack(mtd, type, erase, size):
               '-comp', comp, '-noappend', '-b', block, '-no-xattrs', '-always-use-fragments', '-all-root', '-Xbcj',
               filter_, '-Xdict-size', dict_size])
         print("已打包squashfs分区：", mtd)
-    elif type == "jffs2":
+    elif type_ == "jffs2":
         ret, output = call(['mkfs.jffs2', '-d', mtd + "_unpacked", '-o', mtd + "_new", '-X', 'lzo', '--pagesize=0x1000',
                             f'--eraseblock={erase}', '-l', '-n', '-q', '-v'], out=1, return_output=True)
         if ret:
             print("错误：打包jffs2分区", mtd, "时似乎出现了一些问题\n", "\n".join(output))
         print("已打包jffs2分区：", mtd)
     else:
-        print("已跳过", type, "分区：", mtd)
+        print("已跳过", type_, "分区：", mtd)
     if os.path.exists(mtd + "_new"):
         new_size = os.path.getsize(mtd + "_new")
         print("打包后大小", new_size, "，分区大小：", size)
