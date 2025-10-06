@@ -16,6 +16,7 @@ def main():
         with open(file_path + "/partitions.json", "r", encoding="utf-8") as f:
             partition_data = json.load(f)
         os.remove(file_out)
+        file_out_io = open(file_out, "wb")
         for part in partition_data:
             src = file_path + "/" + part['file'] + "_new"
             if not os.path.exists(src):
@@ -32,12 +33,12 @@ def main():
             else:
                 print("检测到严重错误：")
                 print("找不到分区", part['name'], "的相应文件，请检查")
-            if part['start'] % 1024 == 0:
-                seek = part['start'] / 1024
-                call(['dd', f'if="{src}"', f'of="{file_out}"', 'bs=1024', f'seek={seek}', 'conv=notrunc'])
-            else:
-                call(['dd', f'if="{src}"', f'of="{file_out}"', 'bs=1', f'seek={part["start"]}', 'conv=notrunc'])
+                return 1
+            with open(src, "rb") as f:
+                file_out_io.seek(part['start'])
+                file_out_io.write(f.read())
             print("已导入分区：", src)
+        file_out_io.close()
     else:
         file_out = file_path + "/merged-mtd.bin"
         print("检测到旧版mtd文件格式")
