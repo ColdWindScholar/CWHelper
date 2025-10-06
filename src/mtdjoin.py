@@ -65,6 +65,7 @@ def main(file_path = None):
             i += 1
         os.rename("tmp", file_out)
         os.remove("tmp")
+        tmp_file.close()
     print("=====================================")
     print("导入完成，\n文件位于：", file_out)
     return None
