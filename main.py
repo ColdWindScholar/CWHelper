@@ -65,9 +65,8 @@ class Main:
 
     def is_serial_port_connected(self) -> bool:
         for i in range(1, 257):
-            com_port = f"\\\\.\\COM{i}"
             try:
-                file = io.open(com_port)
+                file = io.open(rf"\\.\COM{i}")
             except (FileNotFoundError, PermissionError):
                 continue
             file.close()
