@@ -10,6 +10,7 @@ import time
 from shutil import move
 from time import sleep
 
+from calc_pwd import calc_pwd
 from src.ateer import ateer
 from src.mtdcut import main as mtdcut
 from src.mtdjoin import main as mtdjoin
@@ -491,18 +492,10 @@ class Main:
             ip_address = input("\033[32m设备WEB地址(例如 192.168.100.1):\033[31m\033[1m")
             call(['explorer', f"http://{ip_address}//postesim?postesim=%7B%22esim%22:0%7D"], extra_path=False)
 
-    def mifi_studio(self):
-        print(f"\033[36m\033[1m{self.split_mark}\033[0m")
-        print(
-            "\033[32m\033[1m使用小贴士:\033[0m\033[32m 1.本工具是直接运行MIFI之家的ZXIC-RomKit进行提取,该工具在助手3.0时就已经有了")
-        print("\033[31m提取完成后,您提取的内容会在ZXIC-RomKit根目录以'Z.'开头的文件夹内\033[0m")
-        print("\033[1m请选择要进行的操作：")
-        print("\033[36m\033[1m                      1.打开工具           2.打开提取目录          3.返回\033[0m")
-        user_studio_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m")
-        if user_studio_selection == "1":
-            call(['explorer', "file/ZXIC-RomKit/_ADB一键提取固件.bat"], extra_path=False)
-        elif user_studio_selection == "2":
-            call(['explorer', "file/ZXIC-RomKit"], extra_path=False)
+    def calc_switch_card_pwd(self):
+        imei_data = input("输入您IMEI后六位:")
+        result = calc_pwd(imei_data)
+        input(f"\033[33m您的切卡密码为:\033[0m\033[32m{result or "计算失败"}\033[0m\n回车继续")
 
     def set_wifi(self):
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
@@ -915,7 +908,7 @@ class Main:
             print(
                 "\033[36m\033[1m          =                                                                                            =\033[0m")
             print(
-                "\033[36m\033[1m          =\033[0m\033[33m    E.写入WEB         F.中兴微通杀完美去控     G.固件提取与解打包                           \033[0m\033[36m\033[1m=\033[0m")
+                "\033[36m\033[1m          =\033[0m\033[33m    E.写入WEB         F.中兴微通杀完美去控     G.固件提取与解打包     H.切卡密码计算        \033[0m\033[36m\033[1m=\033[0m")
             print(
                 "\033[36m\033[1m          =                                                                                            =\033[0m")
             print(
@@ -933,12 +926,12 @@ class Main:
                 "D": self.mtd_check,
                 "E": self.xr_web,
                 "F": self.ufi_nv_set,
-                "H": self.mifi_studio,
+                "H": self.calc_switch_card_pwd,
                 "01": self.machine_material,
                 "02": self.set_adb,
                 "03": self.install_drive,
                 "8": self.uisoc,
-                "6": self.set_wifi
+                "6": self.set_wifi,
             }
             if choice in choices:
                 choices[choice]()
