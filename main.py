@@ -10,7 +10,7 @@ import time
 from shutil import move
 from time import sleep
 
-from calc_pwd import calc_pwd
+from src.calc_pwd import calc_pwd
 from src.ateer import ateer
 from src.mtdcut import main as mtdcut
 from src.mtdjoin import main as mtdjoin
