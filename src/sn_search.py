@@ -53,8 +53,10 @@ def get_vendor(sn):
         return 1
     vendors = {0:"自动", 1:"移动", 2:"联通", 3:"电信"}
     print("网络选择:", vendors.get(json_data['data']['connectIsp'], "未知"))
-    print("办卡时间:", json_data['data']['createDate'])
-    print("更新时间:", json_data['data']['updateDate'])
+    if "createDate" in json_data['data']:
+        print("办卡时间:", json_data['data']['createDate'])
+    if "updateDate" in json_data['data']:
+        print("更新时间:", json_data['data']['updateDate'])
     print("----------------------------------")
     return None
 
