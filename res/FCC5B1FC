@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="header-meta" content="e5dl12XYVggihggafXWf0f2YSf2Xngd1">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="images/favicon.ico" />
+    <script src="js/libs/modernizr.custom.63662.js"></script>
+    <script>
+        pageName = "indexPage";
+    </script>
+</head>
+
+<body class="index">
+    <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+    <div id="tpl">
+        <div class="wrapper clearfix">
+            <header class="clearfix">
+                <div class="right-header">
+                    <div id="headerNav" class="nav-header">
+                        <ul class="navigation clearfix">
+                            <li class="downloadImg navigation">
+                                <a href="#">
+                                </a>
+                                <span class="tooltip-arrow"></span>
+                                <p class="tooltipImg"></p>
+                            </li>
+                            <li class="navigation alcatelLink hidden">
+                                <a></a>
+                            </li>
+                            <li class="navigation webChatLink hidden">
+                                <a class="webChatIcon"></a>
+                            </li>
+                            <li class="lng navigation y-lng">
+                                <a class="navigation" id="linkLanguages"></a>
+                                <div class="dropdown" id="languages">
+                                </div>
+                            </li>
+                            <li class="navigation">
+                                <a href="javascript:void(0)" class="btn_help">${ids_btn_help}</a>
+                            </li>
+                            <li class="navigation logged">
+                                <a href="javascript:void(0)" id="logout">${ids_btn_logout}</a>
+                            </li>
+                            <li class="navigation logouted">
+                                <a href="javascript:void(0)" id="login">${ids_login}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearCode hidden"></div>
+            </header>
+        </div>
+        <!-- ****************************
+        CONTENT MAIN 
+    **************************** -->
+        <div id="main" role="main" class="content clearfix">
+            <a class="moov4g hidden">
+                <div class="moov4g-normal clearfix">
+                    <!-- <div class="moov4g_log">
+                        <img src="images/4G.png">
+                    </div> -->
+                    <div class="moovlog" id="">
+                        <img src="images/logo.png">
+                    </div>
+                    <div class="moov4g_string" id="">
+                        MOOV PORTAIL 4G
+                    </div>
+                    <!-- <div class="moovlog" id="">
+                        <img src="images/logo.png">
+                    </div> -->
+                </div>
+            </a>
+            <a class="conStatus blue">
+                <div class="con-normal clearfix">
+                    <div class="single-wrap">
+                        <div class="single">
+                            <span class="glyphicon-single"></span>
+                            <span class="nw-type" id="spnWanNetworkType"></span>
+                            <span class="glyphicon-roaming hidden"></span>
+                            <span class="glyphicon-connected" id="glyghiconConnectStatus"></span>
+                        </div>
+                    </div>
+                    <div class="status-wrap" id="normalStatus">
+                        <p class="nw-name" id="spnWanNetworkName"></p>
+                        <p class="con-status" id="spnWanConnectState"></p>
+                    </div>
+                    <div class="status-wrap hidden" id="noService">
+                        <p class="nw-noservice">${ids_net_noService}</p>
+                    </div>
+                </div>
+                <p id="simCardStatus" class="simcard-status"></p>
+            </a>
+
+            <a class="connectDialModule blue hidden">
+                <div class="conMode">
+                    <span class="switch"></span>
+                </div>
+                <p class="spnWanConState"></p>
+            </a>
+
+            <a class="usages red">
+                <div class="glyphicon-wrap">
+                    <span class="glyphicon glyphicon-usages"></span>
+                </div>
+                <span class="glyphicon-class">${ids_menu_usage}</span>
+            </a>
+            <a class="logo">
+                <div class="logoa">
+                    <img src="images/logo.png" alt="LOGO">
+                </div>
+                <div class="differLanguagelogoa_ar hidden">
+                    <img src="images/logoen.png" alt="LOGO">
+                </div>
+                <div class="moovlogoa hidden">
+                    <img src="images/browser.png" alt="LOGO">
+                </div>
+            </a>
+            <a class="more orange">
+                <div class="glyphicon-wrap">
+                    <span class="glyphicon glyphicon-more"></span>
+                </div>
+                <span class="glyphicon-class">${ids_menu_more}</span>
+            </a>
+            <a class="sms pink">
+                <div class="glyphicon-wrap">
+                    <span class="glyphicon glyphicon-sms"></span>
+                    <span id="smsStatus"></span>
+                </div>
+                <span class="glyphicon-class">${ids_menu_sms}</span>
+            </a>
+            <a class="settings green">
+                <div class="glyphicon-wrap">
+                    <span class="glyphicon glyphicon-settings"></span>
+                </div>
+                <span class="glyphicon-class">${ids_menu_settings}</span>
+            </a>
+            <a class="sharing yellow">
+                <div class="glyphicon-wrap">
+                    <span class="glyphicon glyphicon-sharing"></span>
+                </div>
+                <span class="glyphicon-class">${ids_menu_sharing}</span>
+            </a>
+            <!-- <a class="phonebook scarlet">
+                <div class="glyphicon-wrap">
+                    <span class="glyphicon glyphicon-phoneBook"></span>
+                </div>
+                <span class="glyphicon-class">${ids_pb_phoneBook}</span>
+            </a> -->
+        </div>
+        <div class="helplineNumber hidden"><span></span></div>
+        <!-- end container -->
+        <!-- end main -->
+        <!-- ****************************
+        POPIN AUTH
+    **************************** -->
+        <div id="popinAuth" class="hidden">
+            <div class="cache"></div>
+            <div class="popin">
+                <span class="close">
+                    <img src="images/icon_close.png" alt="">
+                </span>
+                <!-- ****************************
+                Login
+            **************************** -->
+                <div class="login_wrap">
+                    <div id="login_form" name="login_form" class="">
+                        <div class="glyphicon-admin"></div>
+                        <div class="form-group">
+                            <p class="titlePass hidden"></p>
+                            <p class="loginUserName hidden">
+                                <span class="hidden"></span>
+                                <input type="text" name="f_username" id="f_username" class="hidden" />
+                            </p>
+                            <input type="password" id="f_password" name="f_password" class="ipt-login" maxlength="16">
+                            <div class="remenberUserpw hidden">
+                                <input type="checkbox" name="remenberUserAndPw"
+                                    id="remenberUserAndPw" />${ids_login_remenberPassword}
+                            </div>
+                        </div>
+                        <p class="alert error hidden">${ids_login_inputCurrPwd}</p>
+                        <div class="form-group">
+                            <input type="button" id="f_submit_login" data-type="submit" class="btnNormal btn-login"
+                                value="${ids_login}" />
+                        </div>
+                    </div>
+                </div>
+                <!-- ****************************
+                change username and password
+            **************************** -->
+                <div class="change_wrap hidden">
+                    <div class="form_change">
+                        <p>${ids_changePassword_Tips}</p>
+                        <input type="checkbox" name="usernamePass" />${ids_show_again}
+                    </div>
+                    <div class="form-group">
+                        <input type="button" id="f_submit_change" data-type="submit" class="btnNormal btn-login"
+                            value="${ids_btn_ok}" />
+                    </div>
+                </div>
+                <!-- ****************************
+                PIN
+            **************************** -->
+                <div class="pin_wrap hidden">
+                    <h2>${ids_sim_pinRequired}</h2>
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label for="pinCode" class="text">${ids_sim_pinCode:}</label>
+                            <input type="password" id="iptPinCode" name="iptPinCode" class="form-control"
+                                data-type="focus" maxlength="8" />
+                        </li>
+                        <li>
+                            <label class="text"></label>
+                            ${ids_sim_remainTime}:
+                            <span id="spnPinTime"></span>
+                        </li>
+                        <li id="IschkAutoPin">
+                            <label class="text"></label>
+                            <label class="lab">
+                                <input type="checkbox" name="chkAutoPin" id="chkAutoPin">${ids_sim_autoValidate}</label>
+                        </li>
+                    </ul>
+                    <p class="alert alert-error error hidden"></p>
+                    <div class="btn-wrap">
+                        <input type="button" id="btnPinApply" data-type="submit" class="btn btn-default"
+                            value="${ids_btn_ok}" />
+                    </div>
+                </div>
+                <!--end PIN-->
+                <!--****************************
+                PUK
+            **************************** -->
+                <div id="" class="puk_wrap hidden">
+                    <h2>${ids_sim_pukRequired}</h2>
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label for="pukCode" class="text">${ids_sim_pukCode:}</label>
+                            <input type="password" id="iptPukCode" name="iptPukCode" class="form-control"
+                                data-type="focus" maxlength="8" />
+                        </li>
+                        <li>
+                            <label class="text"></label>
+                            ${ids_sim_remainTime}:
+                            <span id="spnPukTime"></span>
+                        </li>
+                        <li>
+                            <label for="pukCode" class="text">${ids_sim_newPinCode:}</label>
+                            <input type="password" id="iptNewPin" name="iptNewPin" class="form-control" maxlength="8" />
+                        </li>
+                        <li>
+                            <label for="pukCode" class="text">${ids_sim_confirmPinCode:}</label>
+                            <input type="password" id="iptConPin" name="iptConPin" class="form-control" maxlength="8" />
+                        </li>
+                    </ul>
+                    <p class="alert alert-error error hidden"></p>
+                    <div class="btn-wrap">
+                        <input type="button" id="btnPukApply" data-type="submit" class="btn btn-default"
+                            value="${ids_btn_ok}" />
+                    </div>
+                </div>
+                <!--end PUK-->
+                <!-- ****************************
+                simlock tips lock
+            **************************** -->
+                <div class="simlockTips_wrap hidden">
+                    <div class="form_simlockTips">
+                        <p>${ids_locked_permanently}</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" id="f_submit_simlockTips" data-type="submit" class="btnNormal btn-login"
+                            value="${ids_btn_ok}" />
+                    </div>
+                </div>
+                <!-- ****************************
+                SIMLOCK
+            **************************** -->
+                <div id="" class="simlock_wrap hidden">
+                    <h2>${ids_sim_simLocked}</h2>
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label for="pukCode" id="labSimlockState" class="text">${ids_sim_simLockCode:}</label>
+                            <input type="password" id="iptSimlockCode" name="iptSimlockCode" class="form-control"
+                                data-type="focus" />
+                        </li>
+                        <li>
+                            <label class="text"></label>
+                            ${ids_sim_remainTime}:
+                            <span id="spnSimlockTime"></span>
+                        </li>
+                    </ul>
+                    <p class="alert alert-error error hidden"></p>
+                    <div class="btn-wrap">
+                        <input type="button" id="btnSimlockApply" data-type="submit" class="btn btn-default"
+                            value="${ids_btn_ok}" />
+                    </div>
+                </div>
+                <!--end SIMLOCK-->
+                <!--login time out  start-->
+                <div class="loginTimeout hidden">
+                    <p>${ids_loginTimeout}</p>
+                    <div>
+                        <input type="button" id="loginTimeoutBtn" value="${ids_btn_loginTimeout}" />
+                    </div>
+                </div>
+                <!--login time out-->
+                <!--other user login -->
+                <div class="otherUserLogin hidden">
+                    <p>${ids_login_otherLogin}</p>
+                </div>
+                <!--other user login end-->
+            </div>
+            <!-- ****************************
+            end pop
+        **************************** -->
+        </div>
+        <!-- ****************************
+        POPIN PUBLIC
+    **************************** -->
+        <div class="show">
+            <div id="mask"></div>
+            <div id="loading"></div>
+            <div id="popUpMask"></div>
+            <div id="popUpWrap"></div>
+            <div id="popUpBox">
+                <div id="popUpHead">
+                    <span id="popUpTitle"></span>
+                    <a href="javascript:void(0)" id="popUpClose" style="display: none"></a>
+                </div>
+                <div id="popUpMain">
+                    <div id="popUpContent"></div>
+                    <div id="popUpBtnWrap">
+                        <label id="okBtnWrap">
+                            <button type="button" class="btnNormal" id="btnPopUpOk">${ids_btn_ok}</button>
+                        </label>
+                        <label id="cancelBtnWrap">
+                            <button type="button" class="btnNormal" id="btnPopUpCancel">${ids_btn_cancel}</button>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ****************************
+        POPIN LNG - MOBILE
+    **************************** -->
+        <div id="popinLng" class="hidden">
+            <div class="cache"></div>
+            <div class="popinBkg"></div>
+            <div class="popin" id="popin_languages"></div>
+        </div>
+    </div>
+    <script src="js/libs/jquery-1.8.3.min.js"></script>
+    <script src="js/libs/jquery.touchSwipe.min.js"></script>
+    <script src="js/libs/jquery.easing.1.3.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/configAuto.js"></script>
+    <script src="js/configManual.js"></script>
+    <script src="js/configLink.js"></script>
+    <script src="js/json2.js"></script>
+    <script src="js/sdk.js"></script>
+    <script src="js/base.js"></script>
+    <script>
+        var sessionId = SDK.User.GetLoginState();
+        var language = SDK.System.GetLanguage();
+        var simInfo = SDK.SIM.GetSimStatus();
+        var autoPinStatus = SDK.SIM.GetAutoEnterPinState();
+        if (config.isCustomCss) {
+            document.write(unescape('%3Clink rel="stylesheet" href="css/style_custom.css"%3E'));
+        }
+        document.write(unescape('%3Cscript src="resource/res_' + language + '.res?' + Math.random() + '"%3E%3C/script%3E'))
+        if ($.inArray(language, config.sys_custom_language) != -1) {
+            try {
+                document.write(unescape('%3Cscript src="resource/res_' + language + '_custom.res?' + Math.random() + '"%3E%3C/script%3E'));
+            } catch (e) {
+            }
+        }
+        if ($.trim(config.isLogoLink) == '' || config.isLogoLink == 'None') {
+            $(".logo").attr("href", 'javascript:void(0)');
+        } else {
+            $(".logo").attr("href", config.isLogoLink).attr("target", "_blank");
+        }
+        if (config.SupportmoovLogo) {
+            $(".logoa").addClass("hidden");
+            $(".moovlogoa").removeClass("hidden");
+            $(".moov4g").removeClass("hidden");
+            $(".content").css({
+                "margin": "1% auto 1%"
+            });
+        }
+        if (config.SupportdifferLanguageLogo) {
+            if (language == "ar") {
+                $(".differLanguagelogoa_ar").removeClass("hidden");
+                $(".logoa").addClass("hidden");
+            }
+        }
+    </script>
+    <script>
+        $("#tpl").replaceTpl();
+        if ($.inArray(language, config.langChioce) != -1) {
+            $("html").attr("id", "ar");
+        }
+        if (config.isLoginTitlePassword.isActive) {
+            $(".titlePass").addClass("hidden");
+            $("#f_password").attr("placeholder", sys.getRes(config.isLoginTitlePassword.name));
+        }
+        if (config.SupportOpenNewPage) {
+            var open_newPage_local_state = SDK.System.getNewPageFlagSemaphore().flag_state;
+        }
+    </script>
+    <script src="js/header.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
