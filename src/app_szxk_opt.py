@@ -1,4 +1,8 @@
 import os
+from time import sleep
+
+from pefile import cache_adjust_FileAlignment
+
 from src.utils import call
 from src.utilities import edit_nv_line, file_modify, set_nv_configs
 if os.name == 'nt':
@@ -14,6 +18,7 @@ def devcon():
     return False
 
 def rmcheck():
+    global read_only
     while not devcon():
         input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
     print("忠信威路由安全卫士正在扫描恶意软件和漏洞")
@@ -33,6 +38,7 @@ def rmcheck():
         needfix = True
     elif [i for i in v3t if 'exit' in i]:
         needfix = True
+    is128M = False
     if needfix:
         read_only = False
         print("您的路由器似乎存在木马或漏洞，正在处理")
@@ -265,5 +271,166 @@ def rmcheck():
             print("\t● 修复系统漏洞")
             call(['adb', 'shell', 'mount', '-o', 'remount,rw', '/mnt/imagefs'])
             call(['adb', 'shell', "sed -i 's/update2.zte.com.cn/blocked.by.ufitool/g' /mnt/imagefs/nvrwall.bin"])
+            _, out = call(['adb', 'shell', 'nv', 'get', 'sn_boardnum'], out=1, extra_path=True)
+            if [i for i in out if i.strip("\r").strip("\n")]:
+                call(['adb', 'shell', 'mount', '-o', 'remount,rw', '/mnt/nvrofs'])
+                call(['adb', 'shell', "dd if=/dev/zero of=/mnt/nvrofs/nvroall.bin bs=1 count=20 seek=40 conv=notrunc"])
+            call(['adb', 'push', 'res/6FBEADFC', '/mnt/userdata/.uart'])
+            call(['adb', 'push', 'chmod','755', '/mnt/userdata/.uart'])
+            call(['adb', 'shell', "/mnt/userdata/.uart AT+TWRSFOTA=0"])
+            call(['adb', 'shell', "/mnt/userdata/.uart AT+TWOTAMODE="])
+            call(['adb', 'shell', "rm","/mnt/userdata/.uart"])
+            print("\t● 改善使用体验")
+            set_nv_configs("sim_esim_mode", 0)
+            set_nv_configs("sim_esim_auto_switch", 0)
+            set_nv_configs("esim_login_psw_mode", 0)
+            set_nv_configs("esim_login_psw", "admin")
+            set_nv_configs("esim1_ziccid", "")
+            set_nv_configs("esim2_ziccid", "")
+            set_nv_configs("v3t_net_limit", 0)
+            set_nv_configs("net_limit_upload", "1000Mbit")
+            set_nv_configs("net_limit_download", "1000Mbit")
+            set_nv_configs("wifi_coverage", "long_mode")
+
+
+            set_nv_configs("wifi_sta_need_display", "yes")
+            set_nv_configs("hide_sn", 0)
+            set_nv_configs("ttl_enable", 1)
+            set_nv_configs("imei_enable", 1)
+            set_nv_configs("EsimSim_enable", 1)
+            set_nv_configs("user_web_disp_sim_esim_config", 1)
+            set_nv_configs("need_support_sms", "yes")
+            set_nv_configs("need_support_pb", "yes")
+            set_nv_configs("hide_web_fota", 0)
+            set_nv_configs("disable_traffic_manager", "no")
+            set_nv_configs("root_admin_enable", 1)
+            set_nv_configs("root_user", "root")
+            set_nv_configs("root_Password", "root")
+            set_nv_configs("login_need_input_username", "yes")
+            set_nv_configs("tr069_need_display", "no")
+            set_nv_configs("net_selfcheck_display", "yes")
+            set_nv_configs("vpn_need_display", "yes")
+            set_nv_configs("network_display", "yes")
+            set_nv_configs("sleepmode_display", "yes")
+            set_nv_configs("netlock_display", "yes")
+            set_nv_configs("hide_net_3G_search_mode", 0)
+            set_nv_configs("need_display_searching_status", "yes")
+            set_nv_configs("user_web_disp_privacy_statement", 1)
+            set_nv_configs("user_web_disp_opensource_statement", "")
+            set_nv_configs("user_web_disp_internet_ussd", 1)
+            set_nv_configs("user_web_hide_ddns", 0)
+            set_nv_configs("user_web_hide_wifi", 0)
+
+            print("\t● 净化系统设置")
+            set_nv_configs("dm_enable", 0)
+            set_nv_configs("twcloud_enable", 0)
+            set_nv_configs("twcloud_device_key", "UFITOOL")
+            set_nv_configs("twcloud_domain", "0.1.2.3")
+            set_nv_configs("tw_esim_app_enable", 0)
+            set_nv_configs("tw_esim_app_host", "0.1.2.3")
+            set_nv_configs("tw_fota_dm", 0)
+            set_nv_configs("tw_local_updata", "disable")
+            set_nv_configs("tw_seecom_enable", 0)
+            set_nv_configs("tw_seecom_unlocksim", 1)
+            set_nv_configs("tw_seecom_sim_policy", 0)
+            set_nv_configs("tw_seecom_limitSpeed", "")
+            set_nv_configs("slic_enable", 0)
+            set_nv_configs("ztif_enable", 0)
+
+            set_nv_configs("aliyunthing_mode", "")
+            set_nv_configs("aliyunthing_mqttmode", "")
+            set_nv_configs("aliyun_mqttopen", 0)
+            set_nv_configs("aliyun_mqttmode", 0)
+            set_nv_configs("aliyun_state", 0)
+            set_nv_configs("aliyun_region", "-1")
+            set_nv_configs("aliyunthing_region", "-1")
+            set_nv_configs("aliyun_custom_domain", "0.1.2.3")
+            set_nv_configs("aliyunthing_custom_domain", "0.1.2.3")
+            set_nv_configs("aliyun_url", "")
+            set_nv_configs("aliyun_ip", "0.1.2.3")
+
+            set_nv_configs("os_url", "")
+            set_nv_configs("safecare_enbale", 0)
+            set_nv_configs("safecare_hostname", "")
+            set_nv_configs("safecare_mobsite", "")
+            set_nv_configs("hostName", "")
+            set_nv_configs("pwron_auto_check", 0)
+            set_nv_configs("fota_updateMode", 0)
+            set_nv_configs("fota_need_user_confirm_update", 1)
+            set_nv_configs("fota_need_user_confirm_download", 1)
+            set_nv_configs("fota_dm_vendor", "ufitool")
+            set_nv_configs("fota_token_rs", "")
+            set_nv_configs("fota_token_zx", "")
+            set_nv_configs("fota_token_gs", "")
+            set_nv_configs("fota_product_id", "-1")
+            set_nv_configs("fota_product_secret", "")
+
+            set_nv_configs("tr069_app_enable", 0)
+            set_nv_configs("tr069_ServerURL", "")
+            set_nv_configs("tr069_ServerURL1", "")
+            set_nv_configs("tr069_ConnectionRequestURL", "")
+            set_nv_configs("tr069_ConnectionRequestURL1", "")
+            set_nv_configs("product_model_prefix", "ufitool-")
+            call(['adb', 'shell', 'nv save'])
+            ok =True
+        if not ok:
+            print("糟糕，修复失败！")
+            return 1
+        else:
+            print("安全加固成功！")
+    else:
+        print("您的路由器很健康，无需修复。")
+    if not is128M:
+        choice = input("需要尝试切换当前使用的SIM卡吗？\n(实验性功能，不一定管用)\n1.更改为内置卡优先 2.更改为外卡槽优先 3.取消")
+        if choice == '1':
+            call(['adb', 'shell', "echo '1' > /mnt/userdata/etc_rw/sim_esim"])
+            print(" √ 已设置为使用内置ESIM")
+        elif choice == '2':
+            call(["adb", "shell", "echo '0' > /mnt/userdata/etc_rw/sim_esim"])
+            print(" √ 已设置为使用实体卡槽")
+        else:
+            print("已跳过切卡")
+        print("但如果恢复出厂设置，将会恢复为系统默认选项。")
+        if read_only != True:
+            choice = input(
+                "需要系统初始SIM卡设置吗？\n当您恢复出厂设置后，会自动启用此选项.\n(实验性功能，不一定管用)\n1.更改为内置卡优先 2.更改为外卡槽优先 3.取消")
+            _, out = call(["adb", "shell", "ls", "/etc/sim_esim"], out=1, return_output=True)
+            if choice == '2':
+                if not [i for i in out if 'file' in i]:
+                    call(['adb', 'shell', "echo '0' > /etc/sim_esim"])
+                else:
+                    call(['adb', 'shell', "echo '0' > /etc/cust_sim_esim"])
+                print(" √ 已将系统默认SIM选项更新为实体卡槽优先")
+            elif choice == '1':
+                if not [i for i in out if 'file' in i]:
+                    call(['adb', 'shell', "echo '1' > /etc/sim_esim"])
+                else:
+                    call(['adb', 'shell', "echo '1' > /etc/cust_sim_esim"])
+                print(" √ 已将系统默认SIM选项更新为内置ESIM优先")
+            else:
+                print('取消')
+    call(['adb', 'shell', 'reboot'])
+    sleep(3)
+    call(['adb', 'shell', 'reboot'])
+    call(['adb', 'shell', 'reboot'])
+
+def start():
+    while not devcon():
+        input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
+    print("正在智能搜索路由器...")
+    call(['adb', 'kill-server'])
+    call(['adb', 'start-server'])
+    call(['adb', 'devices'])
+    _, shpath = call(['adb', 'devices'], out=1, return_output=True)
+    if [i for i in shpath if "szxf" in i]:
+        rmcheck()
+    else:
+        print("路由器类型不支持优化功能。")
+
+
+
+
+
+
 
 
