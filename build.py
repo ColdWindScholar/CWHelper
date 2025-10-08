@@ -99,7 +99,7 @@ class Builder:
                     shutil.copy(f"{self.local}/bin/{i}", f"{self.local}/dist/bin/{i}")
         if not os.path.exists('dist/LICENSE'):
             shutil.copy(f'{self.local}/LICENSE', f"{self.local}/dist/LICENSE")
-        for i in ['file', 'LICENSES', 'TQ']:
+        for i in ['file', 'LICENSES', 'TQ', 'res']:
             if not os.path.isfile(f'dist/{i}'):
                 shutil.copytree(f"{self.local}/{i}", f"{self.local}/dist/{i}", dirs_exist_ok=True)
 
