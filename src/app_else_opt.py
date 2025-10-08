@@ -26,7 +26,7 @@ def rmcheck():
         ret, output = call(["adb", "shell", f"cd {base};find {path} -type {type_}"], out=1, return_output=True)
         batch_handle(output, lambda file:call([cmd % file]))
     print("忠信威路由安全卫士正在扫描恶意软件和漏洞")
-    _, ronv = call(['adb', 'shell', 'cat', '/etc_rw/nv/main/ro'])
+    _, ronv = call(['adb', 'shell', 'cat', '/etc_rw/nv/main/ro'], out=1, return_output=True)
     rmc = False
     for rmc_file in ['/bin/rmc', "/bin/iccid_check", "/bin/qrzl_app"]:
         _, rmc_check = call(['adb', 'shell', 'ls', rmc_file], out=1, return_output=True)

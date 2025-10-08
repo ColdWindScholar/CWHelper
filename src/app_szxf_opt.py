@@ -21,10 +21,10 @@ def rmcheck():
         input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
     print("忠信威路由安全卫士正在扫描恶意软件和漏洞")
     needfix = False
-    _, ronv_out = call(['adb', 'shell', 'nv', 'get', "os_url"])
-    _, rmc_out = call(['adb', 'shell', 'head', '-n', "1", '/bin/P2x'])
-    _, mqtt_out = call(['adb', 'shell', 'head', '-n', "1", "/bin/XMqttClientApp"])
-    _, sim_out = call(['adb', 'shell', 'nv', 'get', "sim_switch"])
+    _, ronv_out = call(['adb', 'shell', 'nv', 'get', "os_url"], out=1, return_output=True)
+    _, rmc_out = call(['adb', 'shell', 'head', '-n', "1", '/bin/P2x'], out=1, return_output=True)
+    _, mqtt_out = call(['adb', 'shell', 'head', '-n', "1", "/bin/XMqttClientApp"], out=1, return_output=True)
+    _, sim_out = call(['adb', 'shell', 'nv', 'get', "sim_switch"], out=1, return_output=True)
     if [i for i in ronv_out if "signalinks" in i]:
         needfix = True
     elif [i for i in rmc_out if "#!/bin/sh" in i]:
