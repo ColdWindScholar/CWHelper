@@ -9,7 +9,7 @@ import sys
 import time
 from shutil import move
 from time import sleep
-
+import requests
 from src.calc_pwd import calc_pwd
 from src.ateer import ateer
 from src.mtdcut import main as mtdcut
@@ -152,38 +152,38 @@ class Main:
         adb_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m\033[31m\033[1m")
         if adb_selection == "1":
             print("\033[34m\033[1m")
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2"])
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1"])
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1"])
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1").text)
             for user in ["coolfish666", "xscmadmin888", "MM888", "159258"]:
-                call(['curl',
-                      f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202"])
+                print(
+                    requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE"])
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE"])
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "2":
             print("\033[34m\033[1m")
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2"])
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE"])
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE"])
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "3":
             print("\033[34m\033[1m")
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=3"])
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=3").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE"])
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE"])
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "4":
             print("\033[34m\033[1m")
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=0"])
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D0"])
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=0").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D0").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE"])
-            call(['curl', f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE"])
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
+            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "5":
             print("\033[31m\033[1m\n\n警告:该方式来源于Remo内部人员\033[34m\033[1m")
             print(
