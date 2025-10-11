@@ -1004,6 +1004,7 @@ class Main:
                 "8": self.uisoc,
                 "6": self.set_wifi,
             }
+            choice = choice.upper()
             if choice in choices:
                 choices[choice]()
             elif choice == "G":
