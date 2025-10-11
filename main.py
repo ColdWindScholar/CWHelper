@@ -132,7 +132,11 @@ class Main:
         elif drive_selection == "3":
             call([f"{self.local_dir}/file/drive/Quectel_LTE_Windows_USB_Driver.exe"], extra_path=False)
         elif drive_selection == "4":
-            call([f"{self.local_dir}/file/drive/SPD_Driver/DriverSetup.exe"], extra_path=False)
+            for num, i in enumerate(['Drivers/DriversForWin10/DriverSetup.exe', 'DriverCoding/64install.exe', 'DRIVER_R4.19.5001/DriversForWin10/DriverSetup.exe',
+                                     "RDA_Driver_R2.21.5001/DriversForWin10/DPInst64.exe", "SPRD_NPI_USBDriver_1.4/64install.exe"]):
+                print(f"正在安装紫光驱动 {num + 1}/5", i, f"{self.local_dir}/file/drive/SPD_Driver/{i}")
+                if call([f"{self.local_dir}/file/drive/SPD_Driver/{i}"], extra_path=False):
+                    print("安装失败，请使用管理员运行该工具。")
 
     def set_adb(self):
         # to recovery adb ,first try at command , then use ftp to push a adbd and run it via at command.

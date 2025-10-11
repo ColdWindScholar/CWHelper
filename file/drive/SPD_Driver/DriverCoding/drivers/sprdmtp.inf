@@ -1,0 +1,70 @@
+; Installation inf for devices supporting Media Transfer Protocol (MTP) and using device's hardware ID
+;
+; Copyright (c) Spreadtrum Communicaitons Inc. 
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = WPD
+ClassGUID   = {EEC5AD98-8080-425f-922A-DABF3DE3F69A}
+Provider    = %SPRD%
+DriverVer   = 06/20/2014,2.9.310.1126
+CatalogFile = sprdmtp.cat
+
+[ControlFlags]
+BasicDriverOk=*
+
+[Manufacturer]
+%GenericMfg%=VendorModels,NTx86,NTamd64
+
+[VendorModels.NTx86]
+;SPRD product
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4001
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4001&MI_00
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4002&MI_00
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4011
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4012&MI_00
+
+[VendorModels.NTamd64]
+;SPRD product
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4001
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4001&MI_00
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4002&MI_00
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4011
+%SPRDMTP.DeviceDesc%=MTPHW, USB\VID_1782&PID_4012&MI_00
+
+[MTPHW.NT]
+Include = wpdmtp.inf, WINUSB.INF
+Needs   = WPD.MTP, WINUSB.NT  
+
+[MTPHW.NT.hw]
+Include = wpdmtp.inf
+Needs   = WPD.MTP.Registration
+AddReg  = TSRedir.Registration
+
+[MTPHW.NT.Services]
+Include = wpdmtp.inf
+Needs   = WPD.MTP.Services
+
+[MTPHW.NT.CoInstallers]
+Include = wpdmtp.inf
+Needs   = WPD.MTP.CoInstallers
+
+[MTPHW.NT.Wdf]
+Include = wpdmtp.inf
+Needs   = WPD.MTP.Wdf
+UmdfServiceOrder=WpdMtpDriver
+
+[TSRedir.Registration]
+;
+; Enable support for redirecting the device over Terminal Server connection.
+;
+HKR,,"TSRedirFlags",0x10001,0x1
+
+
+[Strings]
+;Localizable
+GenericMfg         = "(Standard MTP Device)"
+SPRDMTP.DeviceDesc = "SPRD Mobile MTP Device"
+;Non-Localizable
+SPRD               = "Spreadtrum Communications Inc"

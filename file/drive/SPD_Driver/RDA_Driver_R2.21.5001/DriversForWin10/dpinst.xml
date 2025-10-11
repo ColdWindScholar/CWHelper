@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<dpInst>
+
+    <legacyMode/>
+    <deleteBinaries/>
+    <forceIfDriverIsNotBetter/>
+	
+    <group>
+		<package path=".\Drivers\sprd_rda.inf" />
+		<package path=".\Drivers\unisoc_iot_npi.inf" />
+		<package path=".\Drivers\unisoc_iot.inf" />
+    </group>
+
+</dpInst>

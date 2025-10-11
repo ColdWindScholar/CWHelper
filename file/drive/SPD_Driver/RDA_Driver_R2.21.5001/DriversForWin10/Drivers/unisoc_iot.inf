@@ -1,0 +1,443 @@
+;***************************************************************************************
+;
+; Name      : unisoc_iot.inf  
+;
+; Function  : Install UNISOC USB Serial Driver
+;
+; Copyright (c) UNISOC Communications Inc.  All rights reserved.
+;
+;***************************************************************************************
+
+
+[Version]
+signature   = "$CHICAGO$"
+Class       = Ports
+ClassGuid   = {4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider    = %SPRD%
+DriverVer   = 12/17/2021,2.21.50.133
+CatalogFile = unisoc_iot.cat
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[SourceDisksNames]
+1 = %DISK_NAME%,,,\i386
+2 = %DISK_NAME%,,,\amd64
+
+[SourceDisksFiles.x86]
+WdfCoInstaller01009.dll = 1
+sprdvcomIOT.sys         = 1
+
+[SourceDisksFiles.amd64]
+WdfCoInstaller01009.dll = 2
+sprdvcomIOT.sys         = 2
+
+[DestinationDirs]
+DefaultDestDir          = 12
+CoInstaller_CopyFiles   = 11
+
+[Manufacturer]
+%SPRD%=SPRD,NTx86,NTAMD64
+
+; For Win2K
+[SPRD]
+%USBCOMM_DL%  		  = Serial_Inst, USB\VID_1782&PID_4D00
+
+%SPRD.DIAG%   		  = Serial_Inst, USB\VID_1782&PID_4D05&MI_00
+%SPRD.LOG%    		  = Serial_Inst, USB\VID_1782&PID_4D05&MI_01
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D10&MI_00
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D10&MI_01
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D10&MI_02
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D10&MI_03
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D10&MI_04
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D10&MI_05
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D10&MI_06
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D10&MI_07
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D11&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D11&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D11&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D11&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D11&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D11&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D11&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D11&MI_09
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D13&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D13&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D13&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D13&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D13&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D13&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D13&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D13&MI_09
+
+%unisoc.AT% 		  = Serial_Inst, USB\VID_1782&PID_4D17&MI_00
+%unisoc.AP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_01
+%unisoc.DB.HOST%	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_02
+%unisoc.CP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D21&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_03
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_04
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D22&MI_00
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_01
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_02
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_03
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_04
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_05
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_06
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_07
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_05
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_06
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_07
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0B
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0C
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0D
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D26&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D26&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D27&MI_03
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_04
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D28&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D29&MI_0B
+
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_08
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_09
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_0A
+
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2B&MI_08
+
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2C&MI_0E
+
+%unisoc.NPI% 		  = Serial_Inst, USB\VID_1782&PID_4D30&MI_00
+%unisoc.CP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D30&MI_01
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4E00&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4E00&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4E00&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4E00&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4E00&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4E00&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4E00&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4E00&MI_09
+
+; For XP and later
+[SPRD.NTx86]
+%USBCOMM_DL%  		  = Serial_Inst, USB\VID_1782&PID_4D00
+
+%SPRD.DIAG%   		  = Serial_Inst, USB\VID_1782&PID_4D05&MI_00
+%SPRD.LOG%    		  = Serial_Inst, USB\VID_1782&PID_4D05&MI_01
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D10&MI_00
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D10&MI_01
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D10&MI_02
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D10&MI_03
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D10&MI_04
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D10&MI_05
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D10&MI_06
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D10&MI_07
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D11&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D11&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D11&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D11&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D11&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D11&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D11&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D11&MI_09
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D13&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D13&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D13&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D13&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D13&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D13&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D13&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D13&MI_09
+
+%unisoc.AT% 		  = Serial_Inst, USB\VID_1782&PID_4D17&MI_00
+%unisoc.AP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_01
+%unisoc.DB.HOST%	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_02
+%unisoc.CP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D21&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_03
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_04
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D22&MI_00
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_01
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_02
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_03
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_04
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_05
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_06
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_07
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_05
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_06
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_07
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0B
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0C
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0D
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D26&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D26&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D27&MI_03
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_04
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D28&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D29&MI_0B
+
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_08
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_09
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_0A
+
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2B&MI_08
+
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2C&MI_0E
+
+%unisoc.NPI% 		  = Serial_Inst, USB\VID_1782&PID_4D30&MI_00
+%unisoc.CP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D30&MI_01
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4E00&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4E00&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4E00&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4E00&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4E00&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4E00&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4E00&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4E00&MI_09
+
+
+[SPRD.NTAMD64]
+%USBCOMM_DL%  		  = Serial_Inst, USB\VID_1782&PID_4D00
+
+%SPRD.DIAG%   		  = Serial_Inst, USB\VID_1782&PID_4D05&MI_00
+%SPRD.LOG%    		  = Serial_Inst, USB\VID_1782&PID_4D05&MI_01
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D10&MI_00
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D10&MI_01
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D10&MI_02
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D10&MI_03
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D10&MI_04
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D10&MI_05
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D10&MI_06
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D10&MI_07
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D11&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D11&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D11&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D11&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D11&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D11&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D11&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D11&MI_09
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4D13&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4D13&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4D13&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4D13&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4D13&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4D13&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4D13&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4D13&MI_09
+
+%unisoc.AT% 		  = Serial_Inst, USB\VID_1782&PID_4D17&MI_00
+%unisoc.AP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_01
+%unisoc.DB.HOST%	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_02
+%unisoc.CP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D17&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D21&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_03
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_04
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D21&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D22&MI_00
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_01
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_02
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D22&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_03
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_04
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D23&MI_05
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_06
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D23&MI_07
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D24&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_05
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_06
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D24&MI_07
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D25&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0B
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0C
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D25&MI_0D
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D26&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D26&MI_03
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D27&MI_03
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_04
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D27&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D28&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D28&MI_05
+
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_00
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_01
+%SPRD.AT% 			  = Serial_Inst, USB\VID_1782&PID_4D29&MI_02
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D29&MI_0B
+
+%SPRD.DIAG% 		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_08
+%SPRD.CM4LOG% 		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_09
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2A&MI_0A
+
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2B&MI_08
+
+%SPRD.LOG%     		  = Serial_Inst, USB\VID_1782&PID_4D2C&MI_0E
+
+%unisoc.NPI% 		  = Serial_Inst, USB\VID_1782&PID_4D30&MI_00
+%unisoc.CP.LOG% 	  = Serial_Inst, USB\VID_1782&PID_4D30&MI_01
+
+%unisoc.common.Name0% = Serial_Inst, USB\VID_1782&PID_4E00&MI_02
+%unisoc.common.Name1% = Serial_Inst, USB\VID_1782&PID_4E00&MI_03
+%unisoc.common.Name2% = Serial_Inst, USB\VID_1782&PID_4E00&MI_04
+%unisoc.common.Name3% = Serial_Inst, USB\VID_1782&PID_4E00&MI_05
+%unisoc.common.Name4% = Serial_Inst, USB\VID_1782&PID_4E00&MI_06
+%unisoc.common.Name5% = Serial_Inst, USB\VID_1782&PID_4E00&MI_07
+%unisoc.common.Name6% = Serial_Inst, USB\VID_1782&PID_4E00&MI_08
+%unisoc.common.Name7% = Serial_Inst, USB\VID_1782&PID_4E00&MI_09
+
+[Serial_Inst.NT]
+CopyFiles = Serial.CopyFiles
+AddReg    = Serial_Inst.AddReg
+
+[Serial_Inst.AddReg]
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[Serial_Inst.NT.HW]
+AddReg = Models_HW_AddReg
+
+[Serial.CopyFiles]
+sprdvcomIOT.sys
+
+[Serial_Inst.NT.Services]
+AddService = sprdvcomIOT,0x00000002,Serial_Service 
+
+[Serial_Service]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\sprdvcomIOT.sys
+AddReg         = Serial_Parameters_AddReg
+
+[Models_HW_AddReg]
+HKR,,"VendorRequestTimeoutValue", %REG_DWORD%, 5
+HKR,,DeviceCharacteristics,0x10001,0x0100         ; Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;BA)(A;;GA;;;WD)"      ; Allow generic-all access to Built-in administrators and Local system 
+HKR,,"SpreadtrumVendorRequest",%REG_DWORD%,0
+HKR,,"CdcControlLineState",%REG_DWORD%,1
+HKR,,"UseContinuousRead",%REG_DWORD%,1
+HKR,,"RxFifoSize",%REG_DWORD%,15360
+HKR,,"UsbEnableZLP",%REG_DWORD%,1
+
+[Serial_Parameters_AddReg]
+
+;-------------- WDF Coinstaller installation
+
+[Serial_Inst.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoInstaller01009.dll
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller01009.dll,WdfCoInstaller"
+
+[Serial_Inst.NT.Wdf]
+KmdfService = sprdvcomIOT, Serial_wdfsect
+
+[Serial_wdfsect]
+KmdfLibraryVersion = 1.9
+
+[Strings]
+SPRD                = "UNISOC Communications Inc."
+DISK_NAME           = "UNISOC USB to Serial Install Disk"
+unisoc.common.Name0 = "Unisoc Usb Serial Port 0"
+unisoc.common.Name1 = "Unisoc Usb Serial Port 1"
+unisoc.common.Name2 = "Unisoc Usb Serial Port 2"
+unisoc.common.Name3 = "Unisoc Usb Serial Port 3"
+unisoc.common.Name4 = "Unisoc Usb Serial Port 4"
+unisoc.common.Name5 = "Unisoc Usb Serial Port 5"
+unisoc.common.Name6 = "Unisoc Usb Serial Port 6"
+unisoc.common.Name7 = "Unisoc Usb Serial Port 7"
+unisoc.AT = "UNISOC AT PORT"
+unisoc.AP.LOG = "UNISOC AP LOG PORT"
+unisoc.DB.HOST = "UNISOC DB HOST PORT"
+unisoc.CP.LOG = "UNISOC CP LOG PORT"
+unisoc.NPI = "UNISOC NPI PORT"
+SPRD.AT         = "SPRD AT"
+SPRD.DIAG       = "SPRD DIAG"
+SPRD.LOG        = "SPRD LOG"
+USBCOMM_DL      = "SPRD U2S Diag"
+SPRD.CM4LOG     = "SPRD WCN LOG"
+REG_EXPAND_SZ       = 0x00020000
+REG_DWORD           = 0x00010001
