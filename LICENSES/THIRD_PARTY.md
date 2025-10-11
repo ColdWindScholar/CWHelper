@@ -45,31 +45,25 @@ This project includes the following third-party components not licensed under AG
 - **备注**：该工具用于 Spreadtrum 固件的转储操作，但不保证其能否正常使用。
 ---
 
-### 7. `dongle_fun`  (v2.7)  
-- **Author**: FireGo
-- **License**: Authors are allowed to use and modify, reproduce, disseminate at will, and allow commercial mass use
-- **备注**: 作者允许随意使用与修改、复制、传播，并允许商业批量使用
----
-
-### 8. `vivo-drive.exe` 
+### 7. `vivo-drive.exe` 
 - **Author**: vivo Mobile Communication Co., Ltd.
 - **License**: The author is free to use, reproduce and disseminate as he pleases. However, commercial use and reverse engineering are prohibited
 - **备注**: 作者允许随意使用、复制与传播。但禁止商业使用与逆向工程
 ---
 
-### 9. `Quectel_LTE_Windows_USB_Driver.exe` 
+### 8. `Quectel_LTE_Windows_USB_Driver.exe` 
 - **Author**: Quectel Communications, Inc
 - **License**: The author is free to use, reproduce and disseminate as he pleases. However, commercial use and reverse engineering are prohibited
 - **备注**: 作者允许随意使用、复制与传播。但禁止商业使用与逆向工程
 ---
 
-### 10. `SPD_Driver` and ‘Pandora‘ and ‘ResearchDownload‘
+### 9. `SPD_Driver` and ‘Pandora‘ and ‘ResearchDownload‘
 - **Author**: New Unigroup Co., Ltd
 - **License**: The author is free to use, reproduce and disseminate as he pleases. However, commercial use and reverse engineering are prohibited
 - **备注**: 作者允许随意使用、复制与传播。但禁止商业使用与逆向工程
 ---
 
-### 11. `AT_Server`
+### 10. `AT_Server`
 - **Author**: mWIFI_icu
 - **License**: The author is free to use, reproduce and disseminate as he pleases. However, commercial use and reverse engineering are prohibited
 - **备注**: 作者允许随意使用、复制与传播。但禁止商业使用与逆向工程
