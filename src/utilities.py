@@ -2,7 +2,7 @@ import os
 from hashlib import md5
 from random import randrange
 
-from utils import call
+from src.utils import call
 
 
 def md5sum(string):

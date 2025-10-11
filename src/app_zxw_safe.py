@@ -1,4 +1,4 @@
-from libregmngr import get_pref
+from src.libregmngr import get_pref
 from src.utilities import safesh, edit_nv_line, file_modify
 from src.utils import call
 
