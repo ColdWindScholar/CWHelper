@@ -161,7 +161,9 @@ class Main:
         adb_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m\033[31m\033[1m")
         if adb_selection == "1":
             print("\033[34m\033[1m")
-            print(requests.post(f"http://{ip_address}/goform/goform_set_cmd_process", data={"isTest":"false","goformId": 'tw_telnet_config', "telnetd_enable":"1", "debug_enable":"1"}).text)
+            print(requests.post(f"http://{ip_address}/goform/goform_set_cmd_process",
+                                data={"isTest": "false", "goformId": 'tw_telnet_config', "telnetd_enable": "1",
+                                      "debug_enable": "1"}).text)
             print(requests.get(
                 f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
             print(requests.get(
@@ -1009,6 +1011,45 @@ class Main:
                 return 1
             input("回车继续")
 
+    def flash_mtd4(self):
+        if not self.is_adb_device_connected():
+            input("未发现设备，请稍后再试！\n回车继续")
+            return 1
+        rom_to_flash = input("你要刷入哪一个固件:\n1.mtd4_v1_modi.bin 2.mtd4_xy_mf782_modi.bin 3.自定义")
+        if rom_to_flash == '1':
+            rom_path = os.path.join(self.local_dir, 'file', 'flash_mtd4', 'mtd4_v1_modi.bin')
+        elif rom_to_flash == '2':
+            rom_path = os.path.join(self.local_dir, 'file', 'flash_mtd4', 'mtd4_xy_mf782_modi.bin')
+        elif os.path.exists(rom_to_flash):
+            rom_path = rom_to_flash
+        else:
+            input("找不到该固件，回车返回")
+            return 1
+        call(['adb', 'shell', 'fota_release_space.sh'])
+        call(['adb', 'shell', "echo 3 > /proc/sys/vm/drop_caches"])
+        call(['adb', 'shell', "mount -t tmpfs rw,remount /tmp"])
+        call(['adb', 'push', os.path.join(self.local_dir, 'file', 'flash_mtd4', 'busybox'), '/tmp/'])
+        call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/dd'])
+        call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/sh'])
+        call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/reboot'])
+        call(['adb', "shell", 'chmox', '+x', '/tmp/sh'])
+        call(['adb', "shell", 'chmox', '+x', '/tmp/dd'])
+        call(['adb', "shell", 'chmox', '+x', '/tmp/reboot'])
+        call(['adb', 'shell',"/tmp/dd if=/dev/mtdblock4 of=/tmp/mtd4_bak.bin"])
+        call(['adb', 'pull',"/tmp/mtd4_bak.bin", f"{time.strftime('%Y%m%d%H%M')}_mtd4_bak.bin"])
+        call(['adb', "shell", 'rm', '/tmp/mtd4_bak.bin'])
+        call(['adb', "shell", 'killall', '-9', 'zte_ufi'])
+        call(['adb', "shell", 'killall', '-9', 'goahead'])
+        call(['adb', "shell", 'mkdir', '-p', '/mnt/userdata/temp'])
+        call(['adb', "push", os.path.join(self.local_dir, 'file', 'flash_mtd4', 'do.sh'), '/mnt/userdata/temp/do.sh'])
+        call(['adb', "shell","chmod","+x", '/mnt/userdata/temp/do.sh'])
+        call(["adb", "pull", rom_path, "/mnt/userdata/temp/mtd4_to_flash.bin"])
+        call(['adb', "shell", '/mnt/userdata/temp/do.sh'])
+        print("刷入完成，正在重启...")
+        call(['adb', "shell", '/tmp/reboot'])
+        input("刷入完成，感谢使用。回车继续。")
+
+
     def print_menu(self):
         while True:
             os.system("cls") if os.name == "nt" else os.system("clear")
@@ -1022,7 +1063,7 @@ class Main:
             print(
                 "\033[36m\033[1m          =                                                                                            =\033[0m")
             print(
-                "\033[36m\033[1m          =\033[0m\033[33m    A.提取MTD4分区    B.调用dongle刷入MTD4     C.快速MTD刷写工具      D.查看机器mtd类型     \033[0m\033[36m\033[1m=\033[0m")
+                "\033[36m\033[1m          =\033[0m\033[33m    A.提取MTD4分区    B.刷入MTD4               C.快速MTD刷写工具      D.查看机器mtd类型     \033[0m\033[36m\033[1m=\033[0m")
             print(
                 "\033[36m\033[1m          =                                                                                            =\033[0m")
             print(
@@ -1042,7 +1083,7 @@ class Main:
             choice = input("\033[32m请输入并按Enter键: \033[0m")
             choices = {
                 "A": self.zmtd_extract,
-                "B": lambda: call(["file/dongle_fun/dongle_fun.bat"], extra_path=False),
+                "B": self.flash_mtd4,
                 "C": self.zmtd_brusquel,
                 "D": self.mtd_check,
                 "E": self.xr_web,
