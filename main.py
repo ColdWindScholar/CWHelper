@@ -9,14 +9,22 @@ import sys
 import time
 from shutil import move
 from time import sleep
+
 import requests
-from src.calc_pwd import calc_pwd
+
+from src.app_else_opt import start as app_else_opt_start
+from src.app_remo_opt import main as app_remo_opt
+from src.app_szxf_opt import start as app_szxf_opt_start
+from src.app_szxk_opt import start as app_szxk_opt_start
+from src.app_zxw_safe import main as app_zxw_safe_start
 from src.ateer import ateer
+from src.calc_pwd import calc_pwd
 from src.mtdcut import main as mtdcut
 from src.mtdjoin import main as mtdjoin
 from src.mtdrepk import main as mtdrepk
 from src.mtdunpk import main as mtdunpk
 from src.sn_search import main as sn_search
+from src.utilities import generate_imei
 from src.utils import call, ebinner
 
 if os.name == 'nt':
@@ -152,34 +160,41 @@ class Main:
         adb_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m\033[31m\033[1m")
         if adb_selection == "1":
             print("\033[34m\033[1m")
-            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
-            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1").text)
+            print(requests.get(
+                f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
+            print(requests.get(
+                f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=1").text)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1").text)
             for user in ["coolfish666", "xscmadmin888", "MM888", "159258"]:
                 print(
-                    requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202").text)
+                    requests.get(
+                        f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1&password={user}@Qiruizhilian20241202").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
             print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "2":
             print("\033[34m\033[1m")
-            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
+            print(requests.get(
+                f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
             print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "3":
             print("\033[34m\033[1m")
-            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=3").text)
+            print(requests.get(
+                f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=3").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
             print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "4":
             print("\033[34m\033[1m")
-            print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=0").text)
-            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D0").text)
+            print(requests.get(
+                f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=0").text)
+            print(requests.get(
+                f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D0").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
@@ -190,15 +205,20 @@ class Main:
                 "\033[31m\033[1m\n\n仅适用于第四代机型以前的版本(即24年6月之前),其他版本估计会遇到错误\033[34m\033[1m")
             print("\033[32m\033[1m\n正在向系统发送请求.....\033[0m\033[34m\033[1m")
             print("\033[34m\033[1m")
-            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx").text)
+            print(requests.get(
+                f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx").text)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=YWRtaW4%3D").text)
-            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REMO_SIM_SELECT_R1865&isTest=false&sim_option_id=3&select_sim_mode=1").text)
-            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SysCtlUtal&action=System_MODE&debug_enable=1").text)
-            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D1").text)
+            print(requests.get(
+                f"http://{ip_address}/reqproc/proc_post?goformId=REMO_SIM_SELECT_R1865&isTest=false&sim_option_id=3&select_sim_mode=1").text)
+            print(requests.get(
+                f"http://{ip_address}/reqproc/proc_post?goformId=SysCtlUtal&action=System_MODE&debug_enable=1").text)
+            print(requests.get(
+                f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D1").text)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
-            print(requests.get(f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS").text)
+            print(requests.get(
+                f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS").text)
         input("\033[32m\033[1m\n操作已完成，回车返回\033[0m")
 
     def is_readonly_to_flash(self) -> bool:
@@ -506,15 +526,15 @@ class Main:
         max_access = input("\033[32m最大接入设备数:\033[31m\033[1m")
         print("\033[0m")
         data = {
-            "goformId":"SET_WIFI_SSID1_SETTINGS",
-            "ssid":your_ssid,
-            "broadcastSsidEnabled":"0",
-            "MAX_Access_num":f"{max_access}",
-            "security_mode":"OPEN",
-            "cipher":"2",
-            "NoForwarding":"0",
-            "show_qrcode_flag":"0",
-            "security_shared_mode":"NONE"
+            "goformId": "SET_WIFI_SSID1_SETTINGS",
+            "ssid": your_ssid,
+            "broadcastSsidEnabled": "0",
+            "MAX_Access_num": f"{max_access}",
+            "security_mode": "OPEN",
+            "cipher": "2",
+            "NoForwarding": "0",
+            "show_qrcode_flag": "0",
+            "security_shared_mode": "NONE"
         }
         for t in ['goform/goform_set_cmd_process', 'reqproc/proc_post']:
             print(requests.post(f"http://{your_ip}/{t}", data=data).text)
@@ -880,30 +900,32 @@ class Main:
         os.makedirs(f"{name}", exist_ok=True)
         os.makedirs(f"{name}/info", exist_ok=True)
         os.makedirs(f"{name}/mtd", exist_ok=True)
-        def write_output(cmd:list, output_path:str):
+
+        def write_output(cmd: list, output_path: str):
             with open(output_path, "w", encoding="utf-8", newline='\n') as f:
                 _, output = call(cmd, out=1, return_output=True)
                 f.write("\n".join(output))
-        write_output(['adb', 'shell', 'cat', '/proc/cpuinfo'], os.path.join(name,'info',"cpuinfo.txt"))
-        write_output(['adb', 'shell', 'cat', '/proc/mtd'], os.path.join(name,'info',"mtd.txt"))
-        write_output(['adb', 'shell', 'cat', '/proc/meminfo'], os.path.join(name,'info',"meminfo.txt"))
-        write_output(['adb', 'shell', 'cat', '/proc/version'], os.path.join(name,'info',"version.txt"))
-        write_output(['adb', 'shell', 'cat', '/proc/cmdline'], os.path.join(name,'info',"cmdline.txt"))
-        write_output(['adb', 'shell', 'df'], os.path.join(name,'info',"df.txt"))
-        write_output(['adb', 'shell', 'mount'], os.path.join(name,'info',"mount.txt"))
-        write_output(['adb', 'shell', 'ps'], os.path.join(name,'info',"ps.txt"))
-        write_output(['adb', 'shell', 'nv', 'show'], os.path.join(name,'info',"nv.txt"))
-        write_output(['adb', 'shell', 'ls', '-l', "/"], os.path.join(name,'info',"ls.txt"))
-        write_output(['adb', 'shell', 'ls', '-l', "/dev"], os.path.join(name,'info',"dev.txt"))
+
+        write_output(['adb', 'shell', 'cat', '/proc/cpuinfo'], os.path.join(name, 'info', "cpuinfo.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/mtd'], os.path.join(name, 'info', "mtd.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/meminfo'], os.path.join(name, 'info', "meminfo.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/version'], os.path.join(name, 'info', "version.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/cmdline'], os.path.join(name, 'info', "cmdline.txt"))
+        write_output(['adb', 'shell', 'df'], os.path.join(name, 'info', "df.txt"))
+        write_output(['adb', 'shell', 'mount'], os.path.join(name, 'info', "mount.txt"))
+        write_output(['adb', 'shell', 'ps'], os.path.join(name, 'info', "ps.txt"))
+        write_output(['adb', 'shell', 'nv', 'show'], os.path.join(name, 'info', "nv.txt"))
+        write_output(['adb', 'shell', 'ls', '-l', "/"], os.path.join(name, 'info', "ls.txt"))
+        write_output(['adb', 'shell', 'ls', '-l', "/dev"], os.path.join(name, 'info', "dev.txt"))
         i = 0
         with open(os.path.join(name, f"{name}_full.bin"), "wb") as f:
             while True:
-                if call(['adb', 'pull', f"/dev/mtd{i}", os.path.join(name,'mtd',f"mtd{i}")]):
+                if call(['adb', 'pull', f"/dev/mtd{i}", os.path.join(name, 'mtd', f"mtd{i}")]):
                     break
-                with open(os.path.join(name,'mtd',f"mtd{i}"), 'rb') as mtd_file:
+                with open(os.path.join(name, 'mtd', f"mtd{i}"), 'rb') as mtd_file:
                     f.write(mtd_file.read())
                 i += 1
-        with open(os.path.join(name,'info.txt'), 'w', encoding='utf-8', newline='\n') as f:
+        with open(os.path.join(name, 'info.txt'), 'w', encoding='utf-8', newline='\n') as f:
             f.write(f'name={name}\n')
             f.write(f'extract_time={time.strftime("%Y%m%d%H%M", time.localtime())}\n')
             f.write(f'extract_time_utc={int(time.time())}\n')
@@ -958,6 +980,30 @@ class Main:
             ateer(cmd, show_send=True, show_response=True)
             print("\033[0m")
 
+    def ufi_center(self):
+        while True:
+            os.system("cls") if os.name == "nt" else os.system("clear")
+            print(f"\033[36m\033[1m{self.split_mark}\033[0m")
+            print(
+                f"\033[33m    1.ELSE-设备优化      2.REMO-设备优化      3.SZXF-设备优化     4.SZXK-设备优化    5.AI优化    6.随机IMEI生成器    7.返回\033[0m")
+            print(f"\033[36m\033[1m{self.split_mark}\033[0m")
+            choice = input("\033[32m请输入并按Enter键: \033[0m")
+            if choice == '1':
+                app_else_opt_start()
+            elif choice == '2':
+                app_remo_opt()
+            elif choice == '3':
+                app_szxf_opt_start()
+            elif choice == '4':
+                app_szxk_opt_start()
+            elif choice == '5':
+                app_zxw_safe_start()
+            elif choice == '6':
+                print(f"\033[33m生成IMEI：\033[0m\033[32m{generate_imei()}\033[0m")
+            elif choice == '7':
+                return 1
+            print("回车继续")
+
     def print_menu(self):
         while True:
             os.system("cls") if os.name == "nt" else os.system("clear")
@@ -979,7 +1025,7 @@ class Main:
             print(
                 "\033[36m\033[1m          =                                                                                            =\033[0m")
             print(
-                "\033[36m\033[1m          =\033[0m\033[33m    I.AT命令行        L.UFI优化中心                                                         \033[0m\033[36m\033[1m=\033[0m")
+                "\033[36m\033[1m          =\033[0m\033[33m    I.AT命令行        J.UFI优化中心                                                         \033[0m\033[36m\033[1m=\033[0m")
             print(
                 "\033[36m\033[1m          =--------------------------------------------------------------------------------------------=\033[0m")
             print("\033[36m     工具与导航栏:\033[0m")
@@ -997,7 +1043,8 @@ class Main:
                 "E": self.xr_web,
                 "F": self.ufi_nv_set,
                 "H": self.calc_switch_card_pwd,
-                "I":self.at_cmd,
+                "I": self.at_cmd,
+                "J": self.ufi_center,
                 "01": self.machine_material,
                 "02": self.set_adb,
                 "03": self.install_drive,
