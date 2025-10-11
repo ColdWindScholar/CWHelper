@@ -1028,7 +1028,7 @@ class Main:
         call(['adb', 'shell', 'fota_release_space.sh'])
         call(['adb', 'shell', "echo 3 > /proc/sys/vm/drop_caches"])
         call(['adb', 'shell', "mount -t tmpfs rw,remount /tmp"])
-        call(['adb', 'push', os.path.join(self.local_dir, 'file', 'flash_mtd4', 'busybox'), '/tmp/'])
+        call(['adb', 'push', os.path.join(self.local_dir, 'file', 'busybox'), '/tmp/'])
         call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/dd'])
         call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/sh'])
         call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/reboot'])
