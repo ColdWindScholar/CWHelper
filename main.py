@@ -945,11 +945,21 @@ class Main:
         input("回车继续")
         return None
 
+    def at_cmd(self):
+        os.system("cls") if os.name == "nt" else os.system("clear")
+        print("\n\033[33m输入\033[0m\033[32m[quit]\033[0m\033[33m即可退出\033[0m\n")
+        while True:
+            cmd = input("AT>")
+            if cmd == "quit":
+                return 0
+            ateer(cmd, show_send=True, show_response=True)
+
     def print_menu(self):
         while True:
             os.system("cls") if os.name == "nt" else os.system("clear")
             self.check_adb_status()
             self.check_serial()
+            print()
             print(
                 "\033[33m            01.设备信息           02.设置设备adb       03.驱动安装       04.ADB终端      05.设备管理器    \033[0m")
             print(
@@ -965,12 +975,15 @@ class Main:
             print(
                 "\033[36m\033[1m          =                                                                                            =\033[0m")
             print(
+                "\033[36m\033[1m          =\033[0m\033[33m    I.AT命令行                                                                              \033[0m\033[36m\033[1m=\033[0m")
+            print(
                 "\033[36m\033[1m          =--------------------------------------------------------------------------------------------=\033[0m")
             print("\033[36m     工具与导航栏:\033[0m")
             print(
                 "\033[33m         1.串口工具         2.云小帆助手      3.1869工具      4.西瓜味asr工具(最终)   5.Orz0000工具(鸡蛋姐)\033[0m")
             print(
                 "\033[33m         6.zxic设置WIFI     7.流量失踪器      \033[4;35m8.紫光专区入口\033[0m  \033[31m9.退出工具\033[0m")
+            print()
             choice = input("\033[32m请输入并按Enter键: \033[0m")
             choices = {
                 "A": self.zmtd_extract,
@@ -980,6 +993,7 @@ class Main:
                 "E": self.xr_web,
                 "F": self.ufi_nv_set,
                 "H": self.calc_switch_card_pwd,
+                "I":self.at_cmd,
                 "01": self.machine_material,
                 "02": self.set_adb,
                 "03": self.install_drive,
