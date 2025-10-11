@@ -985,7 +985,7 @@ class Main:
             os.system("cls") if os.name == "nt" else os.system("clear")
             print(f"\033[36m\033[1m{self.split_mark}\033[0m")
             print(
-                f"\033[33m    1.ELSE-设备优化      2.REMO-设备优化      3.SZXF-设备优化     4.SZXK-设备优化    5.AI优化    6.随机IMEI生成器    7.返回\033[0m")
+                f"\033[33m  1.ELSE-设备优化    2.REMO-设备优化     3.SZXF-设备优化     4.SZXK-设备优化    5.AI优化   6.随机IMEI生成  7.返回\033[0m")
             print(f"\033[36m\033[1m{self.split_mark}\033[0m")
             choice = input("\033[32m请输入并按Enter键: \033[0m")
             if choice == '1':
