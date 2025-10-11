@@ -28,7 +28,7 @@ def call(exe, extra_path=True, out=0, return_output=False):
             try:
                 out_put = i.decode("utf-8").strip()
             except (Exception, BaseException):
-                out_put = i.decode("gbk").strip()
+                out_put = i.decode("gbk","ignore").strip()
             out_put_.append(out_put)
             if out == 0:
                 print(out_put)

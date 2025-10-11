@@ -865,11 +865,56 @@ class Main:
         input("回车继续")
         return None
 
+    def mtd_extract_mtds(self) -> int:
+        os.system("cls") if os.name == "nt" else os.system("clear")
+        print("本工具可以从带ADB的ZXIC设备中提取固件，非常安全可靠，不会造成任何损害。")
+        print("然而，我们仍不推荐在非ZXIC机型上使用此工具，否则可能会出现某些未知的问题。")
+        if not self.is_adb_device_connected():
+            input("未发现设备，回车返回")
+            return 1
+        auto_name = f"extract_{time.strftime("%Y%m%d%H%M", time.localtime())}"
+        name = input('请输入固件名称(可跳过)：')
+        if not name:
+            name = auto_name
+        print("采集信息...")
+        os.makedirs(f"{name}", exist_ok=True)
+        os.makedirs(f"{name}/info", exist_ok=True)
+        os.makedirs(f"{name}/mtd", exist_ok=True)
+        def write_output(cmd:list, output_path:str):
+            with open(output_path, "w", encoding="utf-8", newline='\n') as f:
+                _, output = call(cmd, out=1, return_output=True)
+                f.write("\n".join(output))
+        write_output(['adb', 'shell', 'cat', '/proc/cpuinfo'], os.path.join(name,'info',"cpuinfo.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/mtd'], os.path.join(name,'info',"mtd.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/meminfo'], os.path.join(name,'info',"meminfo.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/version'], os.path.join(name,'info',"version.txt"))
+        write_output(['adb', 'shell', 'cat', '/proc/cmdline'], os.path.join(name,'info',"cmdline.txt"))
+        write_output(['adb', 'shell', 'df'], os.path.join(name,'info',"df.txt"))
+        write_output(['adb', 'shell', 'mount'], os.path.join(name,'info',"mount.txt"))
+        write_output(['adb', 'shell', 'ps'], os.path.join(name,'info',"ps.txt"))
+        write_output(['adb', 'shell', 'nv', 'show'], os.path.join(name,'info',"nv.txt"))
+        write_output(['adb', 'shell', 'ls', '-l', "/"], os.path.join(name,'info',"ls.txt"))
+        write_output(['adb', 'shell', 'ls', '-l', "/dev"], os.path.join(name,'info',"dev.txt"))
+        i = 0
+        with open(os.path.join(name, f"{name}_full.bin"), "wb") as f:
+            while True:
+                if call(['adb', 'pull', f"/dev/mtd{i}", os.path.join(name,'mtd',f"mtd{i}")]):
+                    break
+                with open(os.path.join(name,'mtd',f"mtd{i}"), 'rb') as mtd_file:
+                    f.write(mtd_file.read())
+                i += 1
+        with open(os.path.join(name,'info.txt'), 'w', encoding='utf-8', newline='\n') as f:
+            f.write(f'name={name}\n')
+            f.write(f'extract_time={time.strftime("%Y%m%d%H%M", time.localtime())}\n')
+            f.write(f'extract_time_utc={int(time.time())}\n')
+        input("提取完成，回车返回")
+        return 0
+
     def mtd_tools(self):
         os.system("cls") if os.name == "nt" else os.system("clear")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print(
-            f"\033[33m            1.编程器固件一键解包           2.一键重新打包固件       3.合并所有MTD分区       4.返回\033[0m")
+            f"\033[33m            1.编程器固件一键解包        2.一键重新打包固件      3.合并所有MTD分区       4.ADB提取固件     5.返回\033[0m")
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         choice = input("\033[32m请输入并按Enter键: \033[0m")
         if choice == "1":
@@ -894,6 +939,8 @@ class Main:
                 return 1
             mtdjoin(project_name)
         elif choice == "4":
+            self.mtd_extract_mtds()
+        elif choice == "5":
             return 1
         input("回车继续")
         return None
