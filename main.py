@@ -950,6 +950,8 @@ class Main:
         print("\n\033[35m输入\033[0m\033[34m[quit]\033[0m\033[35m即可退出\033[0m\n")
         while True:
             cmd = input("\033[32mAT>\033]0m\033[37m")
+            if not cmd:
+                continue
             if cmd == "quit":
                 return 0
             print("\033[0m\033[33m")
