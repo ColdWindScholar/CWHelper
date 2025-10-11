@@ -135,6 +135,7 @@ class Main:
             call([f"{self.local_dir}/file/drive/SPD_Driver/DriverSetup.exe"], extra_path=False)
 
     def set_adb(self):
+        # to recovery adb ,first try at command , then use ftp to push a adbd and run it via at command.
         print(f"\033[36m\033[1m{self.split_mark}\033[0m")
         print()
         print("\033[31m\033[1m警告!请先连接设备WIFI或网络,否则程序卡死[滑稽笑]\033[0m")
