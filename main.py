@@ -505,9 +505,19 @@ class Main:
         print("\033[0m")
         max_access = input("\033[32m最大接入设备数:\033[31m\033[1m")
         print("\033[0m")
-        data = f"goformId=SET_WIFI_SSID1_SETTINGS&ssid={your_ssid}&broadcastSsidEnabled=0&MAX_Access_num={max_access}&security_mode=OPEN&cipher=2&NoForwarding=0&show_qrcode_flag=0&security_shared_mode=NONE"
+        data = {
+            "goformId":"SET_WIFI_SSID1_SETTINGS",
+            "ssid":your_ssid,
+            "broadcastSsidEnabled":"0",
+            "MAX_Access_num":f"{max_access}",
+            "security_mode":"OPEN",
+            "cipher":"2",
+            "NoForwarding":"0",
+            "show_qrcode_flag":"0",
+            "security_shared_mode":"NONE"
+        }
         for t in ['goform/goform_set_cmd_process', 'reqproc/proc_post']:
-            call(["curl", "-s", "-X", "POST", "-d", data, f"http://{your_ip}/{t}"])
+            print(requests.post(f"http://{your_ip}/{t}", data=data).text)
 
         print("\033[32m如果此时WiFi断开代表设置成功")
         print("否则失败")
