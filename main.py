@@ -1002,7 +1002,7 @@ class Main:
                 print(f"\033[33m生成IMEI：\033[0m\033[32m{generate_imei()}\033[0m")
             elif choice == '7':
                 return 1
-            print("回车继续")
+            input("回车继续")
 
     def print_menu(self):
         while True:
