@@ -651,16 +651,14 @@ class Main:
             print("\033[34m挂载读写...\033[0m")
             call(["adb", "shell", "mount", "-o", "remount,rw", "/"])
             print("\033[33m\033[1m传输文件(卡住就是不支持)...\033[0m")
-            '''
-            --os.execute("bin/adb push file/at_web/at_server /bin/at_server")
-		--os.execute("bin/adb shell chmod +x ./bin/at_server")
-		--os.execute("bin/adb push file/at_web/at_info.html /etc_ro/web/at_info.html")
-		--os.execute("bin/adb push file/at_web/css/at.css /etc_ro/web/css/at.css")
-		--os.execute("bin/adb push file/at_web/js/at.js /etc_ro/web/js/at.js")
-            '''
+            call(['adb', 'push', 'file/at_web/at_server', '/bin/at_server'])
+            call(['adb', 'shell', 'chmod', '+x', './bin/at_server'])
+            call(['adb', 'push', 'file/at_web/at_info.html', '/etc_ro/web/at_info.html'])
+            call(['adb', 'push', 'file/at_web/css/at.css', '/etc_ro/web/css/at.css'])
+            call(['adb', 'push', 'file/at_web/js/at.js', '/etc_ro/web/js/at.js'])
             print("\033[35m\033[1m设置自启动...\033[0m")
-            """--os.execute([[bin/adb shell "echo 'at_server &' >> /sbin/rm_dev.sh"]])
-		--os.execute("start /min bin/adb shell at_server &")"""
+            call(["adb", "shell", "echo 'at_server &' >> /sbin/rm_dev.sh"])
+            call(["adb", "shell", "at_server &"])
             print("\033[32m设置成功啦！！")
             ret, adb_output = call(['adb', "shell", "nv", "get", "lan_ipaddr"], out=1, return_output=True)
             for i in adb_output:
