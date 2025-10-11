@@ -1,25 +1,13 @@
-import os
 from time import sleep
 
-from pefile import cache_adjust_FileAlignment
-
-from src.utils import call
+from src.ufi_utils import devcon
 from src.utilities import edit_nv_line, file_modify, set_nv_configs
-if os.name == 'nt':
-    import wmi
+from src.utils import call
 
-def devcon():
-    c = wmi.WMI()
-    devices = c.Win32_PnPEntity()
-    for device in devices:
-        device_str = device.name + devices.deviceid
-        if "szxkmob" in device_str or "demomob" in device_str:
-            return True
-    return False
 
 def rmcheck():
     global read_only
-    while not devcon():
+    while not devcon(["szxkmob", "demomob"]):
         input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
     print("忠信威路由安全卫士正在扫描恶意软件和漏洞")
     _, ronv = call(['adb', 'shell', 'nv', 'get', 'os_url'], out=1, return_output=True)
@@ -415,7 +403,7 @@ def rmcheck():
     call(['adb', 'shell', 'reboot'])
 
 def start():
-    while not devcon():
+    while not devcon(["szxkmob", "demomob"]):
         input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
     print("正在智能搜索路由器...")
     call(['adb', 'kill-server'])

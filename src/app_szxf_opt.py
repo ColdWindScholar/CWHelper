@@ -1,23 +1,12 @@
-import os
 from time import sleep
 
-from src.utils import call
+from src.ufi_utils import devcon
 from src.utilities import edit_nv_line, file_modify, set_nv_configs
-if os.name == 'nt':
-    import wmi
-
-def devcon():
-    c = wmi.WMI()
-    devices = c.Win32_PnPEntity()
-    for device in devices:
-        device_str = device.name + devices.deviceid
-        if "szxfmob" in device_str or "novoconnectmo" in device_str:
-            return True
-    return False
+from src.utils import call
 
 def rmcheck():
     global doNotReset
-    while not devcon():
+    while not devcon(["szxfmob", "novoconnectmo"]):
         input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
     print("忠信威路由安全卫士正在扫描恶意软件和漏洞")
     needfix = False
@@ -253,7 +242,7 @@ def rmcheck():
         call(['adb', 'shell', "reboot"])
 
 def start():
-    while not devcon():
+    while not devcon(["szxfmob", "novoconnectmo"]):
         input("未检测到路由器，请检查是否已将路由器连接到此计算机。\n请按任意键重试.")
     print("正在智能搜索路由器...")
     call(['adb', 'kill-server'])

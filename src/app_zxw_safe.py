@@ -1,6 +1,8 @@
-from src.utilities import safesh, edit_nv_line, file_modify, file_creator
-from src.utils import call
 from libregmngr import get_pref
+from src.utilities import safesh, edit_nv_line, file_modify
+from src.utils import call
+
+
 def is_rootfs_rw():
     safesh("mount -o remount,rw /")
     _, mounts = safesh("cat /proc/mounts")

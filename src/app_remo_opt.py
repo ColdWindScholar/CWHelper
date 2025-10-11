@@ -1,19 +1,8 @@
 from time import sleep
 
+from src.ufi_utils import devcon
 from src.utilities import safesh, file_creator
 from src.utils import call
-import os
-if os.name == 'nt':
-    import wmi
-
-def devcon():
-    c = wmi.WMI()
-    devices = c.Win32_PnPEntity()
-    for device in devices:
-        device_str = device.name + devices.deviceid
-        if "VID_19D2" in device_str:
-            return True
-    return False
 
 cleaner = '''
 #!/bin/sh
@@ -131,7 +120,7 @@ rm /mnt/userdata/etc_rw/remo_esim*
 rm /tmp/cleaner.sh
 '''
 def main():
-    while not devcon():
+    while not devcon(["VID_19D2"]):
         input("未检测到任何REMO路由器，请检查是否已将路由器连接到此计算机。\n回车继续")
     else:
         print("已检测到路由器，正在评估其可用性...")
