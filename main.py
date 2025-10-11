@@ -134,7 +134,7 @@ class Main:
         elif drive_selection == "4":
             for num, i in enumerate(['Drivers/DriversForWin10/DriverSetup.exe', 'DriverCoding/64install.exe', 'DRIVER_R4.19.5001/DriversForWin10/DriverSetup.exe',
                                      "RDA_Driver_R2.21.5001/DriversForWin10/DPInst64.exe", "SPRD_NPI_USBDriver_1.4/64install.exe"]):
-                print(f"正在安装紫光驱动 {num + 1}/5", i, f"{self.local_dir}/file/drive/SPD_Driver/{i}")
+                print(f"正在安装紫光驱动 {num + 1}/5")
                 if call([f"{self.local_dir}/file/drive/SPD_Driver/{i}"], extra_path=False):
                     print("安装失败，请使用管理员运行该工具。")
 
