@@ -190,19 +190,15 @@ class Main:
                 "\033[31m\033[1m\n\n仅适用于第四代机型以前的版本(即24年6月之前),其他版本估计会遇到错误\033[34m\033[1m")
             print("\033[32m\033[1m\n正在向系统发送请求.....\033[0m\033[34m\033[1m")
             print("\033[34m\033[1m")
-            call(
-                ['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx"])
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=YWRtaW4%3D"])
-            call(['curl',
-                  f"http://{ip_address}/reqproc/proc_post?goformId=REMO_SIM_SELECT_R1865&isTest=false&sim_option_id=3&select_sim_mode=1"])
-            call(
-                ['curl',
-                 f"http://{ip_address}/reqproc/proc_post?goformId=SysCtlUtal&action=System_MODE&debug_enable=1"])
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D1"])
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1"])
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=cmVtb19zdXBlcl9hZG1pbl8yMjAx").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=LOGIN&password=YWRtaW4%3D").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REMO_SIM_SELECT_R1865&isTest=false&sim_option_id=3&select_sim_mode=1").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SysCtlUtal&action=System_MODE&debug_enable=1").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D1").text)
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1").text)
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
-            call(['curl', f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS"])
+            print(requests.get(f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS").text)
         input("\033[32m\033[1m\n操作已完成，回车返回\033[0m")
 
     def is_readonly_to_flash(self) -> bool:
