@@ -78,7 +78,7 @@ class Main:
         for i in range(1, 257):
             try:
                 file = io.open(rf"\\.\COM{i}")
-            except (FileNotFoundError, PermissionError):
+            except (FileNotFoundError, PermissionError, OSError):
                 continue
             file.close()
             return True
@@ -161,6 +161,7 @@ class Main:
         adb_selection = input("\033[32m请输入数字并按 Enter 键: \033[0m\033[31m\033[1m")
         if adb_selection == "1":
             print("\033[34m\033[1m")
+            print(requests.post(f"http://{ip_address}/goform/goform_set_cmd_process", data={"isTest":"false","goformId": 'tw_telnet_config', "telnetd_enable":"1", "debug_enable":"1"}).text)
             print(requests.get(
                 f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=2").text)
             print(requests.get(
@@ -192,6 +193,9 @@ class Main:
             print(requests.get(f"http://{ip_address}/goform/goform_set_cmd_process?goformId=REBOOT_DEVICE").text)
         elif adb_selection == "4":
             print("\033[34m\033[1m")
+            print(requests.post(f"http://{ip_address}/goform/goform_set_cmd_process",
+                                data={"isTest": "false", "goformId": 'tw_telnet_config', "telnetd_enable": "0",
+                                      "debug_enable": "0"}).text)
             print(requests.get(
                 f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=0").text)
             print(requests.get(
