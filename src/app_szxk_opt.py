@@ -26,7 +26,7 @@ def rmcheck():
         needfix = True
     elif [i for i in v3t if 'exit' in i]:
         needfix = True
-    is128M = False
+    is128_m = False
     if needfix:
         read_only = False
         print("您的路由器似乎存在木马或漏洞，正在处理")
@@ -35,10 +35,10 @@ def rmcheck():
         _, out = call(['adb', 'shell', "ls /etc_ro/test.txt"], out=1, return_output=True)
         _, mtd = call(['adb', 'shell', 'cat', '/proc/mtd'])
         if [i for i in mtd if 'yaffs' in i or 'zterw' in i]:
-            is128M = True
+            is128_m = True
         else:
-            is128M = False
-        if is128M:
+            is128_m = False
+        if is128_m:
             print("忠信威路由卫士正在全局优化加固")
             call(['adb', 'shell', 'rm', '/etc_ro/test.txt'])
             print("\t● 移除恶意软件")
@@ -254,7 +254,6 @@ def rmcheck():
             file_modify(out, True, "/etc_ro/web/tmpl/home.html")
             ok = True
         else:
-            readOnly = True
             print("忠信威路由卫士正在安装优化补丁")
             print("\t● 修复系统漏洞")
             call(['adb', 'shell', 'mount', '-o', 'remount,rw', '/mnt/imagefs'])
@@ -368,7 +367,7 @@ def rmcheck():
             print("安全加固成功！")
     else:
         print("您的路由器很健康，无需修复。")
-    if not is128M:
+    if not is128_m:
         choice = input("需要尝试切换当前使用的SIM卡吗？\n(实验性功能，不一定管用)\n1.更改为内置卡优先 2.更改为外卡槽优先 3.取消")
         if choice == '1':
             call(['adb', 'shell', "echo '1' > /mnt/userdata/etc_rw/sim_esim"])
@@ -379,7 +378,7 @@ def rmcheck():
         else:
             print("已跳过切卡")
         print("但如果恢复出厂设置，将会恢复为系统默认选项。")
-        if read_only != True:
+        if not read_only:
             choice = input(
                 "需要系统初始SIM卡设置吗？\n当您恢复出厂设置后，会自动启用此选项.\n(实验性功能，不一定管用)\n1.更改为内置卡优先 2.更改为外卡槽优先 3.取消")
             _, out = call(["adb", "shell", "ls", "/etc/sim_esim"], out=1, return_output=True)
@@ -401,6 +400,8 @@ def rmcheck():
     sleep(3)
     call(['adb', 'shell', 'reboot'])
     call(['adb', 'shell', 'reboot'])
+    return None
+
 
 def start():
     while not devcon(["szxkmob", "demomob"]):
@@ -414,11 +415,3 @@ def start():
         rmcheck()
     else:
         print("路由器类型不支持优化功能。")
-
-
-
-
-
-
-
-
