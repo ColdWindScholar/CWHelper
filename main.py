@@ -947,12 +947,13 @@ class Main:
 
     def at_cmd(self):
         os.system("cls") if os.name == "nt" else os.system("clear")
-        print("\n\033[33m输入\033[0m\033[32m[quit]\033[0m\033[33m即可退出\033[0m\n")
+        print("\n\033[33m输入\033[0m\033[34m[quit]\033[0m\033[33m即可退出\033[0m\n")
         while True:
-            cmd = input("AT>")
+            cmd = input("\033[32mAT>\033]0m\033[33m")
             if cmd == "quit":
                 return 0
             ateer(cmd, show_send=True, show_response=True)
+            print("\033[0m")
 
     def print_menu(self):
         while True:
