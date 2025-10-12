@@ -28,7 +28,7 @@ def find_at_port():
 def ateer(at_command, show_send: bool = False, show_response: bool = False, timeout: int = 2):
     port_name = find_at_port()
     if not port_name:
-        print('未找到包含 \'AT\' 的串口设备')
+        print("未找到包含 'AT' 的串口设备")
         return 2
     try:
         with serial.Serial(port=port_name, baudrate=9600, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE,
