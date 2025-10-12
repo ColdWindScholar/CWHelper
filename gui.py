@@ -1,9 +1,11 @@
 from threading import Thread
 from tkinter import *
-from tkinter.ttk import *
 from tkinter import ttk
+
 from sv_ttk import use_dark_theme
+
 from main import Main
+
 cil_main = Main()
 def create_thread(func, *args, join=False, deamon: bool = True):
     """
