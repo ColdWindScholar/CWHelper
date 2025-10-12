@@ -5,3 +5,4 @@ pillow
 pyinstaller
 sv_ttk
 wmi
+wmi
