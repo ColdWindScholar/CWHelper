@@ -1051,7 +1051,7 @@ class Main:
         print("刷入完成，正在重启...")
         call(['adb', "shell", '/tmp/reboot'])
         input("刷入完成，感谢使用。回车继续。")
-
+        return None
 
     def print_menu(self):
         while True:
