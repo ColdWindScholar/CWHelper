@@ -206,6 +206,7 @@ class Main:
                 f"http://{ip_address}/goform/goform_set_cmd_process?goformId=SET_DEVICE_MODE&debug_enable=0").text)
             print(requests.get(
                 f"http://{ip_address}/reqproc/proc_post?goformId=ID_SENDAT&at_str_data=AT%2BZMODE%3D0").text)
+            # AT+ZMODE=0
             print("\033[32m\033[1m\n稍后重启设备(5秒).....\033[0m\033[34m\033[1m")
             sleep(5)
             print(requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE").text)
