@@ -268,7 +268,7 @@ class Main:
             print("关闭并篡改升级")
             for i in ["fota_updateMode=0",
                       "fota_updateIntervalDay=365",
-                      "fota_platform=Punguin",
+                      "fota_platform=ColdWind",
                       "fota_token_rs=0",
                       "fota_version_delta_id=",
                       "fota_version_delta_url=",
@@ -286,7 +286,7 @@ class Main:
             for i in ["sim_auto_switch_enable=0", "sim_switch=1", "sim_unlock_code=az952#", "sim_default_type=1",
                       "band_select_enable=1",
                       "dns_manual_func_enable=1", "tr069_func_enable=1", "ussd_enable=1", "pdp_type=IPv4v6",
-                      "zcgmi=SZXF-Punguin"]:
+                      "zcgmi=SZXF-ColdWind"]:
                 call(['adb', 'shell', 'nv', "set", i])
             print("保存NV设置")
             call(['adb', 'shell', 'nv', "save"])
@@ -296,7 +296,7 @@ class Main:
                   "echo 'copyright = 此设备软件由 &copy; ColdWindScholar 修改' >> /etc_ro/web/i18n/Messages_zh-cn.properties"])
             call(['adb', 'shell',
                   "echo 'copyright = Software by: &copy; ColdWindScholar Revise' >> /etc_ro/web/i18n/Messages_en.properties"])
-            call(['adb', 'shell', "nv set cr_version=SZXF-Punguin_P001-20250601 &' >> /etc/rc"])
+            call(['adb', 'shell', "nv set cr_version=SZXF-ColdWind_P001-20250601 &' >> /etc/rc"])
             print("\033[32m\033[1m出现Read-only file system是正常的\033[0m")
             print("\033[31m\033[1m修改完成，恢复出厂将会丢失更改，不要恢复出厂\033[0m")
             input("回车继续")
@@ -325,7 +325,7 @@ class Main:
                   "echo 'copyright = 此设备软件由 &copy; ColdWindScholar 修改' >> /etc_ro/web/i18n/Messages_zh-cn.properties"])
             call(['adb', 'shell',
                   "echo 'copyright = Software by: &copy; ColdWindScholar Revise' >> /etc_ro/web/i18n/Messages_en.properties"])
-            call(['adb', 'shell', "echo 'nv set cr_version=SZXK-Punguin_P049U-20250601 &' >> /etc/rc"])
+            call(['adb', 'shell', "echo 'nv set cr_version=SZXK-ColdWind_P049U-20250601 &' >> /etc/rc"])
             print("\033[32m\033[1m出现Read-only file system是正常的\033[0m")
             print('\033[33m正在修改设备文件\033[0m')
             call(['adb', 'push', 'file/gsmtty', '/bin'])
@@ -397,7 +397,7 @@ class Main:
                       "echo 'copyright = 此设备软件由 &copy; ColdWindScholar 修改' >> /etc_ro/web/i18n/Messages_zh-cn.properties"])
                 call(['adb', 'shell',
                       "echo 'copyright = Software by: &copy; ColdWindScholar Revise' >> /etc_ro/web/i18n/Messages_en.properties"])
-                call(['adb', 'shell', "echo 'nv set cr_version=ALK-Punguin_P049U-20250813 &' >> /etc/rc"])
+                call(['adb', 'shell', "echo 'nv set cr_version=ALK-ColdWind_P049U-20250813 &' >> /etc/rc"])
                 print("\033[33m正在修改设备文件\033[0m")
                 for file in ['bin/iccid_check', 'bin/mqtt_client', 'bin/vsim', 'bin/rmc', '/sbin/fl_set_iptables.sh']:
                     call(['adb', 'shell', 'rm', '-rf', file])
@@ -458,7 +458,7 @@ class Main:
             call(['adb', "shell", 'killall', "zte_mifi"])
             print("\033[32m\033[1m已关闭多个进程\033[0m")
             print("\033[34m正在更改系统版本\033[0m")
-            call(["adb", "shell", "echo 'nv set cr_version=ALK-Punguin_P012-20250814 &' >> /etc/rc"])
+            call(["adb", "shell", "echo 'nv set cr_version=ALK-ColdWind_P012-20250814 &' >> /etc/rc"])
             print("\033[33m正在修改设备文件\033[0m")
             call(["adb", "shell", "rm", "-rf", "/sbin/zte_mifi"])
             call(["adb", "shell", "rm", "-rf", "/bin/iccid_check"])
