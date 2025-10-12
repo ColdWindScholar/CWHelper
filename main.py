@@ -979,12 +979,12 @@ class Main:
 
     def at_cmd(self):
         os.system("cls") if os.name == "nt" else os.system("clear")
-        print("\n\033[35m输入\033[0m\033[34m[quit]\033[0m\033[35m即可退出\033[0m\n")
+        print("\n\033[35m输入\033[0m\033[34m[quit/q/exit]\033[0m\033[35m即可退出\033[0m\n")
         while True:
             cmd = input("\033[32mAT>\033]0m\033[37m")
             if not cmd:
                 continue
-            if cmd == "quit":
+            if cmd in ["quit", 'exit', 'q']:
                 return 0
             print("\033[0m\033[33m")
             ateer(cmd, show_send=True, show_response=True)
