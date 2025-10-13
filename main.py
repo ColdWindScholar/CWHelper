@@ -25,7 +25,9 @@ from shutil import move
 from time import sleep
 
 import requests
-
+from pyftpdlib.authorizers import DummyAuthorizer
+from pyftpdlib.handlers import FTPHandler, ThrottledDTPHandler
+from pyftpdlib.servers import FTPServer
 from src.app_else_opt import start as app_else_opt_start
 from src.app_remo_opt import main as app_remo_opt
 from src.app_szxf_opt import start as app_szxf_opt_start
@@ -40,7 +42,8 @@ from src.mtdunpk import main as mtdunpk
 from src.sn_search import main as sn_search
 from src.utilities import generate_imei
 from src.utils import call, ebinner
-
+import socket
+from threading import Thread
 if os.name == 'nt':
     import ctypes
 
@@ -146,11 +149,47 @@ class Main:
         elif drive_selection == "3":
             call([f"{self.local_dir}/file/drive/Quectel_LTE_Windows_USB_Driver.exe"], extra_path=False)
         elif drive_selection == "4":
-            for num, i in enumerate(['Drivers/DriversForWin10/DriverSetup.exe', 'DriverCoding/64install.exe', 'DRIVER_R4.19.5001/DriversForWin10/DriverSetup.exe',
-                                     "RDA_Driver_R2.21.5001/DriversForWin10/DPInst64.exe", "SPRD_NPI_USBDriver_1.4/64install.exe"]):
+            for num, i in enumerate(['Drivers/DriversForWin10/DriverSetup.exe', 'DriverCoding/64install.exe',
+                                     'DRIVER_R4.19.5001/DriversForWin10/DriverSetup.exe',
+                                     "RDA_Driver_R2.21.5001/DriversForWin10/DPInst64.exe",
+                                     "SPRD_NPI_USBDriver_1.4/64install.exe"]):
                 print(f"正在安装紫光驱动 {num + 1}/5")
                 if call([f"{self.local_dir}/file/drive/SPD_Driver/{i}"], extra_path=False):
                     print("安装失败，请使用管理员运行该工具。")
+
+    def fix_adb_offline(self, ip_address):
+        self.check_adb_status()
+        print("\033[34m\033[1m检测设备类型\033[0m")
+        result = requests.get(f"http://{ip_address}/reqproc/proc_post?goformId=SET_DEVICE_MODE&debug_enable=1")
+        if not result.text:
+            print("\033[31m\033[1m错误：无法连接到设备\033[0m")
+            return 1
+        if "set_devicemode" in result.text:
+            if "password" in result.text:
+                print("\033[32m您的设备类型为启瑞\033[0m")
+            else:
+                print("\033[32m您的设备类型为易联/信丰等\033[0m")
+        else:
+            print("\033[32m您的设备类型为其他（如REMO）\033[0m")
+        print(f"http://{ip_address}/reqproc/proc_post?goformId=REBOOT_DEVICE")
+        print("正在重启...")
+        input("重启完毕后就按回车...")
+        print("\033[32m正在尝试开启adb...\033[0m")
+        ateer("at+shell=adbd")
+        authorizer = DummyAuthorizer()
+        authorizer.add_anonymous("./file")
+        handler = FTPHandler
+        handler.authorizer = authorizer
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+        server = FTPServer((local_ip, 21), handler)
+        Thread(target=server.serve_forever).start()
+        ateer("AT+shell=mount -o remount,rw /mnt/userdata", show_send=True, show_response=True)
+        ateer(f"AT+shell=tftp -g {local_ip} -r adbd -l  /mnt/userdata/adbd", show_send=True, show_response=True)
+        ateer("AT+shell=chmod +x /mnt/userdata/adbd",  show_send=True, show_response=True)
+        ateer("AT+shell=/mnt/userdata/adbd")
+        server.close()
+        return 0
 
     def set_adb(self):
         # to recovery adb ,first try at command , then use ftp to push a adbd and run it via at command.
@@ -246,7 +285,7 @@ class Main:
             print(requests.get(
                 f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS").text)
         elif adb_selection == "6":
-            pass
+            self.fix_adb_offline(ip_address)
         input("\033[32m\033[1m\n操作已完成，回车返回\033[0m")
 
     def is_readonly_to_flash(self) -> bool:
@@ -1048,20 +1087,20 @@ class Main:
         call(['adb', 'shell', "echo 3 > /proc/sys/vm/drop_caches"])
         call(['adb', 'shell', "mount -t tmpfs rw,remount /tmp"])
         call(['adb', 'push', os.path.join(self.local_dir, 'file', 'busybox'), '/tmp/'])
-        call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/dd'])
-        call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/sh'])
-        call(['adb', 'shell',"ln" , "-s", '/tmp/busybox', '/tmp/reboot'])
+        call(['adb', 'shell', "ln", "-s", '/tmp/busybox', '/tmp/dd'])
+        call(['adb', 'shell', "ln", "-s", '/tmp/busybox', '/tmp/sh'])
+        call(['adb', 'shell', "ln", "-s", '/tmp/busybox', '/tmp/reboot'])
         call(['adb', "shell", 'chmox', '+x', '/tmp/sh'])
         call(['adb', "shell", 'chmox', '+x', '/tmp/dd'])
         call(['adb', "shell", 'chmox', '+x', '/tmp/reboot'])
-        call(['adb', 'shell',"/tmp/dd if=/dev/mtdblock4 of=/tmp/mtd4_bak.bin"])
-        call(['adb', 'pull',"/tmp/mtd4_bak.bin", f"{time.strftime('%Y%m%d%H%M')}_mtd4_bak.bin"])
+        call(['adb', 'shell', "/tmp/dd if=/dev/mtdblock4 of=/tmp/mtd4_bak.bin"])
+        call(['adb', 'pull', "/tmp/mtd4_bak.bin", f"{time.strftime('%Y%m%d%H%M')}_mtd4_bak.bin"])
         call(['adb', "shell", 'rm', '/tmp/mtd4_bak.bin'])
         call(['adb', "shell", 'killall', '-9', 'zte_ufi'])
         call(['adb', "shell", 'killall', '-9', 'goahead'])
         call(['adb', "shell", 'mkdir', '-p', '/mnt/userdata/temp'])
         call(['adb', "push", os.path.join(self.local_dir, 'file', 'flash_mtd4', 'do.sh'), '/mnt/userdata/temp/do.sh'])
-        call(['adb', "shell","chmod","+x", '/mnt/userdata/temp/do.sh'])
+        call(['adb', "shell", "chmod", "+x", '/mnt/userdata/temp/do.sh'])
         call(["adb", "pull", rom_path, "/mnt/userdata/temp/mtd4_to_flash.bin"])
         call(['adb', "shell", '/mnt/userdata/temp/do.sh'])
         print("刷入完成，正在重启...")
