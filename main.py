@@ -171,7 +171,7 @@ class Main:
         print(
             "\033[36m\033[1m =                                                                                                              =")
         print(
-            "\033[36m\033[1m =    \033[0m\033[33m5. Remo专用调试模式(ADB+AT+网络)                                                                         \033[36m\033[1m =")
+            "\033[36m\033[1m =    \033[0m\033[33m5. Remo专用调试模式(ADB+AT+网络)     6.修复ADB离线                                                       \033[36m\033[1m =")
         print(
             "\033[36m\033[1m =                                                                                                              =")
         print(
@@ -245,6 +245,8 @@ class Main:
             sleep(5)
             print(requests.get(
                 f"http://{ip_address}/reqproc/proc_post?isTest=false&goformId=RESTORE_FACTORY_SETTINGS").text)
+        elif adb_selection == "6":
+            pass
         input("\033[32m\033[1m\n操作已完成，回车返回\033[0m")
 
     def is_readonly_to_flash(self) -> bool:
