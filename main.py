@@ -693,7 +693,7 @@ class Main:
             return call(["adb", "push", local_file, device_file])
 
         def get_device_md5(device_file):
-            _, output = call(["adb", "shell", "md5sum", device_file])
+            _, output = call(["adb", "shell", "md5sum", device_file], out=1, return_output=True)
             for i in output:
                 if i:
                     return i
