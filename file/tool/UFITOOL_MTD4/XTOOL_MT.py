@@ -41,7 +41,7 @@ class AdbCommandThread(QThread):
 class ADBTool(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('UFI_TOOL by Orz0000')
+        self.setWindowTitle('UFI_TOOL')
         self.script_directory: str = str(getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__))))
         self.set_window_icon()
         self.init_ui()
