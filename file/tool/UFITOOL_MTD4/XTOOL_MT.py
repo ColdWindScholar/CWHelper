@@ -645,14 +645,14 @@ class ATToolWindow(QWidget):
         self.output_text.clear()
         try:
             with serial.Serial(selected_port, baudrate=9600, timeout=1) as ser:
-                if ser.isOpen():
-                    ser.write(command + '\r\n'.encode())
-                    response = ser.read(100).decode('utf-8', 'ignore')
+                if ser.is_open:
+                    ser.write(command.encode() + b'\r\n')
+                    response = ser.read(1024).decode('utf-8', 'ignore')
                     self.output_text.append(f'发送的指令: {command}\n')
                     self.output_text.append(f'收到的响应: {response}\n')
                 else:  # inserted
                     self.output_text.append(f'无法打开串口 {selected_port}\n')
-        except serial.SerialException as e:
+        except (serial.SerialException, Exception) as e:
             self.output_text.append(f'串口 {selected_port} 打开失败: {e}\n')
         self.output_text.setReadOnly(True)
 
