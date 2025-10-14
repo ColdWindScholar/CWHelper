@@ -19,15 +19,18 @@ import io
 import os
 import re
 import shutil
+import socket
 import sys
 import time
 from shutil import move
+from threading import Thread
 from time import sleep
 
 import requests
 from pyftpdlib.authorizers import DummyAuthorizer
-from pyftpdlib.handlers import FTPHandler, ThrottledDTPHandler
+from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
+
 from src.app_else_opt import start as app_else_opt_start
 from src.app_remo_opt import main as app_remo_opt
 from src.app_szxf_opt import start as app_szxf_opt_start
@@ -42,8 +45,7 @@ from src.mtdunpk import main as mtdunpk
 from src.sn_search import main as sn_search
 from src.utilities import generate_imei
 from src.utils import call, ebinner
-import socket
-from threading import Thread
+
 if os.name == 'nt':
     import ctypes
 
