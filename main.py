@@ -15,7 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import hashlib
-import io
 import os
 import re
 import shutil
@@ -27,6 +26,7 @@ from threading import Thread
 from time import sleep
 
 import requests
+import serial.tools.list_ports
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
@@ -94,14 +94,11 @@ class Main:
         return ""
 
     def is_serial_port_connected(self) -> bool:
-        for i in range(1, 257):
-            try:
-                file = io.open(rf"\\.\COM{i}")
-            except (FileNotFoundError, PermissionError, OSError):
-                continue
-            file.close()
-            return True
+        for port in serial.tools.list_ports.comports():
+            if port.device:
+                return True
         return False
+
 
     def check_serial(self):
         print("\033[33m\033[1m串口状态(AT等)：\033[0m",
