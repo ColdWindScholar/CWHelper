@@ -18,7 +18,7 @@ Main Features：
  
  · Easy to modify device info and config.
  
- · Used dongle_fun(from dongle wifi helper) to flash MTD partition.
+ · Flash MTD4 partition.
  
  · Included drivers for windows.
 
