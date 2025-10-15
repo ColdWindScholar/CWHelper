@@ -93,6 +93,14 @@ class Main:
                 return line
         return ""
 
+    def get_all_nv_value(self) -> dict[str, str]:
+        ret, adb_output = call(["adb", "shell", "nv", "show"], return_output=True, out=1)
+        nv_data = dict()
+        for line in adb_output:
+            name, value = line.split("=", 1)
+            nv_data[name] = value
+        return nv_data
+
     def is_serial_port_connected(self) -> bool:
         for port in serial.tools.list_ports.comports():
             if port.device:
@@ -839,7 +847,7 @@ class Main:
         if not self.is_adb_device_connected():
             input("回车继续")
             return 1
-        get_nv_value = self.get_nv_value
+        get_nv_value = self.get_all_nv_value().get
         intype = get_nv_value("zcgmi")
         fota_platform = get_nv_value("fota_platform")
         cr_version = get_nv_value("cr_version")
