@@ -17,16 +17,12 @@ import serial
 import serial.tools.list_ports
 
 
-def find_at_port():
-    for port in serial.tools.list_ports.comports():
-        desc = f'{port.device} {port.description}'.lower()
-        if 'at' in desc:
-            return port.device
-    return None
+def find_at_ports():
+    return [port.device for port in serial.tools.list_ports.comports() if 'at' in f'{port.device} {port.description}'.lower()]
 
 
-def ateer(at_command, show_send: bool = False, show_response: bool = False, timeout: int = 2):
-    port_name = find_at_port()
+def ateer(at_command, port_name=None, show_send: bool = False, show_response: bool = False, timeout: int = 2):
+    port_name = port_name or find_at_ports()[0]
     if not port_name:
         print("未找到包含 'AT' 的串口设备")
         return 2

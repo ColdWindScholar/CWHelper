@@ -36,7 +36,7 @@ from src.app_remo_opt import main as app_remo_opt
 from src.app_szxf_opt import start as app_szxf_opt_start
 from src.app_szxk_opt import start as app_szxk_opt_start
 from src.app_zxw_safe import main as app_zxw_safe_start
-from src.ateer import ateer
+from src.ateer import ateer, find_at_ports
 from src.calc_pwd import calc_pwd
 from src.mtdcut import main as mtdcut
 from src.mtdjoin import main as mtdjoin
@@ -1042,6 +1042,15 @@ class Main:
     def at_cmd(self):
         os.system("cls") if os.name == "nt" else os.system("clear")
         print("\n\033[35m输入\033[0m\033[34m[quit/q/exit]\033[0m\033[35m即可退出\033[0m\n")
+        ports = {index: value for index, value in enumerate(find_at_ports())}
+        print(f"\033[33m发现{len(ports)}个AT端口，请选择.\033[0m")
+        for index, port in ports.items():
+            print(f'\033[32m[{index}]\033[0m\033[33m{port}\033[0m')
+        choice = input('\033[32mAT>\033]0m\033[37m')
+        if choice.isdigit() and int(choice) in ports:
+            port = ports[int(choice)]
+        else:
+            return 1
         while True:
             cmd = input("\033[32mAT>\033]0m\033[37m")
             if not cmd:
@@ -1049,7 +1058,7 @@ class Main:
             if cmd in ["quit", 'exit', 'q']:
                 return 0
             print("\033[0m\033[33m")
-            ateer(cmd, show_send=True, show_response=True)
+            ateer(cmd,port_name=port,  show_send=True, show_response=True)
             print("\033[0m")
 
     def ufi_center(self):
